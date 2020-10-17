@@ -1,0 +1,235 @@
+[options]
+deprecate_by_min_version = true
+generate_safety_asserts = true
+girs_dir = "../gir-files"
+library = "GtkSource"
+min_cfg_version = "4.90"
+single_version_file = true
+target_path = "."
+version = "5"
+work_mode = "normal"
+
+external_libraries = [
+  "GLib",
+  "GObject",
+  "Gdk",
+  "GdkPixbuf",
+  "Gio",
+  "Gtk",
+  "Pango",
+]
+
+generate = [
+  # "GtkSource.RegionIter",
+  "GtkSource.BackgroundPatternType",
+  "GtkSource.BracketMatchType",
+  "GtkSource.ChangeCaseType",
+  "GtkSource.CompletionActivation",
+  "GtkSource.CompletionColumn",
+  "GtkSource.CompletionProposal",
+  "GtkSource.CompletionProvider",
+  "GtkSource.CompressionType",
+  "GtkSource.Encoding",
+  "GtkSource.FileLoaderError",
+  "GtkSource.FileSaverError",
+  "GtkSource.FileSaverFlags",
+  "GtkSource.GutterLines",
+  "GtkSource.GutterRenderer",
+  "GtkSource.GutterRendererAlignmentMode",
+  "GtkSource.Language",
+  "GtkSource.MountOperationFactory",
+  "GtkSource.NewlineType",
+  "GtkSource.SmartHomeEndType",
+  "GtkSource.SnippetContext",
+  "GtkSource.SortFlags",
+  "GtkSource.SpaceLocationFlags",
+  "GtkSource.SpaceTypeFlags",
+  "GtkSource.StyleSchemeChooser",
+  "GtkSource.StyleSchemeChooserButton",
+  "GtkSource.StyleSchemeChooserWidget",
+  "GtkSource.TextBuffer",
+  "GtkSource.ViewGutterPosition",
+]
+
+manual = [
+  "GLib.Error",
+  "GLib.Priority",
+  "GLib.Quark",
+  "GLib.Variant",
+  "Gdk.ModifierType",
+  "Gdk.Paintable",
+  "Gdk.Rectangle",
+  "Gdk.RGBA",
+  "GdkPixbuf.Pixbuf",
+  "Gio.Cancellable",
+  "Gio.File",
+  "Gio.Icon",
+  "Gio.InputStream",
+  "Gio.ListModel",
+  "Gio.MountOperation",
+  "Gio.Settings",
+  "Gio.SettingsBindFlags",
+  "Gtk.Accessible",
+  "Gtk.Actionable",
+  "Gtk.Buildable",
+  "Gtk.Button",
+  "Gtk.ConstraintTarget",
+  "Gtk.PrintContext",
+  "Gtk.Scrollable",
+  "Gtk.TextBuffer",
+  "Gtk.TextIter",
+  "Gtk.TextMark",
+  "Gtk.TextTag",
+  "Gtk.TextTagTable",
+  "Gtk.TextView",
+  "Gtk.TextWindowType",
+  "Gtk.Widget",
+  "Gtk.WrapMode",
+  "Pango.FontDescription",
+  "Pango.Underline",
+]
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Buffer"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Completion"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.CompletionCell"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.CompletionContext"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.CompletionSnippets"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.CompletionWords"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.File"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.FileLoader"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.FileSaver"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Gutter"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.GutterRendererPixbuf"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.GutterRendererText"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.LanguageManager"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Map"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.MarkAttributes"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Mark"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.PrintCompositor"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Region"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.SearchContext"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.SearchSettings"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Snippet"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.SnippetChunk"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.SnippetManager"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.SpaceDrawer"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Style"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.StyleScheme"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.StyleSchemeManager"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.Tag"
+status = "generate"
+
+[[object]]
+generate_builder = true
+name = "GtkSource.View"
+status = "generate"

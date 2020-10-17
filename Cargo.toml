@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "gir",
+    "sourceview5",
+    "sourceview5-sys",
+]

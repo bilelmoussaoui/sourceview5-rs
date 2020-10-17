@@ -1,0 +1,15 @@
+[options]
+external_libraries = [
+  "GLib",
+  "GObject",
+  "Gdk",
+  "GdkPixbuf",
+  "Gio",
+  "Gtk",
+  "Pango",
+]
+girs_dir = "../gir-files"
+library = "GtkSource"
+min_cfg_version = "4.90"
+version = "5"
+work_mode = "sys"
