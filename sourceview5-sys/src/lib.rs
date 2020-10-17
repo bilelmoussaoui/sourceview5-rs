@@ -15,8 +15,8 @@ extern crate gio_sys as gio;
 extern crate glib_sys as glib;
 extern crate gobject_sys as gobject;
 extern crate gtk_sys as gtk;
-extern crate pango_sys as pango;
 extern crate libc;
+extern crate pango_sys as pango;
 
 #[allow(unused_imports)]
 use libc::{
