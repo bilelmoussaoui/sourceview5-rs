@@ -64,7 +64,6 @@ impl GutterBuilder {
         Self::default()
     }
 
-
     pub fn build(self) -> Gutter {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         if let Some(ref view) = self.view {
@@ -149,7 +148,7 @@ impl GutterBuilder {
             .expect("object new")
             .downcast::<Gutter>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn view<P: IsA<View>>(mut self, view: &P) -> Self {
@@ -300,33 +299,53 @@ pub trait GutterExt: 'static {
 impl<O: IsA<Gutter>> GutterExt for O {
     fn get_view(&self) -> Option<View> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_get_view(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_gutter_get_view(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn insert<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_gutter_insert(self.as_ref().to_glib_none().0, renderer.as_ref().to_glib_none().0, position))
+            from_glib(gtk_source_sys::gtk_source_gutter_insert(
+                self.as_ref().to_glib_none().0,
+                renderer.as_ref().to_glib_none().0,
+                position,
+            ))
         }
     }
 
     fn remove<P: IsA<GutterRenderer>>(&self, renderer: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_remove(self.as_ref().to_glib_none().0, renderer.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_gutter_remove(
+                self.as_ref().to_glib_none().0,
+                renderer.as_ref().to_glib_none().0,
+            );
         }
     }
 
     fn reorder<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_reorder(self.as_ref().to_glib_none().0, renderer.as_ref().to_glib_none().0, position);
+            gtk_source_sys::gtk_source_gutter_reorder(
+                self.as_ref().to_glib_none().0,
+                renderer.as_ref().to_glib_none().0,
+                position,
+            );
         }
     }
 
     fn get_property_window_type(&self) -> gtk::TextWindowType {
         unsafe {
             let mut value = Value::from_type(<gtk::TextWindowType as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"window-type\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `window-type` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"window-type\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `window-type` getter")
+                .unwrap()
         }
     }
 }

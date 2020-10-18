@@ -33,9 +33,7 @@ glib_wrapper! {
 impl Map {
     pub fn new() -> Map {
         assert_initialized_main_thread!();
-        unsafe {
-            gtk::Widget::from_glib_none(gtk_source_sys::gtk_source_map_new()).unsafe_cast()
-        }
+        unsafe { gtk::Widget::from_glib_none(gtk_source_sys::gtk_source_map_new()).unsafe_cast() }
     }
 }
 
@@ -126,7 +124,6 @@ impl MapBuilder {
         Self::default()
     }
 
-
     pub fn build(self) -> Map {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         if let Some(ref font_desc) = self.font_desc {
@@ -157,7 +154,10 @@ impl MapBuilder {
             properties.push(("indent-width", indent_width));
         }
         if let Some(ref insert_spaces_instead_of_tabs) = self.insert_spaces_instead_of_tabs {
-            properties.push(("insert-spaces-instead-of-tabs", insert_spaces_instead_of_tabs));
+            properties.push((
+                "insert-spaces-instead-of-tabs",
+                insert_spaces_instead_of_tabs,
+            ));
         }
         if let Some(ref right_margin_position) = self.right_margin_position {
             properties.push(("right-margin-position", right_margin_position));
@@ -304,7 +304,7 @@ impl MapBuilder {
             .expect("object new")
             .downcast::<Map>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn font_desc(mut self, font_desc: &pango::FontDescription) -> Self {
@@ -608,55 +608,90 @@ pub trait MapExt: 'static {
 impl<O: IsA<Map>> MapExt for O {
     fn get_view(&self) -> Option<View> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_map_get_view(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_map_get_view(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn set_view<P: IsA<View>>(&self, view: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_map_set_view(self.as_ref().to_glib_none().0, view.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_map_set_view(
+                self.as_ref().to_glib_none().0,
+                view.as_ref().to_glib_none().0,
+            );
         }
     }
 
     fn get_property_font_desc(&self) -> Option<pango::FontDescription> {
         unsafe {
             let mut value = Value::from_type(<pango::FontDescription as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"font-desc\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `font-desc` getter")
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"font-desc\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `font-desc` getter")
         }
     }
 
     fn set_property_font_desc(&self, font_desc: Option<&pango::FontDescription>) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"font-desc\0".as_ptr() as *const _, Value::from(font_desc).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"font-desc\0".as_ptr() as *const _,
+                Value::from(font_desc).to_glib_none().0,
+            );
         }
     }
 
     fn connect_property_font_desc_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_font_desc_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceMap, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Map>
+        unsafe extern "C" fn notify_font_desc_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceMap,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Map>,
         {
             let f: &F = &*(f as *const F);
             f(&Map::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::font-desc\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_font_desc_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::font-desc\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_font_desc_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_view_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_view_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceMap, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Map>
+        unsafe extern "C" fn notify_view_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceMap,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Map>,
         {
             let f: &F = &*(f as *const F);
             f(&Map::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::view\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_view_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::view\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_view_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

@@ -55,7 +55,6 @@ impl CompletionContextBuilder {
         Self::default()
     }
 
-
     pub fn build(self) -> CompletionContext {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         #[cfg(any(feature = "v5_0", feature = "dox"))]
@@ -68,7 +67,7 @@ impl CompletionContextBuilder {
             .expect("object new")
             .downcast::<CompletionContext>()
             .expect("downcast");
-    ret
+        ret
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
@@ -111,7 +110,11 @@ pub trait CompletionContextExt: 'static {
     fn get_word(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
-    fn set_proposals_for_provider<P: IsA<CompletionProvider>, Q: IsA<gio::ListModel>>(&self, provider: &P, results: Option<&Q>);
+    fn set_proposals_for_provider<P: IsA<CompletionProvider>, Q: IsA<gio::ListModel>>(
+        &self,
+        provider: &P,
+        results: Option<&Q>,
+    );
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_property_busy_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -124,7 +127,11 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_activation(&self) -> CompletionActivation {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_completion_context_get_activation(self.as_ref().to_glib_none().0))
+            from_glib(
+                gtk_source_sys::gtk_source_completion_context_get_activation(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 
@@ -133,100 +140,155 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
         unsafe {
             let mut begin = gtk::TextIter::uninitialized();
             let mut end = gtk::TextIter::uninitialized();
-            let ret = from_glib(gtk_source_sys::gtk_source_completion_context_get_bounds(self.as_ref().to_glib_none().0, begin.to_glib_none_mut().0, end.to_glib_none_mut().0));
-            if ret { Some((begin, end)) } else { None }
+            let ret = from_glib(gtk_source_sys::gtk_source_completion_context_get_bounds(
+                self.as_ref().to_glib_none().0,
+                begin.to_glib_none_mut().0,
+                end.to_glib_none_mut().0,
+            ));
+            if ret {
+                Some((begin, end))
+            } else {
+                None
+            }
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_context_get_buffer(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_completion_context_get_buffer(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_busy(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_completion_context_get_busy(self.as_ref().to_glib_none().0))
+            from_glib(gtk_source_sys::gtk_source_completion_context_get_busy(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_completion(&self) -> Option<Completion> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_context_get_completion(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                gtk_source_sys::gtk_source_completion_context_get_completion(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_empty(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_completion_context_get_empty(self.as_ref().to_glib_none().0))
+            from_glib(gtk_source_sys::gtk_source_completion_context_get_empty(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_language(&self) -> Option<Language> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_context_get_language(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_completion_context_get_language(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_start_iter(&self, iter: &mut gtk::TextIter) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_context_get_start_iter(self.as_ref().to_glib_none().0, iter.to_glib_none_mut().0);
+            gtk_source_sys::gtk_source_completion_context_get_start_iter(
+                self.as_ref().to_glib_none().0,
+                iter.to_glib_none_mut().0,
+            );
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_view(&self) -> Option<View> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_context_get_view(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_completion_context_get_view(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_word(&self) -> Option<GString> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_completion_context_get_word(self.as_ref().to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_completion_context_get_word(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
-    fn set_proposals_for_provider<P: IsA<CompletionProvider>, Q: IsA<gio::ListModel>>(&self, provider: &P, results: Option<&Q>) {
+    fn set_proposals_for_provider<P: IsA<CompletionProvider>, Q: IsA<gio::ListModel>>(
+        &self,
+        provider: &P,
+        results: Option<&Q>,
+    ) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_context_set_proposals_for_provider(self.as_ref().to_glib_none().0, provider.as_ref().to_glib_none().0, results.map(|p| p.as_ref()).to_glib_none().0);
+            gtk_source_sys::gtk_source_completion_context_set_proposals_for_provider(
+                self.as_ref().to_glib_none().0,
+                provider.as_ref().to_glib_none().0,
+                results.map(|p| p.as_ref()).to_glib_none().0,
+            );
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_property_busy_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_busy_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionContext, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionContext>
+        unsafe extern "C" fn notify_busy_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionContext,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionContext>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionContext::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::busy\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_busy_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::busy\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_busy_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_property_empty_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_empty_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionContext, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionContext>
+        unsafe extern "C" fn notify_empty_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionContext,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionContext>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionContext::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::empty\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_empty_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::empty\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_empty_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

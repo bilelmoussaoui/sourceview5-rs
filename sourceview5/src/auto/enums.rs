@@ -15,8 +15,7 @@ use gobject_sys;
 use gtk_source_sys;
 use std::fmt;
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum BackgroundPatternType {
     None,
@@ -27,11 +26,15 @@ pub enum BackgroundPatternType {
 
 impl fmt::Display for BackgroundPatternType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "BackgroundPatternType::{}", match *self {
-            BackgroundPatternType::None => "None",
-            BackgroundPatternType::Grid => "Grid",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "BackgroundPatternType::{}",
+            match *self {
+                BackgroundPatternType::None => "None",
+                BackgroundPatternType::Grid => "Grid",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -43,7 +46,7 @@ impl ToGlib for BackgroundPatternType {
         match *self {
             BackgroundPatternType::None => gtk_source_sys::GTK_SOURCE_BACKGROUND_PATTERN_TYPE_NONE,
             BackgroundPatternType::Grid => gtk_source_sys::GTK_SOURCE_BACKGROUND_PATTERN_TYPE_GRID,
-            BackgroundPatternType::__Unknown(value) => value
+            BackgroundPatternType::__Unknown(value) => value,
         }
     }
 }
@@ -84,8 +87,7 @@ impl SetValue for BackgroundPatternType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum BracketMatchType {
     None,
@@ -98,13 +100,17 @@ pub enum BracketMatchType {
 
 impl fmt::Display for BracketMatchType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "BracketMatchType::{}", match *self {
-            BracketMatchType::None => "None",
-            BracketMatchType::OutOfRange => "OutOfRange",
-            BracketMatchType::NotFound => "NotFound",
-            BracketMatchType::Found => "Found",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "BracketMatchType::{}",
+            match *self {
+                BracketMatchType::None => "None",
+                BracketMatchType::OutOfRange => "OutOfRange",
+                BracketMatchType::NotFound => "NotFound",
+                BracketMatchType::Found => "Found",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -118,7 +124,7 @@ impl ToGlib for BracketMatchType {
             BracketMatchType::OutOfRange => gtk_source_sys::GTK_SOURCE_BRACKET_MATCH_OUT_OF_RANGE,
             BracketMatchType::NotFound => gtk_source_sys::GTK_SOURCE_BRACKET_MATCH_NOT_FOUND,
             BracketMatchType::Found => gtk_source_sys::GTK_SOURCE_BRACKET_MATCH_FOUND,
-            BracketMatchType::__Unknown(value) => value
+            BracketMatchType::__Unknown(value) => value,
         }
     }
 }
@@ -161,8 +167,7 @@ impl SetValue for BracketMatchType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum ChangeCaseType {
     Lower,
@@ -175,13 +180,17 @@ pub enum ChangeCaseType {
 
 impl fmt::Display for ChangeCaseType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "ChangeCaseType::{}", match *self {
-            ChangeCaseType::Lower => "Lower",
-            ChangeCaseType::Upper => "Upper",
-            ChangeCaseType::Toggle => "Toggle",
-            ChangeCaseType::Title => "Title",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "ChangeCaseType::{}",
+            match *self {
+                ChangeCaseType::Lower => "Lower",
+                ChangeCaseType::Upper => "Upper",
+                ChangeCaseType::Toggle => "Toggle",
+                ChangeCaseType::Title => "Title",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -195,7 +204,7 @@ impl ToGlib for ChangeCaseType {
             ChangeCaseType::Upper => gtk_source_sys::GTK_SOURCE_CHANGE_CASE_UPPER,
             ChangeCaseType::Toggle => gtk_source_sys::GTK_SOURCE_CHANGE_CASE_TOGGLE,
             ChangeCaseType::Title => gtk_source_sys::GTK_SOURCE_CHANGE_CASE_TITLE,
-            ChangeCaseType::__Unknown(value) => value
+            ChangeCaseType::__Unknown(value) => value,
         }
     }
 }
@@ -238,8 +247,7 @@ impl SetValue for ChangeCaseType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum CompletionActivation {
     None,
@@ -251,12 +259,16 @@ pub enum CompletionActivation {
 
 impl fmt::Display for CompletionActivation {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CompletionActivation::{}", match *self {
-            CompletionActivation::None => "None",
-            CompletionActivation::Interactive => "Interactive",
-            CompletionActivation::UserRequested => "UserRequested",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "CompletionActivation::{}",
+            match *self {
+                CompletionActivation::None => "None",
+                CompletionActivation::Interactive => "Interactive",
+                CompletionActivation::UserRequested => "UserRequested",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -267,9 +279,13 @@ impl ToGlib for CompletionActivation {
     fn to_glib(&self) -> gtk_source_sys::GtkSourceCompletionActivation {
         match *self {
             CompletionActivation::None => gtk_source_sys::GTK_SOURCE_COMPLETION_ACTIVATION_NONE,
-            CompletionActivation::Interactive => gtk_source_sys::GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE,
-            CompletionActivation::UserRequested => gtk_source_sys::GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED,
-            CompletionActivation::__Unknown(value) => value
+            CompletionActivation::Interactive => {
+                gtk_source_sys::GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE
+            }
+            CompletionActivation::UserRequested => {
+                gtk_source_sys::GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED
+            }
+            CompletionActivation::__Unknown(value) => value,
         }
     }
 }
@@ -311,8 +327,7 @@ impl SetValue for CompletionActivation {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum CompletionColumn {
     Icon,
@@ -327,15 +342,19 @@ pub enum CompletionColumn {
 
 impl fmt::Display for CompletionColumn {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CompletionColumn::{}", match *self {
-            CompletionColumn::Icon => "Icon",
-            CompletionColumn::Before => "Before",
-            CompletionColumn::TypedText => "TypedText",
-            CompletionColumn::After => "After",
-            CompletionColumn::Comment => "Comment",
-            CompletionColumn::Details => "Details",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "CompletionColumn::{}",
+            match *self {
+                CompletionColumn::Icon => "Icon",
+                CompletionColumn::Before => "Before",
+                CompletionColumn::TypedText => "TypedText",
+                CompletionColumn::After => "After",
+                CompletionColumn::Comment => "Comment",
+                CompletionColumn::Details => "Details",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -351,7 +370,7 @@ impl ToGlib for CompletionColumn {
             CompletionColumn::After => gtk_source_sys::GTK_SOURCE_COMPLETION_COLUMN_AFTER,
             CompletionColumn::Comment => gtk_source_sys::GTK_SOURCE_COMPLETION_COLUMN_COMMENT,
             CompletionColumn::Details => gtk_source_sys::GTK_SOURCE_COMPLETION_COLUMN_DETAILS,
-            CompletionColumn::__Unknown(value) => value
+            CompletionColumn::__Unknown(value) => value,
         }
     }
 }
@@ -396,8 +415,7 @@ impl SetValue for CompletionColumn {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum CompressionType {
     None,
@@ -408,11 +426,15 @@ pub enum CompressionType {
 
 impl fmt::Display for CompressionType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CompressionType::{}", match *self {
-            CompressionType::None => "None",
-            CompressionType::Gzip => "Gzip",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "CompressionType::{}",
+            match *self {
+                CompressionType::None => "None",
+                CompressionType::Gzip => "Gzip",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -424,7 +446,7 @@ impl ToGlib for CompressionType {
         match *self {
             CompressionType::None => gtk_source_sys::GTK_SOURCE_COMPRESSION_TYPE_NONE,
             CompressionType::Gzip => gtk_source_sys::GTK_SOURCE_COMPRESSION_TYPE_GZIP,
-            CompressionType::__Unknown(value) => value
+            CompressionType::__Unknown(value) => value,
         }
     }
 }
@@ -465,8 +487,7 @@ impl SetValue for CompressionType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum FileLoaderError {
     TooBig,
@@ -478,12 +499,16 @@ pub enum FileLoaderError {
 
 impl fmt::Display for FileLoaderError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "FileLoaderError::{}", match *self {
-            FileLoaderError::TooBig => "TooBig",
-            FileLoaderError::EncodingAutoDetectionFailed => "EncodingAutoDetectionFailed",
-            FileLoaderError::ConversionFallback => "ConversionFallback",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "FileLoaderError::{}",
+            match *self {
+                FileLoaderError::TooBig => "TooBig",
+                FileLoaderError::EncodingAutoDetectionFailed => "EncodingAutoDetectionFailed",
+                FileLoaderError::ConversionFallback => "ConversionFallback",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -494,9 +519,13 @@ impl ToGlib for FileLoaderError {
     fn to_glib(&self) -> gtk_source_sys::GtkSourceFileLoaderError {
         match *self {
             FileLoaderError::TooBig => gtk_source_sys::GTK_SOURCE_FILE_LOADER_ERROR_TOO_BIG,
-            FileLoaderError::EncodingAutoDetectionFailed => gtk_source_sys::GTK_SOURCE_FILE_LOADER_ERROR_ENCODING_AUTO_DETECTION_FAILED,
-            FileLoaderError::ConversionFallback => gtk_source_sys::GTK_SOURCE_FILE_LOADER_ERROR_CONVERSION_FALLBACK,
-            FileLoaderError::__Unknown(value) => value
+            FileLoaderError::EncodingAutoDetectionFailed => {
+                gtk_source_sys::GTK_SOURCE_FILE_LOADER_ERROR_ENCODING_AUTO_DETECTION_FAILED
+            }
+            FileLoaderError::ConversionFallback => {
+                gtk_source_sys::GTK_SOURCE_FILE_LOADER_ERROR_CONVERSION_FALLBACK
+            }
+            FileLoaderError::__Unknown(value) => value,
         }
     }
 }
@@ -559,8 +588,7 @@ impl SetValue for FileLoaderError {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum FileSaverError {
     InvalidChars,
@@ -571,11 +599,15 @@ pub enum FileSaverError {
 
 impl fmt::Display for FileSaverError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "FileSaverError::{}", match *self {
-            FileSaverError::InvalidChars => "InvalidChars",
-            FileSaverError::ExternallyModified => "ExternallyModified",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "FileSaverError::{}",
+            match *self {
+                FileSaverError::InvalidChars => "InvalidChars",
+                FileSaverError::ExternallyModified => "ExternallyModified",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -585,9 +617,13 @@ impl ToGlib for FileSaverError {
 
     fn to_glib(&self) -> gtk_source_sys::GtkSourceFileSaverError {
         match *self {
-            FileSaverError::InvalidChars => gtk_source_sys::GTK_SOURCE_FILE_SAVER_ERROR_INVALID_CHARS,
-            FileSaverError::ExternallyModified => gtk_source_sys::GTK_SOURCE_FILE_SAVER_ERROR_EXTERNALLY_MODIFIED,
-            FileSaverError::__Unknown(value) => value
+            FileSaverError::InvalidChars => {
+                gtk_source_sys::GTK_SOURCE_FILE_SAVER_ERROR_INVALID_CHARS
+            }
+            FileSaverError::ExternallyModified => {
+                gtk_source_sys::GTK_SOURCE_FILE_SAVER_ERROR_EXTERNALLY_MODIFIED
+            }
+            FileSaverError::__Unknown(value) => value,
         }
     }
 }
@@ -648,8 +684,7 @@ impl SetValue for FileSaverError {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum GutterRendererAlignmentMode {
     Cell,
@@ -661,12 +696,16 @@ pub enum GutterRendererAlignmentMode {
 
 impl fmt::Display for GutterRendererAlignmentMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "GutterRendererAlignmentMode::{}", match *self {
-            GutterRendererAlignmentMode::Cell => "Cell",
-            GutterRendererAlignmentMode::First => "First",
-            GutterRendererAlignmentMode::Last => "Last",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "GutterRendererAlignmentMode::{}",
+            match *self {
+                GutterRendererAlignmentMode::Cell => "Cell",
+                GutterRendererAlignmentMode::First => "First",
+                GutterRendererAlignmentMode::Last => "Last",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -676,16 +715,24 @@ impl ToGlib for GutterRendererAlignmentMode {
 
     fn to_glib(&self) -> gtk_source_sys::GtkSourceGutterRendererAlignmentMode {
         match *self {
-            GutterRendererAlignmentMode::Cell => gtk_source_sys::GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_CELL,
-            GutterRendererAlignmentMode::First => gtk_source_sys::GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST,
-            GutterRendererAlignmentMode::Last => gtk_source_sys::GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST,
-            GutterRendererAlignmentMode::__Unknown(value) => value
+            GutterRendererAlignmentMode::Cell => {
+                gtk_source_sys::GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_CELL
+            }
+            GutterRendererAlignmentMode::First => {
+                gtk_source_sys::GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST
+            }
+            GutterRendererAlignmentMode::Last => {
+                gtk_source_sys::GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST
+            }
+            GutterRendererAlignmentMode::__Unknown(value) => value,
         }
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<gtk_source_sys::GtkSourceGutterRendererAlignmentMode> for GutterRendererAlignmentMode {
+impl FromGlib<gtk_source_sys::GtkSourceGutterRendererAlignmentMode>
+    for GutterRendererAlignmentMode
+{
     fn from_glib(value: gtk_source_sys::GtkSourceGutterRendererAlignmentMode) -> Self {
         skip_assert_initialized!();
         match value {
@@ -721,8 +768,7 @@ impl SetValue for GutterRendererAlignmentMode {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum NewlineType {
     Lf,
@@ -734,12 +780,16 @@ pub enum NewlineType {
 
 impl fmt::Display for NewlineType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "NewlineType::{}", match *self {
-            NewlineType::Lf => "Lf",
-            NewlineType::Cr => "Cr",
-            NewlineType::CrLf => "CrLf",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "NewlineType::{}",
+            match *self {
+                NewlineType::Lf => "Lf",
+                NewlineType::Cr => "Cr",
+                NewlineType::CrLf => "CrLf",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -752,7 +802,7 @@ impl ToGlib for NewlineType {
             NewlineType::Lf => gtk_source_sys::GTK_SOURCE_NEWLINE_TYPE_LF,
             NewlineType::Cr => gtk_source_sys::GTK_SOURCE_NEWLINE_TYPE_CR,
             NewlineType::CrLf => gtk_source_sys::GTK_SOURCE_NEWLINE_TYPE_CR_LF,
-            NewlineType::__Unknown(value) => value
+            NewlineType::__Unknown(value) => value,
         }
     }
 }
@@ -794,8 +844,7 @@ impl SetValue for NewlineType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum SmartHomeEndType {
     Disabled,
@@ -808,13 +857,17 @@ pub enum SmartHomeEndType {
 
 impl fmt::Display for SmartHomeEndType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SmartHomeEndType::{}", match *self {
-            SmartHomeEndType::Disabled => "Disabled",
-            SmartHomeEndType::Before => "Before",
-            SmartHomeEndType::After => "After",
-            SmartHomeEndType::Always => "Always",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "SmartHomeEndType::{}",
+            match *self {
+                SmartHomeEndType::Disabled => "Disabled",
+                SmartHomeEndType::Before => "Before",
+                SmartHomeEndType::After => "After",
+                SmartHomeEndType::Always => "Always",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -828,7 +881,7 @@ impl ToGlib for SmartHomeEndType {
             SmartHomeEndType::Before => gtk_source_sys::GTK_SOURCE_SMART_HOME_END_BEFORE,
             SmartHomeEndType::After => gtk_source_sys::GTK_SOURCE_SMART_HOME_END_AFTER,
             SmartHomeEndType::Always => gtk_source_sys::GTK_SOURCE_SMART_HOME_END_ALWAYS,
-            SmartHomeEndType::__Unknown(value) => value
+            SmartHomeEndType::__Unknown(value) => value,
         }
     }
 }
@@ -871,8 +924,7 @@ impl SetValue for SmartHomeEndType {
     }
 }
 
-#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[derive(Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
 pub enum ViewGutterPosition {
     Lines,
@@ -883,11 +935,15 @@ pub enum ViewGutterPosition {
 
 impl fmt::Display for ViewGutterPosition {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "ViewGutterPosition::{}", match *self {
-            ViewGutterPosition::Lines => "Lines",
-            ViewGutterPosition::Marks => "Marks",
-            _ => "Unknown",
-        })
+        write!(
+            f,
+            "ViewGutterPosition::{}",
+            match *self {
+                ViewGutterPosition::Lines => "Lines",
+                ViewGutterPosition::Marks => "Marks",
+                _ => "Unknown",
+            }
+        )
     }
 }
 
@@ -899,7 +955,7 @@ impl ToGlib for ViewGutterPosition {
         match *self {
             ViewGutterPosition::Lines => gtk_source_sys::GTK_SOURCE_VIEW_GUTTER_POSITION_LINES,
             ViewGutterPosition::Marks => gtk_source_sys::GTK_SOURCE_VIEW_GUTTER_POSITION_MARKS,
-            ViewGutterPosition::__Unknown(value) => value
+            ViewGutterPosition::__Unknown(value) => value,
         }
     }
 }
@@ -939,4 +995,3 @@ impl SetValue for ViewGutterPosition {
         gobject_sys::g_value_set_enum(value.to_glib_none_mut().0, this.to_glib())
     }
 }
-

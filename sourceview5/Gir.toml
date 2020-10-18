@@ -33,7 +33,6 @@ generate = [
   "GtkSource.FileLoaderError",
   "GtkSource.FileSaverError",
   "GtkSource.FileSaverFlags",
-  "GtkSource.GutterLines",
   "GtkSource.GutterRenderer",
   "GtkSource.GutterRendererAlignmentMode",
   "GtkSource.Language",
@@ -128,6 +127,9 @@ status = "generate"
 generate_builder = true
 name = "GtkSource.FileLoader"
 status = "generate"
+  [[object.function]]
+  name = "set_candidate_encodings"
+  ignore = true # manual
 
 [[object]]
 generate_builder = true
@@ -138,6 +140,13 @@ status = "generate"
 generate_builder = true
 name = "GtkSource.Gutter"
 status = "generate"
+
+[[object]]
+name = "GtkSource.GutterLines"
+status = "generate"
+  [[object.function]]
+  name = "get_yrange"
+  ignore = true # manual
 
 [[object]]
 generate_builder = true
@@ -233,3 +242,9 @@ status = "generate"
 generate_builder = true
 name = "GtkSource.View"
 status = "generate"
+  [[object.function]]
+  name = "get_mark_attributes"
+  ignore = true # manual
+  [[object.function]]
+  name = "push_snippet"
+  ignore = true # manual

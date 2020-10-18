@@ -31,7 +31,9 @@ impl CompletionWords {
     pub fn new(title: Option<&str>) -> CompletionWords {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_completion_words_new(title.to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_completion_words_new(
+                title.to_glib_none().0,
+            ))
         }
     }
 }
@@ -49,7 +51,6 @@ impl CompletionWordsBuilder {
     pub fn new() -> Self {
         Self::default()
     }
-
 
     pub fn build(self) -> CompletionWords {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
@@ -72,7 +73,7 @@ impl CompletionWordsBuilder {
             .expect("object new")
             .downcast::<CompletionWords>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn minimum_word_size(mut self, minimum_word_size: u32) -> Self {
@@ -126,13 +127,22 @@ pub trait CompletionWordsExt: 'static {
 
     fn set_property_title(&self, title: Option<&str>);
 
-    fn connect_property_minimum_word_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_minimum_word_size_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     fn connect_property_priority_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    fn connect_property_proposals_batch_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_proposals_batch_size_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
-    fn connect_property_scan_batch_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_scan_batch_size_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     fn connect_property_title_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
@@ -140,145 +150,258 @@ pub trait CompletionWordsExt: 'static {
 impl<O: IsA<CompletionWords>> CompletionWordsExt for O {
     fn register<P: IsA<gtk::TextBuffer>>(&self, buffer: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_words_register(self.as_ref().to_glib_none().0, buffer.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_completion_words_register(
+                self.as_ref().to_glib_none().0,
+                buffer.as_ref().to_glib_none().0,
+            );
         }
     }
 
     fn unregister<P: IsA<gtk::TextBuffer>>(&self, buffer: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_words_unregister(self.as_ref().to_glib_none().0, buffer.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_completion_words_unregister(
+                self.as_ref().to_glib_none().0,
+                buffer.as_ref().to_glib_none().0,
+            );
         }
     }
 
     fn get_property_minimum_word_size(&self) -> u32 {
         unsafe {
             let mut value = Value::from_type(<u32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"minimum-word-size\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `minimum-word-size` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"minimum-word-size\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `minimum-word-size` getter")
+                .unwrap()
         }
     }
 
     fn set_property_minimum_word_size(&self, minimum_word_size: u32) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"minimum-word-size\0".as_ptr() as *const _, Value::from(&minimum_word_size).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"minimum-word-size\0".as_ptr() as *const _,
+                Value::from(&minimum_word_size).to_glib_none().0,
+            );
         }
     }
 
     fn get_property_priority(&self) -> i32 {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"priority\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `priority` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"priority\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `priority` getter")
+                .unwrap()
         }
     }
 
     fn set_property_priority(&self, priority: i32) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"priority\0".as_ptr() as *const _, Value::from(&priority).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"priority\0".as_ptr() as *const _,
+                Value::from(&priority).to_glib_none().0,
+            );
         }
     }
 
     fn get_property_proposals_batch_size(&self) -> u32 {
         unsafe {
             let mut value = Value::from_type(<u32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"proposals-batch-size\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `proposals-batch-size` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"proposals-batch-size\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `proposals-batch-size` getter")
+                .unwrap()
         }
     }
 
     fn set_property_proposals_batch_size(&self, proposals_batch_size: u32) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"proposals-batch-size\0".as_ptr() as *const _, Value::from(&proposals_batch_size).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"proposals-batch-size\0".as_ptr() as *const _,
+                Value::from(&proposals_batch_size).to_glib_none().0,
+            );
         }
     }
 
     fn get_property_scan_batch_size(&self) -> u32 {
         unsafe {
             let mut value = Value::from_type(<u32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"scan-batch-size\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `scan-batch-size` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"scan-batch-size\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `scan-batch-size` getter")
+                .unwrap()
         }
     }
 
     fn set_property_scan_batch_size(&self, scan_batch_size: u32) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"scan-batch-size\0".as_ptr() as *const _, Value::from(&scan_batch_size).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"scan-batch-size\0".as_ptr() as *const _,
+                Value::from(&scan_batch_size).to_glib_none().0,
+            );
         }
     }
 
     fn set_property_title(&self, title: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"title\0".as_ptr() as *const _, Value::from(title).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"title\0".as_ptr() as *const _,
+                Value::from(title).to_glib_none().0,
+            );
         }
     }
 
-    fn connect_property_minimum_word_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_minimum_word_size_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionWords, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionWords>
+    fn connect_property_minimum_word_size_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_minimum_word_size_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionWords,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionWords>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionWords::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::minimum-word-size\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_minimum_word_size_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::minimum-word-size\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_minimum_word_size_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_priority_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_priority_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionWords, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionWords>
+        unsafe extern "C" fn notify_priority_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionWords,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionWords>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionWords::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::priority\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_priority_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::priority\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_priority_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
-    fn connect_property_proposals_batch_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_proposals_batch_size_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionWords, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionWords>
+    fn connect_property_proposals_batch_size_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_proposals_batch_size_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionWords,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionWords>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionWords::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::proposals-batch-size\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_proposals_batch_size_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::proposals-batch-size\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_proposals_batch_size_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
-    fn connect_property_scan_batch_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_scan_batch_size_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionWords, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionWords>
+    fn connect_property_scan_batch_size_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_scan_batch_size_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionWords,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionWords>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionWords::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::scan-batch-size\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_scan_batch_size_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::scan-batch-size\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_scan_batch_size_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_title_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_title_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionWords, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionWords>
+        unsafe extern "C" fn notify_title_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionWords,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionWords>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionWords::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::title\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_title_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::title\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_title_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

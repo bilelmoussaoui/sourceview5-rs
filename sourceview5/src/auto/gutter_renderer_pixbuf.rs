@@ -36,7 +36,8 @@ impl GutterRendererPixbuf {
     pub fn new() -> GutterRendererPixbuf {
         assert_initialized_main_thread!();
         unsafe {
-            GutterRenderer::from_glib_full(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_new()).unsafe_cast()
+            GutterRenderer::from_glib_full(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_new())
+                .unsafe_cast()
         }
     }
 }
@@ -94,7 +95,6 @@ impl GutterRendererPixbufBuilder {
     pub fn new() -> Self {
         Self::default()
     }
-
 
     pub fn build(self) -> GutterRendererPixbuf {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
@@ -201,7 +201,7 @@ impl GutterRendererPixbufBuilder {
             .expect("object new")
             .downcast::<GutterRendererPixbuf>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn gicon<P: IsA<gio::Icon>>(mut self, gicon: &P) -> Self {
@@ -407,121 +407,196 @@ pub trait GutterRendererPixbufExt: 'static {
 impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
     fn get_gicon(&self) -> Option<gio::Icon> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_gicon(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_gicon(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_icon_name(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_icon_name(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_icon_name(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_paintable(&self) -> Option<gdk::Paintable> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_paintable(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_paintable(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 
     fn get_pixbuf(&self) -> Option<gdk_pixbuf::Pixbuf> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_pixbuf(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_pixbuf(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn overlay_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_overlay_paintable(self.as_ref().to_glib_none().0, paintable.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_overlay_paintable(
+                self.as_ref().to_glib_none().0,
+                paintable.as_ref().to_glib_none().0,
+            );
         }
     }
 
     fn set_gicon<P: IsA<gio::Icon>>(&self, icon: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_gicon(self.as_ref().to_glib_none().0, icon.map(|p| p.as_ref()).to_glib_none().0);
+            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_gicon(
+                self.as_ref().to_glib_none().0,
+                icon.map(|p| p.as_ref()).to_glib_none().0,
+            );
         }
     }
 
     fn set_icon_name(&self, icon_name: Option<&str>) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_icon_name(self.as_ref().to_glib_none().0, icon_name.to_glib_none().0);
+            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_icon_name(
+                self.as_ref().to_glib_none().0,
+                icon_name.to_glib_none().0,
+            );
         }
     }
 
     fn set_paintable<P: IsA<gdk::Paintable>>(&self, paintable: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_paintable(self.as_ref().to_glib_none().0, paintable.map(|p| p.as_ref()).to_glib_none().0);
+            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_paintable(
+                self.as_ref().to_glib_none().0,
+                paintable.map(|p| p.as_ref()).to_glib_none().0,
+            );
         }
     }
 
     fn set_pixbuf(&self, pixbuf: Option<&gdk_pixbuf::Pixbuf>) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_pixbuf(self.as_ref().to_glib_none().0, pixbuf.to_glib_none().0);
+            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_pixbuf(
+                self.as_ref().to_glib_none().0,
+                pixbuf.to_glib_none().0,
+            );
         }
     }
 
     fn get_property_paintable(&self) -> Option<gdk::Paintable> {
         unsafe {
             let mut value = Value::from_type(<gdk::Paintable as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"paintable\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `paintable` getter")
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"paintable\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `paintable` getter")
         }
     }
 
     fn connect_property_gicon_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_gicon_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<GutterRendererPixbuf>
+        unsafe extern "C" fn notify_gicon_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<GutterRendererPixbuf>,
         {
             let f: &F = &*(f as *const F);
             f(&GutterRendererPixbuf::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::gicon\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_gicon_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::gicon\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_gicon_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_icon_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_icon_name_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<GutterRendererPixbuf>
+        unsafe extern "C" fn notify_icon_name_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<GutterRendererPixbuf>,
         {
             let f: &F = &*(f as *const F);
             f(&GutterRendererPixbuf::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::icon-name\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_icon_name_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::icon-name\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_icon_name_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_paintable_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_paintable_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<GutterRendererPixbuf>
+        unsafe extern "C" fn notify_paintable_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<GutterRendererPixbuf>,
         {
             let f: &F = &*(f as *const F);
             f(&GutterRendererPixbuf::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::paintable\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_paintable_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::paintable\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_paintable_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_pixbuf_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_pixbuf_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<GutterRendererPixbuf>
+        unsafe extern "C" fn notify_pixbuf_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<GutterRendererPixbuf>,
         {
             let f: &F = &*(f as *const F);
             f(&GutterRendererPixbuf::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::pixbuf\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_pixbuf_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::pixbuf\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_pixbuf_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }
