@@ -12,6 +12,8 @@ jobs:
       image: docker.io/bilelmoussaoui/gtk4
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
