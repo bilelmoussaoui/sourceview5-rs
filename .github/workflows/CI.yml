@@ -55,7 +55,11 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - run: cp ./GtkSource-5.gir ./gir-files/
+      - run: rustup component add rustfmt
+      - uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
       - run: make regen_check
 
   checker:
