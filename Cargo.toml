@@ -4,6 +4,7 @@ exclude = [
 ]
 members = [
   "gir",
+  "demo",
   "sourceview5",
   "sourceview5-sys",
 ]

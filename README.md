@@ -2,6 +2,12 @@
 
 [Gtk SourceView 5 (4.90)](https://gitlab.gnome.org/GNOME/gtksourceview/) Rust bindings
 
+<div align="center">
+    <img src="demo/screenshot.png" alt="Screenshot" />
+</div>
+
+A small demo is available in the [demo](./demo) subdirectory.
+
 ## Documentation
 
 - [sourceview5](https://bilelmoussaoui.github.io/sourceview5-rs/sourceview5/)
