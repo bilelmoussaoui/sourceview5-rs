@@ -4,11 +4,14 @@ build = "build.rs"
 edition = "2015"
 name = "sourceview5-sys"
 version = "0.1.0"
+documentation = "https://bilelmoussaoui.github.io/sourceview5-rs/sourceview5_sys/"
+repository = "https://github.com/bilelmoussaoui/sourceview5-rs/"
 [package.metadata.system-deps.gtksourceview_5]
 name = "gtksourceview-5"
 version = "4.90"
 
 [package.metadata.system-deps.gtksourceview_5.feature-versions]
+v5_0 = "4.90"
 [package.metadata.docs.rs]
 features = ["dox"]
 
@@ -53,3 +56,4 @@ tempfile = "3"
 
 [features]
 dox = []
+v5_0 = []

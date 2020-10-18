@@ -36,7 +36,10 @@ impl Snippet {
     pub fn new(trigger: Option<&str>, language_id: Option<&str>) -> Snippet {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_snippet_new(trigger.to_glib_none().0, language_id.to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_snippet_new(
+                trigger.to_glib_none().0,
+                language_id.to_glib_none().0,
+            ))
         }
     }
 }
@@ -53,7 +56,6 @@ impl SnippetBuilder {
     pub fn new() -> Self {
         Self::default()
     }
-
 
     pub fn build(self) -> Snippet {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
@@ -73,7 +75,7 @@ impl SnippetBuilder {
             .expect("object new")
             .downcast::<Snippet>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn description(mut self, description: &str) -> Self {
@@ -166,7 +168,10 @@ pub trait SnippetExt: 'static {
 
     fn connect_property_description_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    fn connect_property_focus_position_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_focus_position_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     fn connect_property_language_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
@@ -179,28 +184,37 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn add_chunk<P: IsA<SnippetChunk>>(&self, chunk: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_add_chunk(self.as_ref().to_glib_none().0, chunk.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_snippet_add_chunk(
+                self.as_ref().to_glib_none().0,
+                chunk.as_ref().to_glib_none().0,
+            );
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn copy(&self) -> Option<Snippet> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_snippet_copy(self.as_ref().to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_snippet_copy(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_context(&self) -> Option<SnippetContext> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_context(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_snippet_get_context(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_description(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_description(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_snippet_get_description(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -214,219 +228,354 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_language_id(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_language_id(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_snippet_get_language_id(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_n_chunks(&self) -> u32 {
-        unsafe {
-            gtk_source_sys::gtk_source_snippet_get_n_chunks(self.as_ref().to_glib_none().0)
-        }
+        unsafe { gtk_source_sys::gtk_source_snippet_get_n_chunks(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_name(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_name(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_snippet_get_name(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_nth_chunk(&self, nth: u32) -> Option<SnippetChunk> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_nth_chunk(self.as_ref().to_glib_none().0, nth))
+            from_glib_none(gtk_source_sys::gtk_source_snippet_get_nth_chunk(
+                self.as_ref().to_glib_none().0,
+                nth,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_trigger(&self) -> Option<GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_trigger(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_snippet_get_trigger(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn set_description(&self, description: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_set_description(self.as_ref().to_glib_none().0, description.to_glib_none().0);
+            gtk_source_sys::gtk_source_snippet_set_description(
+                self.as_ref().to_glib_none().0,
+                description.to_glib_none().0,
+            );
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn set_language_id(&self, language_id: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_set_language_id(self.as_ref().to_glib_none().0, language_id.to_glib_none().0);
+            gtk_source_sys::gtk_source_snippet_set_language_id(
+                self.as_ref().to_glib_none().0,
+                language_id.to_glib_none().0,
+            );
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn set_name(&self, name: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_set_name(self.as_ref().to_glib_none().0, name.to_glib_none().0);
+            gtk_source_sys::gtk_source_snippet_set_name(
+                self.as_ref().to_glib_none().0,
+                name.to_glib_none().0,
+            );
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn set_trigger(&self, trigger: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_set_trigger(self.as_ref().to_glib_none().0, trigger.to_glib_none().0);
+            gtk_source_sys::gtk_source_snippet_set_trigger(
+                self.as_ref().to_glib_none().0,
+                trigger.to_glib_none().0,
+            );
         }
     }
 
     fn get_property_buffer(&self) -> Option<gtk::TextBuffer> {
         unsafe {
             let mut value = Value::from_type(<gtk::TextBuffer as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"buffer\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `buffer` getter")
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"buffer\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `buffer` getter")
         }
     }
 
     fn get_property_description(&self) -> Option<GString> {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"description\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `description` getter")
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"description\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `description` getter")
         }
     }
 
     fn set_property_description(&self, description: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"description\0".as_ptr() as *const _, Value::from(description).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"description\0".as_ptr() as *const _,
+                Value::from(description).to_glib_none().0,
+            );
         }
     }
 
     fn get_property_focus_position(&self) -> i32 {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"focus-position\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `focus-position` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"focus-position\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `focus-position` getter")
+                .unwrap()
         }
     }
 
     fn get_property_language_id(&self) -> Option<GString> {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"language-id\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `language-id` getter")
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"language-id\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `language-id` getter")
         }
     }
 
     fn set_property_language_id(&self, language_id: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"language-id\0".as_ptr() as *const _, Value::from(language_id).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"language-id\0".as_ptr() as *const _,
+                Value::from(language_id).to_glib_none().0,
+            );
         }
     }
 
     fn get_property_name(&self) -> Option<GString> {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"name\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `name` getter")
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"name\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `name` getter")
         }
     }
 
     fn set_property_name(&self, name: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"name\0".as_ptr() as *const _, Value::from(name).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"name\0".as_ptr() as *const _,
+                Value::from(name).to_glib_none().0,
+            );
         }
     }
 
     fn get_property_trigger(&self) -> Option<GString> {
         unsafe {
             let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"trigger\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `trigger` getter")
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"trigger\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `trigger` getter")
         }
     }
 
     fn set_property_trigger(&self, trigger: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"trigger\0".as_ptr() as *const _, Value::from(trigger).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"trigger\0".as_ptr() as *const _,
+                Value::from(trigger).to_glib_none().0,
+            );
         }
     }
 
     fn connect_property_buffer_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_buffer_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceSnippet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Snippet>
+        unsafe extern "C" fn notify_buffer_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceSnippet,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Snippet>,
         {
             let f: &F = &*(f as *const F);
             f(&Snippet::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::buffer\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_buffer_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::buffer\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_buffer_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_description_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_description_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceSnippet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Snippet>
+        unsafe extern "C" fn notify_description_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceSnippet,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Snippet>,
         {
             let f: &F = &*(f as *const F);
             f(&Snippet::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::description\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_description_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::description\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_description_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
-    fn connect_property_focus_position_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_focus_position_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceSnippet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Snippet>
+    fn connect_property_focus_position_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_focus_position_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceSnippet,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Snippet>,
         {
             let f: &F = &*(f as *const F);
             f(&Snippet::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::focus-position\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_focus_position_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::focus-position\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_focus_position_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_language_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_language_id_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceSnippet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Snippet>
+        unsafe extern "C" fn notify_language_id_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceSnippet,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Snippet>,
         {
             let f: &F = &*(f as *const F);
             f(&Snippet::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::language-id\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_language_id_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::language-id\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_language_id_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_name_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceSnippet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Snippet>
+        unsafe extern "C" fn notify_name_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceSnippet,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Snippet>,
         {
             let f: &F = &*(f as *const F);
             f(&Snippet::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::name\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_name_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::name\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_name_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_trigger_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_trigger_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceSnippet, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Snippet>
+        unsafe extern "C" fn notify_trigger_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceSnippet,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Snippet>,
         {
             let f: &F = &*(f as *const F);
             f(&Snippet::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::trigger\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_trigger_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::trigger\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_trigger_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

@@ -24,7 +24,9 @@ impl Region {
     pub fn new<P: IsA<gtk::TextBuffer>>(buffer: &P) -> Region {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_region_new(buffer.as_ref().to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_region_new(
+                buffer.as_ref().to_glib_none().0,
+            ))
         }
     }
 }
@@ -39,7 +41,6 @@ impl RegionBuilder {
         Self::default()
     }
 
-
     pub fn build(self) -> Region {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         if let Some(ref buffer) = self.buffer {
@@ -49,7 +50,7 @@ impl RegionBuilder {
             .expect("object new")
             .downcast::<Region>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn buffer<P: IsA<gtk::TextBuffer>>(mut self, buffer: &P) -> Self {
@@ -87,13 +88,20 @@ pub trait RegionExt: 'static {
 impl<O: IsA<Region>> RegionExt for O {
     fn add_region<P: IsA<Region>>(&self, region_to_add: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_region_add_region(self.as_ref().to_glib_none().0, region_to_add.map(|p| p.as_ref()).to_glib_none().0);
+            gtk_source_sys::gtk_source_region_add_region(
+                self.as_ref().to_glib_none().0,
+                region_to_add.map(|p| p.as_ref()).to_glib_none().0,
+            );
         }
     }
 
     fn add_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter) {
         unsafe {
-            gtk_source_sys::gtk_source_region_add_subregion(self.as_ref().to_glib_none().0, _start.to_glib_none().0, _end.to_glib_none().0);
+            gtk_source_sys::gtk_source_region_add_subregion(
+                self.as_ref().to_glib_none().0,
+                _start.to_glib_none().0,
+                _end.to_glib_none().0,
+            );
         }
     }
 
@@ -101,14 +109,24 @@ impl<O: IsA<Region>> RegionExt for O {
         unsafe {
             let mut start = gtk::TextIter::uninitialized();
             let mut end = gtk::TextIter::uninitialized();
-            let ret = from_glib(gtk_source_sys::gtk_source_region_get_bounds(self.as_ref().to_glib_none().0, start.to_glib_none_mut().0, end.to_glib_none_mut().0));
-            if ret { Some((start, end)) } else { None }
+            let ret = from_glib(gtk_source_sys::gtk_source_region_get_bounds(
+                self.as_ref().to_glib_none().0,
+                start.to_glib_none_mut().0,
+                end.to_glib_none_mut().0,
+            ));
+            if ret {
+                Some((start, end))
+            } else {
+                None
+            }
         }
     }
 
     fn get_buffer(&self) -> Option<gtk::TextBuffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_region_get_buffer(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_region_get_buffer(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -118,37 +136,55 @@ impl<O: IsA<Region>> RegionExt for O {
 
     fn intersect_region<P: IsA<Region>>(&self, region2: Option<&P>) -> Option<Region> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_region_intersect_region(self.as_ref().to_glib_none().0, region2.map(|p| p.as_ref()).to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_region_intersect_region(
+                self.as_ref().to_glib_none().0,
+                region2.map(|p| p.as_ref()).to_glib_none().0,
+            ))
         }
     }
 
     fn intersect_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter) -> Option<Region> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_region_intersect_subregion(self.as_ref().to_glib_none().0, _start.to_glib_none().0, _end.to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_region_intersect_subregion(
+                self.as_ref().to_glib_none().0,
+                _start.to_glib_none().0,
+                _end.to_glib_none().0,
+            ))
         }
     }
 
     fn is_empty(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_region_is_empty(self.as_ref().to_glib_none().0))
+            from_glib(gtk_source_sys::gtk_source_region_is_empty(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn subtract_region<P: IsA<Region>>(&self, region_to_subtract: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_region_subtract_region(self.as_ref().to_glib_none().0, region_to_subtract.map(|p| p.as_ref()).to_glib_none().0);
+            gtk_source_sys::gtk_source_region_subtract_region(
+                self.as_ref().to_glib_none().0,
+                region_to_subtract.map(|p| p.as_ref()).to_glib_none().0,
+            );
         }
     }
 
     fn subtract_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter) {
         unsafe {
-            gtk_source_sys::gtk_source_region_subtract_subregion(self.as_ref().to_glib_none().0, _start.to_glib_none().0, _end.to_glib_none().0);
+            gtk_source_sys::gtk_source_region_subtract_subregion(
+                self.as_ref().to_glib_none().0,
+                _start.to_glib_none().0,
+                _end.to_glib_none().0,
+            );
         }
     }
 
     fn to_string(&self) -> GString {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_region_to_string(self.as_ref().to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_region_to_string(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 }

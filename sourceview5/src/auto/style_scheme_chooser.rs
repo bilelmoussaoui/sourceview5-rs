@@ -29,33 +29,54 @@ pub trait StyleSchemeChooserExt: 'static {
 
     fn set_style_scheme<P: IsA<StyleScheme>>(&self, scheme: &P);
 
-    fn connect_property_style_scheme_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_style_scheme_notify<F: Fn(&Self) + 'static>(&self, f: F)
+        -> SignalHandlerId;
 }
 
 impl<O: IsA<StyleSchemeChooser>> StyleSchemeChooserExt for O {
     fn get_style_scheme(&self) -> Option<StyleScheme> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_style_scheme_chooser_get_style_scheme(self.as_ref().to_glib_none().0))
+            from_glib_none(
+                gtk_source_sys::gtk_source_style_scheme_chooser_get_style_scheme(
+                    self.as_ref().to_glib_none().0,
+                ),
+            )
         }
     }
 
     fn set_style_scheme<P: IsA<StyleScheme>>(&self, scheme: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_style_scheme_chooser_set_style_scheme(self.as_ref().to_glib_none().0, scheme.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_style_scheme_chooser_set_style_scheme(
+                self.as_ref().to_glib_none().0,
+                scheme.as_ref().to_glib_none().0,
+            );
         }
     }
 
-    fn connect_property_style_scheme_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_style_scheme_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceStyleSchemeChooser, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<StyleSchemeChooser>
+    fn connect_property_style_scheme_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_style_scheme_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceStyleSchemeChooser,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<StyleSchemeChooser>,
         {
             let f: &F = &*(f as *const F);
             f(&StyleSchemeChooser::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::style-scheme\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_style_scheme_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::style-scheme\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_style_scheme_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

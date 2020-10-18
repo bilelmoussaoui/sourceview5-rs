@@ -30,9 +30,7 @@ glib_wrapper! {
 impl SpaceDrawer {
     pub fn new() -> SpaceDrawer {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_space_drawer_new())
-        }
+        unsafe { from_glib_full(gtk_source_sys::gtk_source_space_drawer_new()) }
     }
 }
 
@@ -53,7 +51,6 @@ impl SpaceDrawerBuilder {
         Self::default()
     }
 
-
     pub fn build(self) -> SpaceDrawer {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         if let Some(ref enable_matrix) = self.enable_matrix {
@@ -66,7 +63,7 @@ impl SpaceDrawerBuilder {
             .expect("object new")
             .downcast::<SpaceDrawer>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn enable_matrix(mut self, enable_matrix: bool) -> Self {
@@ -83,7 +80,12 @@ impl SpaceDrawerBuilder {
 pub const NONE_SPACE_DRAWER: Option<&SpaceDrawer> = None;
 
 pub trait SpaceDrawerExt: 'static {
-    fn bind_matrix_setting<P: IsA<gio::Settings>>(&self, settings: &P, key: &str, flags: gio::SettingsBindFlags);
+    fn bind_matrix_setting<P: IsA<gio::Settings>>(
+        &self,
+        settings: &P,
+        key: &str,
+        flags: gio::SettingsBindFlags,
+    );
 
     fn get_enable_matrix(&self) -> bool;
 
@@ -97,79 +99,134 @@ pub trait SpaceDrawerExt: 'static {
 
     fn set_types_for_locations(&self, locations: SpaceLocationFlags, types: SpaceTypeFlags);
 
-    fn connect_property_enable_matrix_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_enable_matrix_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     fn connect_property_matrix_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
-    fn bind_matrix_setting<P: IsA<gio::Settings>>(&self, settings: &P, key: &str, flags: gio::SettingsBindFlags) {
+    fn bind_matrix_setting<P: IsA<gio::Settings>>(
+        &self,
+        settings: &P,
+        key: &str,
+        flags: gio::SettingsBindFlags,
+    ) {
         unsafe {
-            gtk_source_sys::gtk_source_space_drawer_bind_matrix_setting(self.as_ref().to_glib_none().0, settings.as_ref().to_glib_none().0, key.to_glib_none().0, flags.to_glib());
+            gtk_source_sys::gtk_source_space_drawer_bind_matrix_setting(
+                self.as_ref().to_glib_none().0,
+                settings.as_ref().to_glib_none().0,
+                key.to_glib_none().0,
+                flags.to_glib(),
+            );
         }
     }
 
     fn get_enable_matrix(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_space_drawer_get_enable_matrix(self.as_ref().to_glib_none().0))
+            from_glib(gtk_source_sys::gtk_source_space_drawer_get_enable_matrix(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_matrix(&self) -> Option<glib::Variant> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_space_drawer_get_matrix(self.as_ref().to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_space_drawer_get_matrix(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_types_for_locations(&self, locations: SpaceLocationFlags) -> SpaceTypeFlags {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_space_drawer_get_types_for_locations(self.as_ref().to_glib_none().0, locations.to_glib()))
+            from_glib(
+                gtk_source_sys::gtk_source_space_drawer_get_types_for_locations(
+                    self.as_ref().to_glib_none().0,
+                    locations.to_glib(),
+                ),
+            )
         }
     }
 
     fn set_enable_matrix(&self, enable_matrix: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_space_drawer_set_enable_matrix(self.as_ref().to_glib_none().0, enable_matrix.to_glib());
+            gtk_source_sys::gtk_source_space_drawer_set_enable_matrix(
+                self.as_ref().to_glib_none().0,
+                enable_matrix.to_glib(),
+            );
         }
     }
 
     fn set_matrix(&self, matrix: Option<&glib::Variant>) {
         unsafe {
-            gtk_source_sys::gtk_source_space_drawer_set_matrix(self.as_ref().to_glib_none().0, matrix.to_glib_none().0);
+            gtk_source_sys::gtk_source_space_drawer_set_matrix(
+                self.as_ref().to_glib_none().0,
+                matrix.to_glib_none().0,
+            );
         }
     }
 
     fn set_types_for_locations(&self, locations: SpaceLocationFlags, types: SpaceTypeFlags) {
         unsafe {
-            gtk_source_sys::gtk_source_space_drawer_set_types_for_locations(self.as_ref().to_glib_none().0, locations.to_glib(), types.to_glib());
+            gtk_source_sys::gtk_source_space_drawer_set_types_for_locations(
+                self.as_ref().to_glib_none().0,
+                locations.to_glib(),
+                types.to_glib(),
+            );
         }
     }
 
-    fn connect_property_enable_matrix_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_enable_matrix_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceSpaceDrawer, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<SpaceDrawer>
+    fn connect_property_enable_matrix_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_enable_matrix_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceSpaceDrawer,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<SpaceDrawer>,
         {
             let f: &F = &*(f as *const F);
             f(&SpaceDrawer::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::enable-matrix\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_enable_matrix_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::enable-matrix\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_enable_matrix_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_matrix_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_matrix_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceSpaceDrawer, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<SpaceDrawer>
+        unsafe extern "C" fn notify_matrix_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceSpaceDrawer,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<SpaceDrawer>,
         {
             let f: &F = &*(f as *const F);
             f(&SpaceDrawer::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::matrix\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_matrix_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::matrix\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_matrix_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

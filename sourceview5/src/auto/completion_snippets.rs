@@ -29,9 +29,7 @@ glib_wrapper! {
 impl CompletionSnippets {
     pub fn new() -> CompletionSnippets {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_completion_snippets_new())
-        }
+        unsafe { from_glib_full(gtk_source_sys::gtk_source_completion_snippets_new()) }
     }
 }
 
@@ -52,7 +50,6 @@ impl CompletionSnippetsBuilder {
         Self::default()
     }
 
-
     pub fn build(self) -> CompletionSnippets {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         if let Some(ref priority) = self.priority {
@@ -65,7 +62,7 @@ impl CompletionSnippetsBuilder {
             .expect("object new")
             .downcast::<CompletionSnippets>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn priority(mut self, priority: i32) -> Self {
@@ -97,48 +94,83 @@ impl<O: IsA<CompletionSnippets>> CompletionSnippetsExt for O {
     fn get_property_priority(&self) -> i32 {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"priority\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `priority` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"priority\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `priority` getter")
+                .unwrap()
         }
     }
 
     fn set_property_priority(&self, priority: i32) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"priority\0".as_ptr() as *const _, Value::from(&priority).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"priority\0".as_ptr() as *const _,
+                Value::from(&priority).to_glib_none().0,
+            );
         }
     }
 
     fn set_property_title(&self, title: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"title\0".as_ptr() as *const _, Value::from(title).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"title\0".as_ptr() as *const _,
+                Value::from(title).to_glib_none().0,
+            );
         }
     }
 
     fn connect_property_priority_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_priority_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionSnippets, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionSnippets>
+        unsafe extern "C" fn notify_priority_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionSnippets,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionSnippets>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionSnippets::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::priority\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_priority_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::priority\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_priority_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_title_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_title_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletionSnippets, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<CompletionSnippets>
+        unsafe extern "C" fn notify_title_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletionSnippets,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<CompletionSnippets>,
         {
             let f: &F = &*(f as *const F);
             f(&CompletionSnippets::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::title\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_title_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::title\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_title_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

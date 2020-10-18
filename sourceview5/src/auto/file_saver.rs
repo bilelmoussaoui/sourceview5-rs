@@ -34,14 +34,25 @@ impl FileSaver {
     pub fn new<P: IsA<Buffer>, Q: IsA<File>>(buffer: &P, file: &Q) -> FileSaver {
         skip_assert_initialized!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_file_saver_new(buffer.as_ref().to_glib_none().0, file.as_ref().to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_file_saver_new(
+                buffer.as_ref().to_glib_none().0,
+                file.as_ref().to_glib_none().0,
+            ))
         }
     }
 
-    pub fn with_target<P: IsA<Buffer>, Q: IsA<File>, R: IsA<gio::File>>(buffer: &P, file: &Q, target_location: &R) -> FileSaver {
+    pub fn with_target<P: IsA<Buffer>, Q: IsA<File>, R: IsA<gio::File>>(
+        buffer: &P,
+        file: &Q,
+        target_location: &R,
+    ) -> FileSaver {
         skip_assert_initialized!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_file_saver_new_with_target(buffer.as_ref().to_glib_none().0, file.as_ref().to_glib_none().0, target_location.as_ref().to_glib_none().0))
+            from_glib_full(gtk_source_sys::gtk_source_file_saver_new_with_target(
+                buffer.as_ref().to_glib_none().0,
+                file.as_ref().to_glib_none().0,
+                target_location.as_ref().to_glib_none().0,
+            ))
         }
     }
 }
@@ -61,7 +72,6 @@ impl FileSaverBuilder {
     pub fn new() -> Self {
         Self::default()
     }
-
 
     pub fn build(self) -> FileSaver {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
@@ -90,7 +100,7 @@ impl FileSaverBuilder {
             .expect("object new")
             .downcast::<FileSaver>()
             .expect("downcast");
-    ret
+        ret
     }
 
     pub fn buffer<P: IsA<Buffer>>(mut self, buffer: &P) -> Self {
@@ -159,55 +169,73 @@ pub trait FileSaverExt: 'static {
 
     fn set_newline_type(&self, newline_type: NewlineType);
 
-    fn connect_property_compression_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_compression_type_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     fn connect_property_encoding_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_flags_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    fn connect_property_newline_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_newline_type_notify<F: Fn(&Self) + 'static>(&self, f: F)
+        -> SignalHandlerId;
 }
 
 impl<O: IsA<FileSaver>> FileSaverExt for O {
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_buffer(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_buffer(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_compression_type(&self) -> CompressionType {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_file_saver_get_compression_type(self.as_ref().to_glib_none().0))
+            from_glib(gtk_source_sys::gtk_source_file_saver_get_compression_type(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_encoding(&self) -> Option<Encoding> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_encoding(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_encoding(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_file(&self) -> Option<File> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_file(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_file(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_flags(&self) -> FileSaverFlags {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_file_saver_get_flags(self.as_ref().to_glib_none().0))
+            from_glib(gtk_source_sys::gtk_source_file_saver_get_flags(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_location(&self) -> Option<gio::File> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_location(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_location(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_newline_type(&self) -> NewlineType {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_file_saver_get_newline_type(self.as_ref().to_glib_none().0))
+            from_glib(gtk_source_sys::gtk_source_file_saver_get_newline_type(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -218,101 +246,159 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
     //
     //fn save_async_future<Q: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, io_priority: glib::Priority, progress_callback: Q, progress_callback_notify: Fn() + 'static) -> Pin<Box_<dyn std::future::Future<Output = Result<(), glib::Error>> + 'static>> {
 
-        //let progress_callback = progress_callback.map(ToOwned::to_owned);
-        //let progress_callback_notify = progress_callback_notify.map(ToOwned::to_owned);
-        //Box_::pin(gio::GioFuture::new(self, move |obj, send| {
-        //    let cancellable = gio::Cancellable::new();
-        //    obj.save_async(
-        //        io_priority,
-        //        Some(&cancellable),
-        //        progress_callback.as_ref().map(::std::borrow::Borrow::borrow),
-        //        progress_callback_notify.as_ref().map(::std::borrow::Borrow::borrow),
-        //        move |res| {
-        //            send.resolve(res);
-        //        },
-        //    );
+    //let progress_callback = progress_callback.map(ToOwned::to_owned);
+    //let progress_callback_notify = progress_callback_notify.map(ToOwned::to_owned);
+    //Box_::pin(gio::GioFuture::new(self, move |obj, send| {
+    //    let cancellable = gio::Cancellable::new();
+    //    obj.save_async(
+    //        io_priority,
+    //        Some(&cancellable),
+    //        progress_callback.as_ref().map(::std::borrow::Borrow::borrow),
+    //        progress_callback_notify.as_ref().map(::std::borrow::Borrow::borrow),
+    //        move |res| {
+    //            send.resolve(res);
+    //        },
+    //    );
 
-        //    cancellable
-        //}))
+    //    cancellable
+    //}))
     //}
 
     fn set_compression_type(&self, compression_type: CompressionType) {
         unsafe {
-            gtk_source_sys::gtk_source_file_saver_set_compression_type(self.as_ref().to_glib_none().0, compression_type.to_glib());
+            gtk_source_sys::gtk_source_file_saver_set_compression_type(
+                self.as_ref().to_glib_none().0,
+                compression_type.to_glib(),
+            );
         }
     }
 
     fn set_encoding(&self, encoding: Option<&Encoding>) {
         unsafe {
-            gtk_source_sys::gtk_source_file_saver_set_encoding(self.as_ref().to_glib_none().0, encoding.to_glib_none().0);
+            gtk_source_sys::gtk_source_file_saver_set_encoding(
+                self.as_ref().to_glib_none().0,
+                encoding.to_glib_none().0,
+            );
         }
     }
 
     fn set_flags(&self, flags: FileSaverFlags) {
         unsafe {
-            gtk_source_sys::gtk_source_file_saver_set_flags(self.as_ref().to_glib_none().0, flags.to_glib());
+            gtk_source_sys::gtk_source_file_saver_set_flags(
+                self.as_ref().to_glib_none().0,
+                flags.to_glib(),
+            );
         }
     }
 
     fn set_newline_type(&self, newline_type: NewlineType) {
         unsafe {
-            gtk_source_sys::gtk_source_file_saver_set_newline_type(self.as_ref().to_glib_none().0, newline_type.to_glib());
+            gtk_source_sys::gtk_source_file_saver_set_newline_type(
+                self.as_ref().to_glib_none().0,
+                newline_type.to_glib(),
+            );
         }
     }
 
-    fn connect_property_compression_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_compression_type_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceFileSaver, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<FileSaver>
+    fn connect_property_compression_type_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_compression_type_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceFileSaver,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<FileSaver>,
         {
             let f: &F = &*(f as *const F);
             f(&FileSaver::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::compression-type\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_compression_type_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::compression-type\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_compression_type_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_encoding_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_encoding_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceFileSaver, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<FileSaver>
+        unsafe extern "C" fn notify_encoding_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceFileSaver,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<FileSaver>,
         {
             let f: &F = &*(f as *const F);
             f(&FileSaver::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::encoding\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_encoding_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::encoding\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_encoding_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_flags_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_flags_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceFileSaver, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<FileSaver>
+        unsafe extern "C" fn notify_flags_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceFileSaver,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<FileSaver>,
         {
             let f: &F = &*(f as *const F);
             f(&FileSaver::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::flags\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_flags_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::flags\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_flags_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
-    fn connect_property_newline_type_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_newline_type_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceFileSaver, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<FileSaver>
+    fn connect_property_newline_type_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_newline_type_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceFileSaver,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<FileSaver>,
         {
             let f: &F = &*(f as *const F);
             f(&FileSaver::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::newline-type\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_newline_type_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::newline-type\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_newline_type_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }

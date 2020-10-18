@@ -17,9 +17,11 @@ not_bound: $(GIR) $(GIR_FILES)
 	$(GIR) -m not_bound -c sourceview5/Gir.toml
 
 regen_check: $(GIR) $(GIR_FILES)
+	cp GtkSource-5.gir ./gir-files
 	rm sourceview5/src/auto/*
 	$(GIR) -c sourceview5/Gir.toml
 	cargo fmt
+	rm $(GIR_FILES)
 	git diff -R --exit-code
 
 sourceview5/src/auto/mod.rs : sourceview5/Gir.toml $(GIR) $(GIR_FILES)

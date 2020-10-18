@@ -48,9 +48,17 @@ impl Completion {
         assert_initialized_main_thread!();
         unsafe {
             let mut priority = mem::MaybeUninit::uninit();
-            let ret = from_glib(gtk_source_sys::gtk_source_completion_fuzzy_match(haystack.to_glib_none().0, casefold_needle.to_glib_none().0, priority.as_mut_ptr()));
+            let ret = from_glib(gtk_source_sys::gtk_source_completion_fuzzy_match(
+                haystack.to_glib_none().0,
+                casefold_needle.to_glib_none().0,
+                priority.as_mut_ptr(),
+            ));
             let priority = priority.assume_init();
-            if ret { Some(priority) } else { None }
+            if ret {
+                Some(priority)
+            } else {
+                None
+            }
         }
     }
 }
@@ -70,7 +78,6 @@ impl CompletionBuilder {
     pub fn new() -> Self {
         Self::default()
     }
-
 
     pub fn build(self) -> Completion {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
@@ -99,7 +106,7 @@ impl CompletionBuilder {
             .expect("object new")
             .downcast::<Completion>()
             .expect("downcast");
-    ret
+        ret
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
@@ -178,10 +185,16 @@ pub trait CompletionExt: 'static {
     fn emit_hide(&self);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
-    fn connect_provider_added<F: Fn(&Self, &CompletionProvider) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_provider_added<F: Fn(&Self, &CompletionProvider) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
-    fn connect_provider_removed<F: Fn(&Self, &CompletionProvider) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_provider_removed<F: Fn(&Self, &CompletionProvider) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_show<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -195,9 +208,15 @@ pub trait CompletionExt: 'static {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_property_page_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
-    fn connect_property_remember_info_visibility_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_remember_info_visibility_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
-    fn connect_property_select_on_show_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
+    fn connect_property_select_on_show_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     fn connect_property_show_icons_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
@@ -206,7 +225,10 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn add_provider<P: IsA<CompletionProvider>>(&self, provider: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_add_provider(self.as_ref().to_glib_none().0, provider.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_completion_add_provider(
+                self.as_ref().to_glib_none().0,
+                provider.as_ref().to_glib_none().0,
+            );
         }
     }
 
@@ -219,7 +241,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_get_buffer(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_completion_get_buffer(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -232,7 +256,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn get_view(&self) -> Option<View> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_get_view(self.as_ref().to_glib_none().0))
+            from_glib_none(gtk_source_sys::gtk_source_completion_get_view(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -246,13 +272,19 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn remove_provider<P: IsA<CompletionProvider>>(&self, provider: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_remove_provider(self.as_ref().to_glib_none().0, provider.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_completion_remove_provider(
+                self.as_ref().to_glib_none().0,
+                provider.as_ref().to_glib_none().0,
+            );
         }
     }
 
     fn set_page_size(&self, page_size: u32) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_set_page_size(self.as_ref().to_glib_none().0, page_size);
+            gtk_source_sys::gtk_source_completion_set_page_size(
+                self.as_ref().to_glib_none().0,
+                page_size,
+            );
         }
     }
 
@@ -265,191 +297,346 @@ impl<O: IsA<Completion>> CompletionExt for O {
 
     fn unblock_interactive(&self) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_unblock_interactive(self.as_ref().to_glib_none().0);
+            gtk_source_sys::gtk_source_completion_unblock_interactive(
+                self.as_ref().to_glib_none().0,
+            );
         }
     }
 
     fn get_property_remember_info_visibility(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"remember-info-visibility\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `remember-info-visibility` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"remember-info-visibility\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `remember-info-visibility` getter")
+                .unwrap()
         }
     }
 
     fn set_property_remember_info_visibility(&self, remember_info_visibility: bool) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"remember-info-visibility\0".as_ptr() as *const _, Value::from(&remember_info_visibility).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"remember-info-visibility\0".as_ptr() as *const _,
+                Value::from(&remember_info_visibility).to_glib_none().0,
+            );
         }
     }
 
     fn get_property_select_on_show(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"select-on-show\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `select-on-show` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"select-on-show\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `select-on-show` getter")
+                .unwrap()
         }
     }
 
     fn set_property_select_on_show(&self, select_on_show: bool) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"select-on-show\0".as_ptr() as *const _, Value::from(&select_on_show).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"select-on-show\0".as_ptr() as *const _,
+                Value::from(&select_on_show).to_glib_none().0,
+            );
         }
     }
 
     fn get_property_show_icons(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"show-icons\0".as_ptr() as *const _, value.to_glib_none_mut().0);
-            value.get().expect("Return Value for property `show-icons` getter").unwrap()
+            gobject_sys::g_object_get_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"show-icons\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `show-icons` getter")
+                .unwrap()
         }
     }
 
     fn set_property_show_icons(&self, show_icons: bool) {
         unsafe {
-            gobject_sys::g_object_set_property(self.to_glib_none().0 as *mut gobject_sys::GObject, b"show-icons\0".as_ptr() as *const _, Value::from(&show_icons).to_glib_none().0);
+            gobject_sys::g_object_set_property(
+                self.to_glib_none().0 as *mut gobject_sys::GObject,
+                b"show-icons\0".as_ptr() as *const _,
+                Value::from(&show_icons).to_glib_none().0,
+            );
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_hide<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn hide_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+        unsafe extern "C" fn hide_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
             f(&Completion::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"hide\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(hide_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"hide\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    hide_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn emit_hide(&self) {
-        let _ = unsafe { glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject).emit("hide", &[]).unwrap() };
+        let _ = unsafe {
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+                .emit("hide", &[])
+                .unwrap()
+        };
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
-    fn connect_provider_added<F: Fn(&Self, &CompletionProvider) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn provider_added_trampoline<P, F: Fn(&P, &CompletionProvider) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, provider: *mut gtk_source_sys::GtkSourceCompletionProvider, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+    fn connect_provider_added<F: Fn(&Self, &CompletionProvider) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn provider_added_trampoline<
+            P,
+            F: Fn(&P, &CompletionProvider) + 'static,
+        >(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            provider: *mut gtk_source_sys::GtkSourceCompletionProvider,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
-            f(&Completion::from_glib_borrow(this).unsafe_cast_ref(), &from_glib_borrow(provider))
+            f(
+                &Completion::from_glib_borrow(this).unsafe_cast_ref(),
+                &from_glib_borrow(provider),
+            )
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"provider-added\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(provider_added_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"provider-added\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    provider_added_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
-    fn connect_provider_removed<F: Fn(&Self, &CompletionProvider) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn provider_removed_trampoline<P, F: Fn(&P, &CompletionProvider) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, provider: *mut gtk_source_sys::GtkSourceCompletionProvider, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+    fn connect_provider_removed<F: Fn(&Self, &CompletionProvider) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn provider_removed_trampoline<
+            P,
+            F: Fn(&P, &CompletionProvider) + 'static,
+        >(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            provider: *mut gtk_source_sys::GtkSourceCompletionProvider,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
-            f(&Completion::from_glib_borrow(this).unsafe_cast_ref(), &from_glib_borrow(provider))
+            f(
+                &Completion::from_glib_borrow(this).unsafe_cast_ref(),
+                &from_glib_borrow(provider),
+            )
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"provider-removed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(provider_removed_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"provider-removed\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    provider_removed_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_show<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn show_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+        unsafe extern "C" fn show_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
             f(&Completion::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"show\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(show_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"show\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    show_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn emit_show(&self) {
-        let _ = unsafe { glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject).emit("show", &[]).unwrap() };
+        let _ = unsafe {
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+                .emit("show", &[])
+                .unwrap()
+        };
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_property_buffer_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_buffer_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+        unsafe extern "C" fn notify_buffer_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
             f(&Completion::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::buffer\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_buffer_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::buffer\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_buffer_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     fn connect_property_page_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_page_size_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+        unsafe extern "C" fn notify_page_size_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
             f(&Completion::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::page-size\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_page_size_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::page-size\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_page_size_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
-    fn connect_property_remember_info_visibility_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_remember_info_visibility_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+    fn connect_property_remember_info_visibility_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_remember_info_visibility_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
             f(&Completion::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::remember-info-visibility\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_remember_info_visibility_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::remember-info-visibility\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_remember_info_visibility_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
-    fn connect_property_select_on_show_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_select_on_show_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+    fn connect_property_select_on_show_notify<F: Fn(&Self) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_select_on_show_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
             f(&Completion::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::select-on-show\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_select_on_show_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::select-on-show\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_select_on_show_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 
     fn connect_property_show_icons_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_show_icons_trampoline<P, F: Fn(&P) + 'static>(this: *mut gtk_source_sys::GtkSourceCompletion, _param_spec: glib_sys::gpointer, f: glib_sys::gpointer)
-            where P: IsA<Completion>
+        unsafe extern "C" fn notify_show_icons_trampoline<P, F: Fn(&P) + 'static>(
+            this: *mut gtk_source_sys::GtkSourceCompletion,
+            _param_spec: glib_sys::gpointer,
+            f: glib_sys::gpointer,
+        ) where
+            P: IsA<Completion>,
         {
             let f: &F = &*(f as *const F);
             f(&Completion::from_glib_borrow(this).unsafe_cast_ref())
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
-            connect_raw(self.as_ptr() as *mut _, b"notify::show-icons\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(notify_show_icons_trampoline::<Self, F> as *const ())), Box_::into_raw(f))
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::show-icons\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_show_icons_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
         }
     }
 }
