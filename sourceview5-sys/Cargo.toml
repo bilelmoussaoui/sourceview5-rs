@@ -4,6 +4,8 @@ build = "build.rs"
 edition = "2015"
 name = "sourceview5-sys"
 version = "0.1.0"
+documentation = "https://bilelmoussaoui.github.io/sourceview5-rs/sourceview5_sys/"
+repository = "https://github.com/bilelmoussaoui/sourceview5-rs/"
 [package.metadata.system-deps.gtksourceview_5]
 name = "gtksourceview-5"
 version = "4.90"

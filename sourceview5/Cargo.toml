@@ -3,6 +3,8 @@ authors = ["Bilal Elmoussaoui <bil.elmoussaoui@gmail.com>"]
 edition = "2015"
 name = "sourceview5"
 version = "0.1.0"
+documentation = "https://bilelmoussaoui.github.io/sourceview5-rs/sourceview5/"
+repository = "https://github.com/bilelmoussaoui/sourceview5-rs/"
 
 [dependencies]
 bitflags = "1.2"

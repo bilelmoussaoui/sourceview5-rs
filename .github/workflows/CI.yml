@@ -26,10 +26,10 @@ jobs:
         with:
           toolchain: ${{ matrix.rust }}
           override: true
-      - uses: actions-rs/cargo@v1
-        name: "Test"
-        with:
-          command: test
+      # - uses: actions-rs/cargo@v1
+      #   name: "Test"
+      #   with:
+      #     command: test
       - uses: actions-rs/cargo@v1
         name: "Build"
         with:
@@ -43,23 +43,17 @@ jobs:
       #   working-directory: examples4
       #   run: cargo check
 
-  fmt:
-    name: Rustfmt
+  regen_check:
+    name: regen check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: "recursive"
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
           override: true
       - run: rustup component add rustfmt
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
       - run: make regen_check
 
   checker:
