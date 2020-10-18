@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["sourceview5"] = [{"text":"impl Not for FileSaverFlags","synthetic":false,"types":[]},{"text":"impl Not for SortFlags","synthetic":false,"types":[]},{"text":"impl Not for SpaceLocationFlags","synthetic":false,"types":[]},{"text":"impl Not for SpaceTypeFlags","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

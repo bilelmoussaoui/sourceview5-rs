@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["sourceview5"] = [{"text":"impl Octal for FileSaverFlags","synthetic":false,"types":[]},{"text":"impl Octal for SortFlags","synthetic":false,"types":[]},{"text":"impl Octal for SpaceLocationFlags","synthetic":false,"types":[]},{"text":"impl Octal for SpaceTypeFlags","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
