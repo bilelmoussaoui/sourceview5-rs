@@ -1646,31 +1646,39 @@ extern "C" {
     // GtkSourceCompletion
     //=========================================================================
     pub fn gtk_source_completion_get_type() -> GType;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_fuzzy_highlight(
         haystack: *const c_char,
         casefold_query: *const c_char,
     ) -> *mut pango::PangoAttrList;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_fuzzy_match(
         haystack: *const c_char,
         casefold_needle: *const c_char,
         priority: *mut c_uint,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_add_provider(
         self_: *mut GtkSourceCompletion,
         provider: *mut GtkSourceCompletionProvider,
     );
     pub fn gtk_source_completion_block_interactive(self_: *mut GtkSourceCompletion);
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_get_buffer(
         self_: *mut GtkSourceCompletion,
     ) -> *mut GtkSourceBuffer;
     pub fn gtk_source_completion_get_page_size(self_: *mut GtkSourceCompletion) -> c_uint;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_get_view(self_: *mut GtkSourceCompletion) -> *mut GtkSourceView;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_hide(self_: *mut GtkSourceCompletion);
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_remove_provider(
         self_: *mut GtkSourceCompletion,
         provider: *mut GtkSourceCompletionProvider,
     );
     pub fn gtk_source_completion_set_page_size(self_: *mut GtkSourceCompletion, page_size: c_uint);
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_show(self_: *mut GtkSourceCompletion);
     pub fn gtk_source_completion_unblock_interactive(self_: *mut GtkSourceCompletion);
 
@@ -1681,6 +1689,7 @@ extern "C" {
     pub fn gtk_source_completion_cell_get_column(
         self_: *mut GtkSourceCompletionCell,
     ) -> GtkSourceCompletionColumn;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_cell_get_widget(
         self_: *mut GtkSourceCompletionCell,
     ) -> *mut gtk::GtkWidget;
@@ -1718,26 +1727,33 @@ extern "C" {
     // GtkSourceCompletionContext
     //=========================================================================
     pub fn gtk_source_completion_context_get_type() -> GType;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_activation(
         self_: *mut GtkSourceCompletionContext,
     ) -> GtkSourceCompletionActivation;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_bounds(
         self_: *mut GtkSourceCompletionContext,
         begin: *mut gtk::GtkTextIter,
         end: *mut gtk::GtkTextIter,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_buffer(
         self_: *mut GtkSourceCompletionContext,
     ) -> *mut GtkSourceBuffer;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_busy(
         self_: *mut GtkSourceCompletionContext,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_completion(
         self_: *mut GtkSourceCompletionContext,
     ) -> *mut GtkSourceCompletion;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_empty(
         self_: *mut GtkSourceCompletionContext,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_language(
         self_: *mut GtkSourceCompletionContext,
     ) -> *mut GtkSourceLanguage;
@@ -1745,12 +1761,15 @@ extern "C" {
         self_: *mut GtkSourceCompletionContext,
         iter: *mut gtk::GtkTextIter,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_view(
         self_: *mut GtkSourceCompletionContext,
     ) -> *mut GtkSourceView;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_get_word(
         self_: *mut GtkSourceCompletionContext,
     ) -> *mut c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_context_set_proposals_for_provider(
         self_: *mut GtkSourceCompletionContext,
         provider: *mut GtkSourceCompletionProvider,
@@ -1937,26 +1956,33 @@ extern "C" {
     // GtkSourceGutterLines
     //=========================================================================
     pub fn gtk_source_gutter_lines_get_type() -> GType;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_add_class(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
         name: *const c_char,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_add_qclass(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
         qname: glib::GQuark,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_get_buffer(
         lines: *mut GtkSourceGutterLines,
     ) -> *mut gtk::GtkTextBuffer;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_get_first(lines: *mut GtkSourceGutterLines) -> c_uint;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_get_iter_at_line(
         lines: *mut GtkSourceGutterLines,
         iter: *mut gtk::GtkTextIter,
         line: c_uint,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_get_last(lines: *mut GtkSourceGutterLines) -> c_uint;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_get_line_yrange(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
@@ -1964,6 +1990,7 @@ extern "C" {
         y: *mut c_int,
         height: *mut c_int,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_get_view(
         lines: *mut GtkSourceGutterLines,
     ) -> *mut gtk::GtkTextView;
@@ -1973,33 +2000,40 @@ extern "C" {
         line_y: *mut c_uint,
         line_height: *mut c_uint,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_has_class(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
         name: *const c_char,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_has_qclass(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
         qname: glib::GQuark,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_is_cursor(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_is_prelit(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_is_selected(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_remove_class(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
         name: *const c_char,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_lines_remove_qclass(
         lines: *mut GtkSourceGutterLines,
         line: c_uint,
@@ -2018,6 +2052,7 @@ extern "C" {
         state: gdk::GdkModifierType,
         n_presses: c_int,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_align_cell(
         renderer: *mut GtkSourceGutterRenderer,
         line: c_uint,
@@ -2029,17 +2064,22 @@ extern "C" {
     pub fn gtk_source_gutter_renderer_get_alignment_mode(
         renderer: *mut GtkSourceGutterRenderer,
     ) -> GtkSourceGutterRendererAlignmentMode;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_get_buffer(
         renderer: *mut GtkSourceGutterRenderer,
     ) -> *mut GtkSourceBuffer;
     pub fn gtk_source_gutter_renderer_get_view(
         renderer: *mut GtkSourceGutterRenderer,
     ) -> *mut GtkSourceView;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_get_xalign(renderer: *mut GtkSourceGutterRenderer)
         -> c_float;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_get_xpad(renderer: *mut GtkSourceGutterRenderer) -> c_int;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_get_yalign(renderer: *mut GtkSourceGutterRenderer)
         -> c_float;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_get_ypad(renderer: *mut GtkSourceGutterRenderer) -> c_int;
     pub fn gtk_source_gutter_renderer_query_activatable(
         renderer: *mut GtkSourceGutterRenderer,
@@ -2050,15 +2090,19 @@ extern "C" {
         renderer: *mut GtkSourceGutterRenderer,
         mode: GtkSourceGutterRendererAlignmentMode,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_set_xalign(
         renderer: *mut GtkSourceGutterRenderer,
         xalign: c_float,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_set_xpad(renderer: *mut GtkSourceGutterRenderer, xpad: c_int);
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_set_yalign(
         renderer: *mut GtkSourceGutterRenderer,
         yalign: c_float,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_set_ypad(renderer: *mut GtkSourceGutterRenderer, ypad: c_int);
 
     //=========================================================================
@@ -2072,12 +2116,14 @@ extern "C" {
     pub fn gtk_source_gutter_renderer_pixbuf_get_icon_name(
         renderer: *mut GtkSourceGutterRendererPixbuf,
     ) -> *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_pixbuf_get_paintable(
         renderer: *mut GtkSourceGutterRendererPixbuf,
     ) -> *mut gdk::GdkPaintable;
     pub fn gtk_source_gutter_renderer_pixbuf_get_pixbuf(
         renderer: *mut GtkSourceGutterRendererPixbuf,
     ) -> *mut gdk_pixbuf::GdkPixbuf;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_gutter_renderer_pixbuf_overlay_paintable(
         renderer: *mut GtkSourceGutterRendererPixbuf,
         paintable: *mut gdk::GdkPaintable,
@@ -2585,53 +2631,75 @@ extern "C" {
     // GtkSourceSnippet
     //=========================================================================
     pub fn gtk_source_snippet_get_type() -> GType;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_new(
         trigger: *const c_char,
         language_id: *const c_char,
     ) -> *mut GtkSourceSnippet;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_add_chunk(
         snippet: *mut GtkSourceSnippet,
         chunk: *mut GtkSourceSnippetChunk,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_copy(snippet: *mut GtkSourceSnippet) -> *mut GtkSourceSnippet;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_get_context(
         snippet: *mut GtkSourceSnippet,
     ) -> *mut GtkSourceSnippetContext;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_get_description(snippet: *mut GtkSourceSnippet) -> *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_get_focus_position(snippet: *mut GtkSourceSnippet) -> c_int;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_get_language_id(snippet: *mut GtkSourceSnippet) -> *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_get_n_chunks(snippet: *mut GtkSourceSnippet) -> c_uint;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_get_name(snippet: *mut GtkSourceSnippet) -> *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_get_nth_chunk(
         snippet: *mut GtkSourceSnippet,
         nth: c_uint,
     ) -> *mut GtkSourceSnippetChunk;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_get_trigger(snippet: *mut GtkSourceSnippet) -> *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_set_description(
         snippet: *mut GtkSourceSnippet,
         description: *const c_char,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_set_language_id(
         snippet: *mut GtkSourceSnippet,
         language_id: *const c_char,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_set_name(snippet: *mut GtkSourceSnippet, name: *const c_char);
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_set_trigger(snippet: *mut GtkSourceSnippet, trigger: *const c_char);
 
     //=========================================================================
     // GtkSourceSnippetChunk
     //=========================================================================
     pub fn gtk_source_snippet_chunk_get_type() -> GType;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_new() -> *mut GtkSourceSnippetChunk;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_copy(
         chunk: *mut GtkSourceSnippetChunk,
     ) -> *mut GtkSourceSnippetChunk;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_get_context(
         chunk: *mut GtkSourceSnippetChunk,
     ) -> *mut GtkSourceSnippetContext;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_get_focus_position(chunk: *mut GtkSourceSnippetChunk) -> c_int;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_get_spec(chunk: *mut GtkSourceSnippetChunk) -> *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_get_text(chunk: *mut GtkSourceSnippetChunk) -> *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_get_text_set(chunk: *mut GtkSourceSnippetChunk) -> gboolean;
     pub fn gtk_source_snippet_chunk_get_tooltip_text(
         chunk: *mut GtkSourceSnippetChunk,
@@ -2640,18 +2708,22 @@ extern "C" {
         chunk: *mut GtkSourceSnippetChunk,
         context: *mut GtkSourceSnippetContext,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_set_focus_position(
         chunk: *mut GtkSourceSnippetChunk,
         focus_position: c_int,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_set_spec(
         chunk: *mut GtkSourceSnippetChunk,
         spec: *const c_char,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_set_text(
         chunk: *mut GtkSourceSnippetChunk,
         text: *const c_char,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_chunk_set_text_set(
         chunk: *mut GtkSourceSnippetChunk,
         text_set: gboolean,
@@ -2665,16 +2737,20 @@ extern "C" {
     // GtkSourceSnippetContext
     //=========================================================================
     pub fn gtk_source_snippet_context_get_type() -> GType;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_context_new() -> *mut GtkSourceSnippetContext;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_context_clear_variables(self_: *mut GtkSourceSnippetContext);
     pub fn gtk_source_snippet_context_expand(
         self_: *mut GtkSourceSnippetContext,
         input: *const c_char,
     ) -> *mut c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_context_get_variable(
         self_: *mut GtkSourceSnippetContext,
         key: *const c_char,
     ) -> *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_context_set_constant(
         self_: *mut GtkSourceSnippetContext,
         key: *const c_char,
@@ -2692,6 +2768,7 @@ extern "C" {
         self_: *mut GtkSourceSnippetContext,
         use_spaces: gboolean,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_context_set_variable(
         self_: *mut GtkSourceSnippetContext,
         key: *const c_char,
@@ -2702,25 +2779,31 @@ extern "C" {
     // GtkSourceSnippetManager
     //=========================================================================
     pub fn gtk_source_snippet_manager_get_type() -> GType;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_manager_get_default() -> *mut GtkSourceSnippetManager;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_manager_get_search_path(
         self_: *mut GtkSourceSnippetManager,
     ) -> *const *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_manager_get_snippet(
         self_: *mut GtkSourceSnippetManager,
         group: *const c_char,
         language_id: *const c_char,
         trigger: *const c_char,
     ) -> *mut GtkSourceSnippet;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_manager_list_groups(
         self_: *mut GtkSourceSnippetManager,
     ) -> *mut *const c_char;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_manager_list_matching(
         self_: *mut GtkSourceSnippetManager,
         group: *const c_char,
         language_id: *const c_char,
         trigger_prefix: *const c_char,
     ) -> *mut gio::GListModel;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_snippet_manager_set_search_path(
         self_: *mut GtkSourceSnippetManager,
         dirs: *const *const c_char,
@@ -2845,6 +2928,7 @@ extern "C" {
         view: *mut GtkSourceView,
     ) -> GtkSourceBackgroundPatternType;
     pub fn gtk_source_view_get_completion(view: *mut GtkSourceView) -> *mut GtkSourceCompletion;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_view_get_enable_snippets(view: *mut GtkSourceView) -> gboolean;
     pub fn gtk_source_view_get_gutter(
         view: *mut GtkSourceView,
@@ -2878,6 +2962,7 @@ extern "C" {
         start: *mut gtk::GtkTextIter,
         end: *mut gtk::GtkTextIter,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_view_push_snippet(
         view: *mut GtkSourceView,
         snippet: *mut GtkSourceSnippet,
@@ -2888,6 +2973,7 @@ extern "C" {
         view: *mut GtkSourceView,
         background_pattern: GtkSourceBackgroundPatternType,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_view_set_enable_snippets(view: *mut GtkSourceView, enable_snippets: gboolean);
     pub fn gtk_source_view_set_highlight_current_line(
         view: *mut GtkSourceView,
@@ -2960,6 +3046,7 @@ extern "C" {
         keyval: c_uint,
         state: gdk::GdkModifierType,
     ) -> gboolean;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_provider_list_alternates(
         self_: *mut GtkSourceCompletionProvider,
         context: *mut GtkSourceCompletionContext,
@@ -2972,6 +3059,7 @@ extern "C" {
         callback: gio::GAsyncReadyCallback,
         user_data: gpointer,
     );
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
     pub fn gtk_source_completion_provider_populate_finish(
         self_: *mut GtkSourceCompletionProvider,
         result: *mut gio::GAsyncResult,

@@ -9,6 +9,7 @@ name = "gtksourceview-5"
 version = "4.90"
 
 [package.metadata.system-deps.gtksourceview_5.feature-versions]
+v5_0 = "5.0"
 [package.metadata.docs.rs]
 features = ["dox"]
 
@@ -53,3 +54,4 @@ tempfile = "3"
 
 [features]
 dox = []
+v5_0 = []

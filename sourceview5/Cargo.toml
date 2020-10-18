@@ -50,4 +50,4 @@ path = "../sourceview5-sys"
 
 [features]
 default = ["v5_0"]
-v5_0 = []
+v5_0 = ["sourceview5-sys/v5_0"]
