@@ -29,13 +29,11 @@ package = "gdk4-sys"
 git = "https://github.com/gtk-rs/sys"
 
 [dependencies.gtk]
-branch = "bilelmoussaoui/update"
-git = "https://github.com/bilelmoussaoui/gtk4"
+git = "https://github.com/gtk-rs/gtk4"
 package = "gtk4"
 
 [dependencies.gdk]
-branch = "bilelmoussaoui/update"
-git = "https://github.com/bilelmoussaoui/gdk4"
+git = "https://github.com/gtk-rs/gdk4"
 package = "gdk4"
 
 [dependencies.pango]
