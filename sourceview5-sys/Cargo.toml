@@ -19,32 +19,32 @@ features = ["dox"]
 libc = "0.2"
 
 [dependencies.glib]
-git = "https://github.com/gtk-rs/glib"
+git = "https://github.com/gtk-rs/gtk-rs"
 
 [dependencies.glib-sys]
-git = "https://github.com/gtk-rs/sys"
+git = "https://github.com/gtk-rs/gtk-rs"
 
 [dependencies.pango]
-git = "https://github.com/gtk-rs/pango"
+git = "https://github.com/gtk-rs/gtk-rs"
 
 [dependencies.pango-sys]
-git = "https://github.com/gtk-rs/sys"
+git = "https://github.com/gtk-rs/gtk-rs"
 
 [dependencies.gio-sys]
-git = "https://github.com/gtk-rs/sys"
+git = "https://github.com/gtk-rs/gtk-rs"
 
 [dependencies.gdk-pixbuf-sys]
-git = "https://github.com/gtk-rs/sys"
+git = "https://github.com/gtk-rs/gtk-rs"
 
 [dependencies.gobject-sys]
-git = "https://github.com/gtk-rs/sys"
+git = "https://github.com/gtk-rs/gtk-rs"
 
 [dependencies.gtk-sys]
-git = "https://github.com/gtk-rs/sys"
+git = "https://github.com/gtk-rs/gtk4-rs"
 package = "gtk4-sys"
 
 [dependencies.gdk-sys]
-git = "https://github.com/gtk-rs/sys"
+git = "https://github.com/gtk-rs/gtk4-rs"
 package = "gdk4-sys"
 
 [build-dependencies]

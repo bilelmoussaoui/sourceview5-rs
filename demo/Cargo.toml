@@ -5,12 +5,11 @@ name = "demo"
 version = "0.1.0"
 
 [dependencies.gtk]
-branch = "bilelmoussaoui/update"
-git = "https://github.com/bilelmoussaoui/gtk4"
+git = "https://github.com/gtk-rs/gtk4-rs"
 package = "gtk4"
 
 [dependencies.gio]
-git = "https://github.com/gtk-rs/gio"
+git = "https://github.com/gtk-rs/gtk-rs"
 
 
 [dependencies.sourceview5]
