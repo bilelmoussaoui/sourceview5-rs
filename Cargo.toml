@@ -1,9 +1,9 @@
 [workspace]
 exclude = [
   "checker",
+  "gir",
 ]
 members = [
-  "gir",
   "demo",
   "sourceview5",
   "sourceview5-sys",
