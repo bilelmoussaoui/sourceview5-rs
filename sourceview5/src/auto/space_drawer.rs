@@ -20,7 +20,7 @@ use SpaceLocationFlags;
 use SpaceTypeFlags;
 
 glib_wrapper! {
-    pub struct SpaceDrawer(Object<gtk_source_sys::GtkSourceSpaceDrawer, gtk_source_sys::GtkSourceSpaceDrawerClass, SpaceDrawerClass>);
+    pub struct SpaceDrawer(Object<gtk_source_sys::GtkSourceSpaceDrawer, gtk_source_sys::GtkSourceSpaceDrawerClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_space_drawer_get_type(),

@@ -23,7 +23,7 @@ use FileSaverFlags;
 use NewlineType;
 
 glib_wrapper! {
-    pub struct FileSaver(Object<gtk_source_sys::GtkSourceFileSaver, gtk_source_sys::GtkSourceFileSaverClass, FileSaverClass>);
+    pub struct FileSaver(Object<gtk_source_sys::GtkSourceFileSaver, gtk_source_sys::GtkSourceFileSaverClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_file_saver_get_type(),

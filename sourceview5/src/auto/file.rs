@@ -22,7 +22,7 @@ use Encoding;
 use NewlineType;
 
 glib_wrapper! {
-    pub struct File(Object<gtk_source_sys::GtkSourceFile, gtk_source_sys::GtkSourceFileClass, FileClass>);
+    pub struct File(Object<gtk_source_sys::GtkSourceFile, gtk_source_sys::GtkSourceFileClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_file_get_type(),

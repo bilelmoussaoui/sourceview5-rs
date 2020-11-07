@@ -20,7 +20,7 @@ use std::mem::transmute;
 use SnippetContext;
 
 glib_wrapper! {
-    pub struct SnippetChunk(Object<gtk_source_sys::GtkSourceSnippetChunk, gtk_source_sys::GtkSourceSnippetChunkClass, SnippetChunkClass>);
+    pub struct SnippetChunk(Object<gtk_source_sys::GtkSourceSnippetChunk, gtk_source_sys::GtkSourceSnippetChunkClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_snippet_chunk_get_type(),

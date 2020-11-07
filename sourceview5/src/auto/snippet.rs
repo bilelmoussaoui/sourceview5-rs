@@ -24,7 +24,7 @@ use SnippetChunk;
 use SnippetContext;
 
 glib_wrapper! {
-    pub struct Snippet(Object<gtk_source_sys::GtkSourceSnippet, gtk_source_sys::GtkSourceSnippetClass, SnippetClass>);
+    pub struct Snippet(Object<gtk_source_sys::GtkSourceSnippet, gtk_source_sys::GtkSourceSnippetClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_snippet_get_type(),

@@ -20,7 +20,7 @@ use Buffer;
 use View;
 
 glib_wrapper! {
-    pub struct PrintCompositor(Object<gtk_source_sys::GtkSourcePrintCompositor, gtk_source_sys::GtkSourcePrintCompositorClass, PrintCompositorClass>);
+    pub struct PrintCompositor(Object<gtk_source_sys::GtkSourcePrintCompositor, gtk_source_sys::GtkSourcePrintCompositorClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_print_compositor_get_type(),

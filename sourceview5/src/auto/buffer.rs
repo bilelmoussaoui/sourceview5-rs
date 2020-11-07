@@ -25,7 +25,7 @@ use SortFlags;
 use StyleScheme;
 
 glib_wrapper! {
-    pub struct Buffer(Object<gtk_source_sys::GtkSourceBuffer, gtk_source_sys::GtkSourceBufferClass, BufferClass>) @extends gtk::TextBuffer;
+    pub struct Buffer(Object<gtk_source_sys::GtkSourceBuffer, gtk_source_sys::GtkSourceBufferClass>) @extends gtk::TextBuffer;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_buffer_get_type(),

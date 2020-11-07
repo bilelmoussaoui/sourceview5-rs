@@ -16,7 +16,7 @@ use GutterRenderer;
 use View;
 
 glib_wrapper! {
-    pub struct Gutter(Object<gtk_source_sys::GtkSourceGutter, gtk_source_sys::GtkSourceGutterClass, GutterClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+    pub struct Gutter(Object<gtk_source_sys::GtkSourceGutter, gtk_source_sys::GtkSourceGutterClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_gutter_get_type(),

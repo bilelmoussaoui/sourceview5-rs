@@ -13,7 +13,7 @@ use gtk_source_sys;
 use std::fmt;
 
 glib_wrapper! {
-    pub struct Mark(Object<gtk_source_sys::GtkSourceMark, gtk_source_sys::GtkSourceMarkClass, MarkClass>) @extends gtk::TextMark;
+    pub struct Mark(Object<gtk_source_sys::GtkSourceMark, gtk_source_sys::GtkSourceMarkClass>) @extends gtk::TextMark;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_mark_get_type(),

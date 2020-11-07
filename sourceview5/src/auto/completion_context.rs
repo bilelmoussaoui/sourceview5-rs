@@ -37,7 +37,7 @@ use Language;
 use View;
 
 glib_wrapper! {
-    pub struct CompletionContext(Object<gtk_source_sys::GtkSourceCompletionContext, gtk_source_sys::GtkSourceCompletionContextClass, CompletionContextClass>) @implements gio::ListModel;
+    pub struct CompletionContext(Object<gtk_source_sys::GtkSourceCompletionContext, gtk_source_sys::GtkSourceCompletionContextClass>) @implements gio::ListModel;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_completion_context_get_type(),

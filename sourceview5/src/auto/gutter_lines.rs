@@ -16,7 +16,7 @@ use std::mem;
 use GutterRendererAlignmentMode;
 
 glib_wrapper! {
-    pub struct GutterLines(Object<gtk_source_sys::GtkSourceGutterLines, gtk_source_sys::GtkSourceGutterLinesClass, GutterLinesClass>);
+    pub struct GutterLines(Object<gtk_source_sys::GtkSourceGutterLines, gtk_source_sys::GtkSourceGutterLinesClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_gutter_lines_get_type(),

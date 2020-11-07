@@ -25,7 +25,7 @@ use GutterRenderer;
 use GutterRendererAlignmentMode;
 
 glib_wrapper! {
-    pub struct GutterRendererPixbuf(Object<gtk_source_sys::GtkSourceGutterRendererPixbuf, gtk_source_sys::GtkSourceGutterRendererPixbufClass, GutterRendererPixbufClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+    pub struct GutterRendererPixbuf(Object<gtk_source_sys::GtkSourceGutterRendererPixbuf, gtk_source_sys::GtkSourceGutterRendererPixbufClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_type(),

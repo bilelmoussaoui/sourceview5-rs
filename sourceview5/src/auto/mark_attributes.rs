@@ -23,7 +23,7 @@ use std::mem::transmute;
 use Mark;
 
 glib_wrapper! {
-    pub struct MarkAttributes(Object<gtk_source_sys::GtkSourceMarkAttributes, gtk_source_sys::GtkSourceMarkAttributesClass, MarkAttributesClass>);
+    pub struct MarkAttributes(Object<gtk_source_sys::GtkSourceMarkAttributes, gtk_source_sys::GtkSourceMarkAttributesClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_mark_attributes_get_type(),

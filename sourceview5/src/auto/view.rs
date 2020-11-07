@@ -32,7 +32,7 @@ use SmartHomeEndType;
 use SpaceDrawer;
 
 glib_wrapper! {
-    pub struct View(Object<gtk_source_sys::GtkSourceView, gtk_source_sys::GtkSourceViewClass, ViewClass>) @extends gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
+    pub struct View(Object<gtk_source_sys::GtkSourceView, gtk_source_sys::GtkSourceViewClass>) @extends gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_view_get_type(),

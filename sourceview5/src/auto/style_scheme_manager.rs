@@ -18,7 +18,7 @@ use std::mem::transmute;
 use StyleScheme;
 
 glib_wrapper! {
-    pub struct StyleSchemeManager(Object<gtk_source_sys::GtkSourceStyleSchemeManager, gtk_source_sys::GtkSourceStyleSchemeManagerClass, StyleSchemeManagerClass>);
+    pub struct StyleSchemeManager(Object<gtk_source_sys::GtkSourceStyleSchemeManager, gtk_source_sys::GtkSourceStyleSchemeManagerClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_style_scheme_manager_get_type(),

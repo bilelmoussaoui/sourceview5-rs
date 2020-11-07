@@ -23,7 +23,7 @@ use SmartHomeEndType;
 use View;
 
 glib_wrapper! {
-    pub struct Map(Object<gtk_source_sys::GtkSourceMap, gtk_source_sys::GtkSourceMapClass, MapClass>) @extends View, gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
+    pub struct Map(Object<gtk_source_sys::GtkSourceMap, gtk_source_sys::GtkSourceMapClass>) @extends View, gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_map_get_type(),

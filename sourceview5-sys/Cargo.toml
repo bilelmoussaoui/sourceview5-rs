@@ -10,8 +10,8 @@ repository = "https://github.com/bilelmoussaoui/sourceview5-rs/"
 name = "gtksourceview-5"
 version = "4.90"
 
-[package.metadata.system-deps.gtksourceview_5.feature-versions]
-v5_0 = "4.90"
+[package.metadata.system-deps.gtksourceview_5.v5_0]
+version = "4.90"
 [package.metadata.docs.rs]
 features = ["dox"]
 
@@ -48,7 +48,7 @@ git = "https://github.com/gtk-rs/gtk4-rs"
 package = "gdk4-sys"
 
 [build-dependencies]
-system-deps = "1.3"
+system-deps = "2.0"
 
 [dev-dependencies]
 shell-words = "1.0.0"

@@ -18,7 +18,7 @@ use std::mem::transmute;
 use Language;
 
 glib_wrapper! {
-    pub struct LanguageManager(Object<gtk_source_sys::GtkSourceLanguageManager, gtk_source_sys::GtkSourceLanguageManagerClass, LanguageManagerClass>);
+    pub struct LanguageManager(Object<gtk_source_sys::GtkSourceLanguageManager, gtk_source_sys::GtkSourceLanguageManagerClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_language_manager_get_type(),

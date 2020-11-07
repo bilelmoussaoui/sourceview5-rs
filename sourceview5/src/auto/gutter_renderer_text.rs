@@ -23,7 +23,7 @@ use GutterRenderer;
 use GutterRendererAlignmentMode;
 
 glib_wrapper! {
-    pub struct GutterRendererText(Object<gtk_source_sys::GtkSourceGutterRendererText, gtk_source_sys::GtkSourceGutterRendererTextClass, GutterRendererTextClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+    pub struct GutterRendererText(Object<gtk_source_sys::GtkSourceGutterRendererText, gtk_source_sys::GtkSourceGutterRendererTextClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_gutter_renderer_text_get_type(),

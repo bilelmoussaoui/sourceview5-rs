@@ -23,7 +23,7 @@ use std::mem::transmute;
 use CompletionColumn;
 
 glib_wrapper! {
-    pub struct CompletionCell(Object<gtk_source_sys::GtkSourceCompletionCell, gtk_source_sys::GtkSourceCompletionCellClass, CompletionCellClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+    pub struct CompletionCell(Object<gtk_source_sys::GtkSourceCompletionCell, gtk_source_sys::GtkSourceCompletionCellClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_completion_cell_get_type(),

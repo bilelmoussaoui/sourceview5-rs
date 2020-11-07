@@ -30,7 +30,7 @@ use CompletionProvider;
 use View;
 
 glib_wrapper! {
-    pub struct Completion(Object<gtk_source_sys::GtkSourceCompletion, gtk_source_sys::GtkSourceCompletionClass, CompletionClass>);
+    pub struct Completion(Object<gtk_source_sys::GtkSourceCompletion, gtk_source_sys::GtkSourceCompletionClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_completion_get_type(),

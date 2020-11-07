@@ -21,7 +21,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct SnippetContext(Object<gtk_source_sys::GtkSourceSnippetContext, gtk_source_sys::GtkSourceSnippetContextClass, SnippetContextClass>);
+    pub struct SnippetContext(Object<gtk_source_sys::GtkSourceSnippetContext, gtk_source_sys::GtkSourceSnippetContextClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_snippet_context_get_type(),

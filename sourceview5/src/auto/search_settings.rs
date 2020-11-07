@@ -17,7 +17,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct SearchSettings(Object<gtk_source_sys::GtkSourceSearchSettings, gtk_source_sys::GtkSourceSearchSettingsClass, SearchSettingsClass>);
+    pub struct SearchSettings(Object<gtk_source_sys::GtkSourceSearchSettings, gtk_source_sys::GtkSourceSearchSettingsClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_search_settings_get_type(),

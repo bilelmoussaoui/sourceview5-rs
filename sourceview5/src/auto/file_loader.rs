@@ -17,7 +17,7 @@ use File;
 use NewlineType;
 
 glib_wrapper! {
-    pub struct FileLoader(Object<gtk_source_sys::GtkSourceFileLoader, gtk_source_sys::GtkSourceFileLoaderClass, FileLoaderClass>);
+    pub struct FileLoader(Object<gtk_source_sys::GtkSourceFileLoader, gtk_source_sys::GtkSourceFileLoaderClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_file_loader_get_type(),

@@ -546,6 +546,7 @@ impl FromGlib<gtk_source_sys::GtkSourceFileLoaderError> for FileLoaderError {
 impl ErrorDomain for FileLoaderError {
     fn domain() -> Quark {
         skip_assert_initialized!();
+
         unsafe { from_glib(gtk_source_sys::gtk_source_file_loader_error_quark()) }
     }
 
@@ -643,6 +644,7 @@ impl FromGlib<gtk_source_sys::GtkSourceFileSaverError> for FileSaverError {
 impl ErrorDomain for FileSaverError {
     fn domain() -> Quark {
         skip_assert_initialized!();
+
         unsafe { from_glib(gtk_source_sys::gtk_source_file_saver_error_quark()) }
     }
 

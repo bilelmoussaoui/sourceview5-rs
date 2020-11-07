@@ -27,7 +27,7 @@ use std::mem::transmute;
 use Snippet;
 
 glib_wrapper! {
-    pub struct SnippetManager(Object<gtk_source_sys::GtkSourceSnippetManager, gtk_source_sys::GtkSourceSnippetManagerClass, SnippetManagerClass>);
+    pub struct SnippetManager(Object<gtk_source_sys::GtkSourceSnippetManager, gtk_source_sys::GtkSourceSnippetManagerClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_snippet_manager_get_type(),

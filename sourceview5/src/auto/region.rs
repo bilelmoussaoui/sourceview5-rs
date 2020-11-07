@@ -13,7 +13,7 @@ use gtk_source_sys;
 use std::fmt;
 
 glib_wrapper! {
-    pub struct Region(Object<gtk_source_sys::GtkSourceRegion, gtk_source_sys::GtkSourceRegionClass, RegionClass>);
+    pub struct Region(Object<gtk_source_sys::GtkSourceRegion, gtk_source_sys::GtkSourceRegionClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_region_get_type(),

@@ -21,7 +21,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib_wrapper! {
-    pub struct Tag(Object<gtk_source_sys::GtkSourceTag, gtk_source_sys::GtkSourceTagClass, TagClass>) @extends gtk::TextTag;
+    pub struct Tag(Object<gtk_source_sys::GtkSourceTag, gtk_source_sys::GtkSourceTagClass>) @extends gtk::TextTag;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_tag_get_type(),

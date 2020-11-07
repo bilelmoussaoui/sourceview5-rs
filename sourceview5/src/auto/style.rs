@@ -16,7 +16,7 @@ use pango;
 use std::fmt;
 
 glib_wrapper! {
-    pub struct Style(Object<gtk_source_sys::GtkSourceStyle, gtk_source_sys::GtkSourceStyleClass, StyleClass>);
+    pub struct Style(Object<gtk_source_sys::GtkSourceStyle, gtk_source_sys::GtkSourceStyleClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_style_get_type(),

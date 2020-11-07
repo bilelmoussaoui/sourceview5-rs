@@ -19,7 +19,7 @@ use std::mem::transmute;
 use CompletionProvider;
 
 glib_wrapper! {
-    pub struct CompletionSnippets(Object<gtk_source_sys::GtkSourceCompletionSnippets, gtk_source_sys::GtkSourceCompletionSnippetsClass, CompletionSnippetsClass>) @implements CompletionProvider;
+    pub struct CompletionSnippets(Object<gtk_source_sys::GtkSourceCompletionSnippets, gtk_source_sys::GtkSourceCompletionSnippetsClass>) @implements CompletionProvider;
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_completion_snippets_get_type(),

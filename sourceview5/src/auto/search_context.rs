@@ -27,7 +27,7 @@ use SearchSettings;
 use Style;
 
 glib_wrapper! {
-    pub struct SearchContext(Object<gtk_source_sys::GtkSourceSearchContext, gtk_source_sys::GtkSourceSearchContextClass, SearchContextClass>);
+    pub struct SearchContext(Object<gtk_source_sys::GtkSourceSearchContext, gtk_source_sys::GtkSourceSearchContextClass>);
 
     match fn {
         get_type => || gtk_source_sys::gtk_source_search_context_get_type(),
