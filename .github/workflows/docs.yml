@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   build-deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     container:
       image: docker.io/bilelmoussaoui/gtk4
     steps:
@@ -18,6 +18,8 @@ jobs:
           profile: minimal
           toolchain: nightly
           override: true
+      - working-directory: gir
+        run: cargo build --release
       - run: cp ./GtkSource-5.gir ./gir-files/
       - run: "./gir/target/release/gir -c ./sourceview5/Gir.toml -d ./gir-files --doc-target-path docs.md -m doc"
       - run: cargo install rustdoc-stripper
