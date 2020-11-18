@@ -3,21 +3,27 @@
 // DO NOT EDIT
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::signal::connect_raw;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::GString;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib_sys;
 use gtk_source_sys;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem::transmute;
 
 glib_wrapper! {
@@ -30,6 +36,7 @@ glib_wrapper! {
 
 impl SnippetContext {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn new() -> SnippetContext {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(gtk_source_sys::gtk_source_snippet_context_new()) }
@@ -37,6 +44,7 @@ impl SnippetContext {
 }
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 impl Default for SnippetContext {
     fn default() -> Self {
         Self::new()
@@ -47,14 +55,17 @@ pub const NONE_SNIPPET_CONTEXT: Option<&SnippetContext> = None;
 
 pub trait SnippetContextExt: 'static {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn clear_variables(&self);
 
     fn expand(&self, input: &str) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_variable(&self, key: &str) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_constant(&self, key: &str, value: &str);
 
     fn set_line_prefix(&self, line_prefix: &str);
@@ -64,14 +75,17 @@ pub trait SnippetContextExt: 'static {
     fn set_use_spaces(&self, use_spaces: bool);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_variable(&self, key: &str, value: &str);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn clear_variables(&self) {
         unsafe {
             gtk_source_sys::gtk_source_snippet_context_clear_variables(
@@ -90,6 +104,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_variable(&self, key: &str) -> Option<GString> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_snippet_context_get_variable(
@@ -100,6 +115,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_constant(&self, key: &str, value: &str) {
         unsafe {
             gtk_source_sys::gtk_source_snippet_context_set_constant(
@@ -138,6 +154,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_variable(&self, key: &str, value: &str) {
         unsafe {
             gtk_source_sys::gtk_source_snippet_context_set_variable(
@@ -149,6 +166,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn changed_trampoline<P, F: Fn(&P) + 'static>(
             this: *mut gtk_source_sys::GtkSourceSnippetContext,

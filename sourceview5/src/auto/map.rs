@@ -50,6 +50,7 @@ pub struct MapBuilder {
     auto_indent: Option<bool>,
     background_pattern: Option<BackgroundPatternType>,
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     enable_snippets: Option<bool>,
     highlight_current_line: Option<bool>,
     indent_on_tab: Option<bool>,
@@ -139,6 +140,7 @@ impl MapBuilder {
             properties.push(("background-pattern", background_pattern));
         }
         #[cfg(any(feature = "v5_0", feature = "dox"))]
+        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
         {
             if let Some(ref enable_snippets) = self.enable_snippets {
                 properties.push(("enable-snippets", enable_snippets));
@@ -328,6 +330,7 @@ impl MapBuilder {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn enable_snippets(mut self, enable_snippets: bool) -> Self {
         self.enable_snippets = Some(enable_snippets);
         self

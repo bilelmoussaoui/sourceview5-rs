@@ -67,6 +67,7 @@ pub struct ViewBuilder {
     auto_indent: Option<bool>,
     background_pattern: Option<BackgroundPatternType>,
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     enable_snippets: Option<bool>,
     highlight_current_line: Option<bool>,
     indent_on_tab: Option<bool>,
@@ -150,6 +151,7 @@ impl ViewBuilder {
             properties.push(("background-pattern", background_pattern));
         }
         #[cfg(any(feature = "v5_0", feature = "dox"))]
+        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
         {
             if let Some(ref enable_snippets) = self.enable_snippets {
                 properties.push(("enable-snippets", enable_snippets));
@@ -329,6 +331,7 @@ impl ViewBuilder {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn enable_snippets(mut self, enable_snippets: bool) -> Self {
         self.enable_snippets = Some(enable_snippets);
         self
@@ -600,6 +603,7 @@ pub trait ViewExt: 'static {
     fn get_completion(&self) -> Option<Completion>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_enable_snippets(&self) -> bool;
 
     fn get_gutter(&self, window_type: gtk::TextWindowType) -> Option<Gutter>;
@@ -637,6 +641,7 @@ pub trait ViewExt: 'static {
     fn set_background_pattern(&self, background_pattern: BackgroundPatternType);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_enable_snippets(&self, enable_snippets: bool);
 
     fn set_highlight_current_line(&self, highlight: bool);
@@ -705,6 +710,7 @@ pub trait ViewExt: 'static {
     fn emit_move_words(&self, count: i32);
 
     //#[cfg(any(feature = "v5_0", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     //fn connect_push_snippet<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
 
     fn connect_show_completion<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
@@ -726,6 +732,7 @@ pub trait ViewExt: 'static {
     fn connect_property_completion_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_enable_snippets_notify<F: Fn(&Self) + 'static>(
         &self,
         f: F,
@@ -811,6 +818,7 @@ impl<O: IsA<View>> ViewExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_enable_snippets(&self) -> bool {
         unsafe {
             from_glib(gtk_source_sys::gtk_source_view_get_enable_snippets(
@@ -956,6 +964,7 @@ impl<O: IsA<View>> ViewExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_enable_snippets(&self, enable_snippets: bool) {
         unsafe {
             gtk_source_sys::gtk_source_view_set_enable_snippets(
@@ -1329,6 +1338,7 @@ impl<O: IsA<View>> ViewExt for O {
     }
 
     //#[cfg(any(feature = "v5_0", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     //fn connect_push_snippet<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
     //    InOut location: Gtk.TextIter
     //}
@@ -1475,6 +1485,7 @@ impl<O: IsA<View>> ViewExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_enable_snippets_notify<F: Fn(&Self) + 'static>(
         &self,
         f: F,

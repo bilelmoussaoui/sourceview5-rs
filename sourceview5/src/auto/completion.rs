@@ -3,10 +3,12 @@
 // DO NOT EDIT
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib;
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::object::ObjectExt;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
@@ -20,13 +22,17 @@ use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem;
 use std::mem::transmute;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use Buffer;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use CompletionProvider;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use View;
 
 glib_wrapper! {
@@ -39,11 +45,13 @@ glib_wrapper! {
 
 impl Completion {
     //#[cfg(any(feature = "v5_0", feature = "dox"))]
+    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     //pub fn fuzzy_highlight(haystack: &str, casefold_query: &str) -> /*Ignored*/Option<pango::AttrList> {
     //    unsafe { TODO: call gtk_source_sys:gtk_source_completion_fuzzy_highlight() }
     //}
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn fuzzy_match(haystack: Option<&str>, casefold_needle: &str) -> Option<u32> {
         assert_initialized_main_thread!();
         unsafe {
@@ -66,11 +74,13 @@ impl Completion {
 #[derive(Clone, Default)]
 pub struct CompletionBuilder {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     page_size: Option<u32>,
     remember_info_visibility: Option<bool>,
     select_on_show: Option<bool>,
     show_icons: Option<bool>,
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     view: Option<View>,
 }
 
@@ -82,6 +92,7 @@ impl CompletionBuilder {
     pub fn build(self) -> Completion {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         #[cfg(any(feature = "v5_0", feature = "dox"))]
+        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
         {
             if let Some(ref page_size) = self.page_size {
                 properties.push(("page-size", page_size));
@@ -97,6 +108,7 @@ impl CompletionBuilder {
             properties.push(("show-icons", show_icons));
         }
         #[cfg(any(feature = "v5_0", feature = "dox"))]
+        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
         {
             if let Some(ref view) = self.view {
                 properties.push(("view", view));
@@ -110,6 +122,7 @@ impl CompletionBuilder {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn page_size(mut self, page_size: u32) -> Self {
         self.page_size = Some(page_size);
         self
@@ -131,6 +144,7 @@ impl CompletionBuilder {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn view<P: IsA<View>>(mut self, view: &P) -> Self {
         self.view = Some(view.clone().upcast());
         self
@@ -141,27 +155,33 @@ pub const NONE_COMPLETION: Option<&Completion> = None;
 
 pub trait CompletionExt: 'static {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_provider<P: IsA<CompletionProvider>>(&self, provider: &P);
 
     fn block_interactive(&self);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<Buffer>;
 
     fn get_page_size(&self) -> u32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_view(&self) -> Option<View>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn hide(&self);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn remove_provider<P: IsA<CompletionProvider>>(&self, provider: &P);
 
     fn set_page_size(&self, page_size: u32);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn show(&self);
 
     fn unblock_interactive(&self);
@@ -179,33 +199,41 @@ pub trait CompletionExt: 'static {
     fn set_property_show_icons(&self, show_icons: bool);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_hide<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn emit_hide(&self);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_provider_added<F: Fn(&Self, &CompletionProvider) + 'static>(
         &self,
         f: F,
     ) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_provider_removed<F: Fn(&Self, &CompletionProvider) + 'static>(
         &self,
         f: F,
     ) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_show<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn emit_show(&self);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_buffer_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_page_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_property_remember_info_visibility_notify<F: Fn(&Self) + 'static>(
@@ -223,6 +251,7 @@ pub trait CompletionExt: 'static {
 
 impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_provider<P: IsA<CompletionProvider>>(&self, provider: &P) {
         unsafe {
             gtk_source_sys::gtk_source_completion_add_provider(
@@ -239,6 +268,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_completion_get_buffer(
@@ -254,6 +284,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_view(&self) -> Option<View> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_completion_get_view(
@@ -263,6 +294,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn hide(&self) {
         unsafe {
             gtk_source_sys::gtk_source_completion_hide(self.as_ref().to_glib_none().0);
@@ -270,6 +302,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn remove_provider<P: IsA<CompletionProvider>>(&self, provider: &P) {
         unsafe {
             gtk_source_sys::gtk_source_completion_remove_provider(
@@ -289,6 +322,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn show(&self) {
         unsafe {
             gtk_source_sys::gtk_source_completion_show(self.as_ref().to_glib_none().0);
@@ -379,6 +413,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_hide<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn hide_trampoline<P, F: Fn(&P) + 'static>(
             this: *mut gtk_source_sys::GtkSourceCompletion,
@@ -403,6 +438,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn emit_hide(&self) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
@@ -412,6 +448,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_provider_added<F: Fn(&Self, &CompletionProvider) + 'static>(
         &self,
         f: F,
@@ -446,6 +483,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_provider_removed<F: Fn(&Self, &CompletionProvider) + 'static>(
         &self,
         f: F,
@@ -480,6 +518,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_show<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn show_trampoline<P, F: Fn(&P) + 'static>(
             this: *mut gtk_source_sys::GtkSourceCompletion,
@@ -504,6 +543,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn emit_show(&self) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
@@ -513,6 +553,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_buffer_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_buffer_trampoline<P, F: Fn(&P) + 'static>(
             this: *mut gtk_source_sys::GtkSourceCompletion,
@@ -538,6 +579,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_page_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_page_size_trampoline<P, F: Fn(&P) + 'static>(
             this: *mut gtk_source_sys::GtkSourceCompletion,

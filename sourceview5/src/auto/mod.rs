@@ -61,10 +61,13 @@ pub use self::gutter::GutterExt;
 pub use self::gutter::{Gutter, NONE_GUTTER};
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 mod gutter_lines;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::gutter_lines::GutterLinesExt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::gutter_lines::{GutterLines, NONE_GUTTER_LINES};
 
 mod gutter_renderer;
@@ -126,12 +129,16 @@ pub use self::search_settings::SearchSettingsExt;
 pub use self::search_settings::{SearchSettings, NONE_SEARCH_SETTINGS};
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 mod snippet;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::snippet::SnippetBuilder;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::snippet::SnippetExt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::snippet::{Snippet, NONE_SNIPPET};
 
 mod snippet_chunk;
@@ -144,12 +151,16 @@ pub use self::snippet_context::SnippetContextExt;
 pub use self::snippet_context::{SnippetContext, NONE_SNIPPET_CONTEXT};
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 mod snippet_manager;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::snippet_manager::SnippetManagerBuilder;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::snippet_manager::SnippetManagerExt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::snippet_manager::{SnippetManager, NONE_SNIPPET_MANAGER};
 
 mod space_drawer;
@@ -234,6 +245,7 @@ pub mod traits {
     pub use super::FileSaverExt;
     pub use super::GutterExt;
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub use super::GutterLinesExt;
     pub use super::GutterRendererExt;
     pub use super::GutterRendererPixbufExt;
@@ -250,8 +262,10 @@ pub mod traits {
     pub use super::SnippetChunkExt;
     pub use super::SnippetContextExt;
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub use super::SnippetExt;
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub use super::SnippetManagerExt;
     pub use super::SpaceDrawerExt;
     pub use super::StyleExt;

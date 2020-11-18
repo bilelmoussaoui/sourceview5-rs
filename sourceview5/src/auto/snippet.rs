@@ -19,8 +19,10 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use SnippetChunk;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use SnippetContext;
 
 glib_wrapper! {
@@ -33,6 +35,7 @@ glib_wrapper! {
 
 impl Snippet {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn new(trigger: Option<&str>, language_id: Option<&str>) -> Snippet {
         assert_initialized_main_thread!();
         unsafe {
@@ -103,45 +106,59 @@ pub const NONE_SNIPPET: Option<&Snippet> = None;
 
 pub trait SnippetExt: 'static {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_chunk<P: IsA<SnippetChunk>>(&self, chunk: &P);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn copy(&self) -> Option<Snippet>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_context(&self) -> Option<SnippetContext>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_description(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_focus_position(&self) -> i32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_language_id(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_n_chunks(&self) -> u32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_name(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_nth_chunk(&self, nth: u32) -> Option<SnippetChunk>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_trigger(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_description(&self, description: &str);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_language_id(&self, language_id: &str);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_name(&self, name: &str);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_trigger(&self, trigger: &str);
 
     fn get_property_buffer(&self) -> Option<gtk::TextBuffer>;
@@ -182,6 +199,7 @@ pub trait SnippetExt: 'static {
 
 impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_chunk<P: IsA<SnippetChunk>>(&self, chunk: &P) {
         unsafe {
             gtk_source_sys::gtk_source_snippet_add_chunk(
@@ -192,6 +210,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn copy(&self) -> Option<Snippet> {
         unsafe {
             from_glib_full(gtk_source_sys::gtk_source_snippet_copy(
@@ -201,6 +220,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_context(&self) -> Option<SnippetContext> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_snippet_get_context(
@@ -210,6 +230,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_description(&self) -> Option<GString> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_snippet_get_description(
@@ -219,6 +240,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_focus_position(&self) -> i32 {
         unsafe {
             gtk_source_sys::gtk_source_snippet_get_focus_position(self.as_ref().to_glib_none().0)
@@ -226,6 +248,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_language_id(&self) -> Option<GString> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_snippet_get_language_id(
@@ -235,11 +258,13 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_n_chunks(&self) -> u32 {
         unsafe { gtk_source_sys::gtk_source_snippet_get_n_chunks(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_name(&self) -> Option<GString> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_snippet_get_name(
@@ -249,6 +274,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_nth_chunk(&self, nth: u32) -> Option<SnippetChunk> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_snippet_get_nth_chunk(
@@ -259,6 +285,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_trigger(&self) -> Option<GString> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_snippet_get_trigger(
@@ -268,6 +295,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_description(&self, description: &str) {
         unsafe {
             gtk_source_sys::gtk_source_snippet_set_description(
@@ -278,6 +306,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_language_id(&self, language_id: &str) {
         unsafe {
             gtk_source_sys::gtk_source_snippet_set_language_id(
@@ -288,6 +317,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_name(&self, name: &str) {
         unsafe {
             gtk_source_sys::gtk_source_snippet_set_name(
@@ -298,6 +328,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_trigger(&self, trigger: &str) {
         unsafe {
             gtk_source_sys::gtk_source_snippet_set_trigger(

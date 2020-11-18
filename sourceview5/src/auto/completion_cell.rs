@@ -322,6 +322,7 @@ pub trait CompletionCellExt: 'static {
     fn get_column(&self) -> CompletionColumn;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_widget(&self) -> Option<gtk::Widget>;
 
     fn set_gicon<P: IsA<gio::Icon>>(&self, gicon: &P);
@@ -365,6 +366,7 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_widget(&self) -> Option<gtk::Widget> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_completion_cell_get_widget(

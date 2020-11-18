@@ -60,6 +60,7 @@ pub trait CompletionProviderExt: 'static {
     ) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn list_alternates<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>>(
         &self,
         context: &P,
@@ -164,6 +165,7 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn list_alternates<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>>(
         &self,
         context: &P,

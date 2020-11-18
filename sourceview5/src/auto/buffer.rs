@@ -227,6 +227,7 @@ pub trait BufferExt: 'static {
     ) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_cursor_moved<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     fn connect_highlight_updated<F: Fn(&Self, &gtk::TextIter, &gtk::TextIter) + 'static>(
@@ -543,6 +544,7 @@ impl<O: IsA<Buffer>> BufferExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_cursor_moved<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn cursor_moved_trampoline<P, F: Fn(&P) + 'static>(
             this: *mut gtk_source_sys::GtkSourceBuffer,

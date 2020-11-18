@@ -378,11 +378,13 @@ pub trait GutterRendererPixbufExt: 'static {
     fn get_icon_name(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_paintable(&self) -> Option<gdk::Paintable>;
 
     fn get_pixbuf(&self) -> Option<gdk_pixbuf::Pixbuf>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn overlay_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P);
 
     fn set_gicon<P: IsA<gio::Icon>>(&self, icon: Option<&P>);
@@ -424,6 +426,7 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_paintable(&self) -> Option<gdk::Paintable> {
         unsafe {
             from_glib_none(
@@ -445,6 +448,7 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn overlay_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_pixbuf_overlay_paintable(

@@ -6,34 +6,46 @@ use gio;
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::signal::connect_raw;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib_sys;
 use gtk;
 use gtk_source_sys;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem::transmute;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use Buffer;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use Completion;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use CompletionActivation;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use CompletionProvider;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use Language;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use View;
 
 glib_wrapper! {
@@ -47,6 +59,7 @@ glib_wrapper! {
 #[derive(Clone, Default)]
 pub struct CompletionContextBuilder {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     completion: Option<Completion>,
 }
 
@@ -58,6 +71,7 @@ impl CompletionContextBuilder {
     pub fn build(self) -> CompletionContext {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         #[cfg(any(feature = "v5_0", feature = "dox"))]
+        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
         {
             if let Some(ref completion) = self.completion {
                 properties.push(("completion", completion));
@@ -71,6 +85,7 @@ impl CompletionContextBuilder {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn completion<P: IsA<Completion>>(mut self, completion: &P) -> Self {
         self.completion = Some(completion.clone().upcast());
         self
@@ -81,35 +96,45 @@ pub const NONE_COMPLETION_CONTEXT: Option<&CompletionContext> = None;
 
 pub trait CompletionContextExt: 'static {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_activation(&self) -> CompletionActivation;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_bounds(&self) -> Option<(gtk::TextIter, gtk::TextIter)>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<Buffer>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_busy(&self) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_completion(&self) -> Option<Completion>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_empty(&self) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_language(&self) -> Option<Language>;
 
     fn get_start_iter(&self, iter: &mut gtk::TextIter);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_view(&self) -> Option<View>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_word(&self) -> Option<GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_proposals_for_provider<P: IsA<CompletionProvider>, Q: IsA<gio::ListModel>>(
         &self,
         provider: &P,
@@ -117,14 +142,17 @@ pub trait CompletionContextExt: 'static {
     );
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_busy_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_empty_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 }
 
 impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_activation(&self) -> CompletionActivation {
         unsafe {
             from_glib(
@@ -136,6 +164,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_bounds(&self) -> Option<(gtk::TextIter, gtk::TextIter)> {
         unsafe {
             let mut begin = gtk::TextIter::uninitialized();
@@ -154,6 +183,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_completion_context_get_buffer(
@@ -163,6 +193,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_busy(&self) -> bool {
         unsafe {
             from_glib(gtk_source_sys::gtk_source_completion_context_get_busy(
@@ -172,6 +203,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_completion(&self) -> Option<Completion> {
         unsafe {
             from_glib_none(
@@ -183,6 +215,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_empty(&self) -> bool {
         unsafe {
             from_glib(gtk_source_sys::gtk_source_completion_context_get_empty(
@@ -192,6 +225,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_language(&self) -> Option<Language> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_completion_context_get_language(
@@ -210,6 +244,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_view(&self) -> Option<View> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_completion_context_get_view(
@@ -219,6 +254,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_word(&self) -> Option<GString> {
         unsafe {
             from_glib_full(gtk_source_sys::gtk_source_completion_context_get_word(
@@ -228,6 +264,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_proposals_for_provider<P: IsA<CompletionProvider>, Q: IsA<gio::ListModel>>(
         &self,
         provider: &P,
@@ -243,6 +280,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_busy_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_busy_trampoline<P, F: Fn(&P) + 'static>(
             this: *mut gtk_source_sys::GtkSourceCompletionContext,
@@ -268,6 +306,7 @@ impl<O: IsA<CompletionContext>> CompletionContextExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_empty_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_empty_trampoline<P, F: Fn(&P) + 'static>(
             this: *mut gtk_source_sys::GtkSourceCompletionContext,

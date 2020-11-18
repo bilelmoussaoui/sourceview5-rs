@@ -20,9 +20,11 @@ use libc;
 use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem;
 use std::mem::transmute;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use Buffer;
 use GutterLines;
 use GutterRendererAlignmentMode;
@@ -49,25 +51,31 @@ pub trait GutterRendererExt: 'static {
     );
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn align_cell(&self, line: u32, width: f32, height: f32) -> (f32, f32);
 
     fn get_alignment_mode(&self) -> GutterRendererAlignmentMode;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<Buffer>;
 
     fn get_view(&self) -> Option<View>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_xalign(&self) -> f32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_xpad(&self) -> i32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_yalign(&self) -> f32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_ypad(&self) -> i32;
 
     fn query_activatable(&self, iter: &gtk::TextIter, area: &gdk::Rectangle) -> bool;
@@ -75,15 +83,19 @@ pub trait GutterRendererExt: 'static {
     fn set_alignment_mode(&self, mode: GutterRendererAlignmentMode);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_xalign(&self, xalign: f32);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_xpad(&self, xpad: i32);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_yalign(&self, yalign: f32);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_ypad(&self, ypad: i32);
 
     fn get_property_lines(&self) -> Option<GutterLines>;
@@ -158,6 +170,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn align_cell(&self, line: u32, width: f32, height: f32) -> (f32, f32) {
         unsafe {
             let mut x = mem::MaybeUninit::uninit();
@@ -187,6 +200,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_get_buffer(
@@ -204,6 +218,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_xalign(&self) -> f32 {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_get_xalign(self.as_ref().to_glib_none().0)
@@ -211,6 +226,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_xpad(&self) -> i32 {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_get_xpad(self.as_ref().to_glib_none().0)
@@ -218,6 +234,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_yalign(&self) -> f32 {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_get_yalign(self.as_ref().to_glib_none().0)
@@ -225,6 +242,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_ypad(&self) -> i32 {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_get_ypad(self.as_ref().to_glib_none().0)
@@ -253,6 +271,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_xalign(&self, xalign: f32) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_set_xalign(
@@ -263,6 +282,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_xpad(&self, xpad: i32) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_set_xpad(
@@ -273,6 +293,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_yalign(&self, yalign: f32) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_set_yalign(
@@ -283,6 +304,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_ypad(&self, ypad: i32) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_renderer_set_ypad(

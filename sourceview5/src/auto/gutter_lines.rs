@@ -3,16 +3,20 @@
 // DO NOT EDIT
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib;
 use glib::object::IsA;
 use glib::translate::*;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use gtk;
 use gtk_source_sys;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use GutterRendererAlignmentMode;
 
 glib_wrapper! {
@@ -27,53 +31,69 @@ pub const NONE_GUTTER_LINES: Option<&GutterLines> = None;
 
 pub trait GutterLinesExt: 'static {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_class(&self, line: u32, name: &str);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_qclass(&self, line: u32, qname: glib::Quark);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<gtk::TextBuffer>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_first(&self) -> u32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_iter_at_line(&self, line: u32) -> gtk::TextIter;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_last(&self) -> u32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_line_yrange(&self, line: u32, mode: GutterRendererAlignmentMode) -> (i32, i32);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_view(&self) -> Option<gtk::TextView>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn has_class(&self, line: u32, name: &str) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn has_qclass(&self, line: u32, qname: glib::Quark) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn is_cursor(&self, line: u32) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn is_prelit(&self, line: u32) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn is_selected(&self, line: u32) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn remove_class(&self, line: u32, name: &str);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn remove_qclass(&self, line: u32, qname: glib::Quark);
 }
 
 impl<O: IsA<GutterLines>> GutterLinesExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_class(&self, line: u32, name: &str) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_lines_add_class(
@@ -85,6 +105,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_qclass(&self, line: u32, qname: glib::Quark) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_lines_add_qclass(
@@ -96,6 +117,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<gtk::TextBuffer> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_gutter_lines_get_buffer(
@@ -105,11 +127,13 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_first(&self) -> u32 {
         unsafe { gtk_source_sys::gtk_source_gutter_lines_get_first(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_iter_at_line(&self, line: u32) -> gtk::TextIter {
         unsafe {
             let mut iter = gtk::TextIter::uninitialized();
@@ -123,11 +147,13 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_last(&self) -> u32 {
         unsafe { gtk_source_sys::gtk_source_gutter_lines_get_last(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_line_yrange(&self, line: u32, mode: GutterRendererAlignmentMode) -> (i32, i32) {
         unsafe {
             let mut y = mem::MaybeUninit::uninit();
@@ -146,6 +172,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_view(&self) -> Option<gtk::TextView> {
         unsafe {
             from_glib_none(gtk_source_sys::gtk_source_gutter_lines_get_view(
@@ -155,6 +182,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn has_class(&self, line: u32, name: &str) -> bool {
         unsafe {
             from_glib(gtk_source_sys::gtk_source_gutter_lines_has_class(
@@ -166,6 +194,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn has_qclass(&self, line: u32, qname: glib::Quark) -> bool {
         unsafe {
             from_glib(gtk_source_sys::gtk_source_gutter_lines_has_qclass(
@@ -177,6 +206,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn is_cursor(&self, line: u32) -> bool {
         unsafe {
             from_glib(gtk_source_sys::gtk_source_gutter_lines_is_cursor(
@@ -187,6 +217,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn is_prelit(&self, line: u32) -> bool {
         unsafe {
             from_glib(gtk_source_sys::gtk_source_gutter_lines_is_prelit(
@@ -197,6 +228,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn is_selected(&self, line: u32) -> bool {
         unsafe {
             from_glib(gtk_source_sys::gtk_source_gutter_lines_is_selected(
@@ -207,6 +239,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn remove_class(&self, line: u32, name: &str) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_lines_remove_class(
@@ -218,6 +251,7 @@ impl<O: IsA<GutterLines>> GutterLinesExt for O {
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn remove_qclass(&self, line: u32, qname: glib::Quark) {
         unsafe {
             gtk_source_sys::gtk_source_gutter_lines_remove_qclass(
