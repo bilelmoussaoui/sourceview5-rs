@@ -19,21 +19,24 @@ RUN dnf install -y glib-devel \
                 gstreamer1-plugins-base-devel \
                 gstreamer1-plugins-bad-free-devel \
                 diffutils \
-                librsvg2-devel
+                librsvg2-devel \
+                xorg-x11-server-Xvfb \
+                procps-ng
 
 # build gtk4 from the latest release
-ADD https://download.gnome.org/sources/gtk/3.99/gtk-3.99.3.tar.xz /tmp/gtk3.99.3.tar.xz
-RUN tar -xf /tmp/gtk3.99.3.tar.xz --directory /tmp
-WORKDIR /tmp/gtk-3.99.3
+ADD https://download.gnome.org/sources/gtk/3.99/gtk-3.99.4.tar.xz /tmp/gtk3.99.4.tar.xz
+RUN tar -xf /tmp/gtk3.99.4.tar.xz --directory /tmp
+WORKDIR /tmp/gtk-3.99.4
 RUN meson _build --prefix=/usr
 RUN ninja -C _build
 RUN ninja -C _build install
 WORKDIR /
 
+
 # Build gtksourceview from master
 RUN git clone https://gitlab.gnome.org/GNOME/gtksourceview/ /tmp/gtksourceview
 WORKDIR /tmp/gtksourceview
-RUN git checkout bf870ac02f3dbbc499a740ab9c99501d173b13b5
+RUN git checkout 2510db7264f853d78ec70aa2f0f66dfa5ae0adbe
 RUN meson _build --prefix=/usr -Dvapi=false
 RUN ninja -C _build
 RUN ninja -C _build install
