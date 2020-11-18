@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `sourceview5/src/auto/tag.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>tag.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../sourceview5/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `sourceview5/src/auto/tag.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>tag.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../sourceview5/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -924,10 +926,10 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">transmute</span>;
 
 <span class="macro">glib_wrapper</span><span class="macro">!</span> {
-    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Tag</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">gtk_source_sys</span>::<span class="ident">GtkSourceTag</span>, <span class="ident">gtk_source_sys</span>::<span class="ident">GtkSourceTagClass</span>, <span class="ident">TagClass</span><span class="op">&gt;</span>) @<span class="ident">extends</span> <span class="ident">gtk</span>::<span class="ident">TextTag</span>;
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Tag</span>(<span class="ident">Object</span><span class="op">&lt;</span><span class="ident">gtk_source_sys</span>::<span class="ident">GtkSourceTag</span>, <span class="ident">gtk_source_sys</span>::<span class="ident">GtkSourceTagClass</span><span class="op">&gt;</span>) @<span class="ident">extends</span> <span class="ident">gtk</span>::<span class="ident">TextTag</span>;
 
     <span class="kw">match</span> <span class="kw">fn</span> {
-        <span class="ident">get_type</span> <span class="op">=&gt;</span> <span class="op">||</span> <span class="ident">gtk_source_sys</span>::<span class="ident">gtk_source_tag_get_type</span>(),
+        <span class="ident">get_type</span> <span class="op">=</span><span class="op">&gt;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">gtk_source_sys</span>::<span class="ident">gtk_source_tag_get_type</span>(),
     }
 }
 
@@ -943,7 +945,7 @@
     <span class="doccomment">/// # Returns</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// a new `Tag`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Tag</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Tag</span> {
         <span class="macro">assert_initialized_main_thread</span><span class="macro">!</span>();
         <span class="kw">unsafe</span> {
             <span class="ident">gtk</span>::<span class="ident">TextTag</span>::<span class="ident">from_glib_full</span>(<span class="ident">gtk_source_sys</span>::<span class="ident">gtk_source_tag_new</span>(<span class="ident">name</span>.<span class="ident">to_glib_none</span>().<span class="number">0</span>))
@@ -1040,11 +1042,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">TagBuilder</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">default</span>()
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Tag</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Tag</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">properties</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">dyn</span> <span class="ident">ToValue</span>)<span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">draw_spaces</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">draw_spaces</span> {
             <span class="ident">properties</span>.<span class="ident">push</span>((<span class="string">&quot;draw-spaces&quot;</span>, <span class="ident">draw_spaces</span>));
@@ -1278,377 +1280,377 @@
         <span class="ident">ret</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">draw_spaces</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">draw_spaces</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">draw_spaces</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">draw_spaces</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">draw_spaces</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">draw_spaces</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">draw_spaces_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">draw_spaces_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">draw_spaces_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">draw_spaces_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">draw_spaces_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">draw_spaces_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accumulative_margin</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accumulative_margin</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">accumulative_margin</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">accumulative_margin</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">accumulative_margin</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">accumulative_margin</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">allow_breaks</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">allow_breaks</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">allow_breaks</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">allow_breaks</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">allow_breaks</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">allow_breaks</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">allow_breaks_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">allow_breaks_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">allow_breaks_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">allow_breaks_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">allow_breaks_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">allow_breaks_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">background</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">background</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_full_height</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_full_height</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_full_height</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_full_height</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">background_full_height</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">background_full_height</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_full_height_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_full_height_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_full_height_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_full_height_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">background_full_height_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">background_full_height_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">background_rgba</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">background_rgba</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">background_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">background_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">background_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">background_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">editable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">editable</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">editable</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">editable</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">editable</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">editable</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">editable_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">editable_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">editable_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">editable_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">editable_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">editable_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fallback</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">fallback</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fallback</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">fallback</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">fallback</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">fallback</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fallback_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">fallback_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fallback_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">fallback_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">fallback_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">fallback_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">family</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">family</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">family</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">family</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">family</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">family</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">family_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">family_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">family_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">family_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">family_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">family_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">font</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">font</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">font</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">font</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">font_desc</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font_desc</span>: <span class="kw-2">&amp;</span><span class="ident">pango</span>::<span class="ident">FontDescription</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">font_desc</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font_desc</span>: <span class="kw-2">&amp;</span><span class="ident">pango</span>::<span class="ident">FontDescription</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">font_desc</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">font_desc</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">font_features</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font_features</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">font_features</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font_features</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">font_features</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">font_features</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">font_features_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font_features_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">font_features_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">font_features_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">font_features_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">font_features_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">foreground</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">foreground</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">foreground_rgba</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">foreground_rgba</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">foreground_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">foreground_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">foreground_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">foreground_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indent</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">indent</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indent</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">indent</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">indent</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">indent</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indent_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">indent_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indent_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">indent_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">indent_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">indent_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert_hyphens</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">insert_hyphens</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert_hyphens</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">insert_hyphens</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">insert_hyphens</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">insert_hyphens</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert_hyphens_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">insert_hyphens_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert_hyphens_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">insert_hyphens_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">insert_hyphens_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">insert_hyphens_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invisible</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">invisible</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invisible</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">invisible</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">invisible</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">invisible</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invisible_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">invisible_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invisible_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">invisible_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">invisible_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">invisible_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">justification_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">justification_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">justification_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">justification_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">justification_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">justification_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">language</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">language</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">language</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">language</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">language</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">language</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">language_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">language_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">language_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">language_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">language_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">language_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_margin</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left_margin</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_margin</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left_margin</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">left_margin</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">left_margin</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_margin_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left_margin_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">left_margin_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">left_margin_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">left_margin_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">left_margin_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">letter_spacing</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">letter_spacing</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">letter_spacing</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">letter_spacing</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">letter_spacing</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">letter_spacing</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">letter_spacing_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">letter_spacing_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">letter_spacing_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">letter_spacing_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">letter_spacing_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">letter_spacing_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overline_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">overline_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overline_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">overline_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">overline_rgba</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">overline_rgba</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overline_rgba_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">overline_rgba_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overline_rgba_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">overline_rgba_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">overline_rgba_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">overline_rgba_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overline_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">overline_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">overline_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">overline_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">overline_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">overline_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paragraph_background</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paragraph_background</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paragraph_background</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paragraph_background</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">paragraph_background</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paragraph_background</span>.<span class="ident">to_string</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paragraph_background_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paragraph_background_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paragraph_background_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paragraph_background_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">paragraph_background_rgba</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paragraph_background_rgba</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paragraph_background_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paragraph_background_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">paragraph_background_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">paragraph_background_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">paragraph_background_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">paragraph_background_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_above_lines</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_above_lines</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_above_lines</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_above_lines</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">pixels_above_lines</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">pixels_above_lines</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_above_lines_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_above_lines_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_above_lines_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_above_lines_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">pixels_above_lines_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">pixels_above_lines_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_below_lines</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_below_lines</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_below_lines</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_below_lines</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">pixels_below_lines</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">pixels_below_lines</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_below_lines_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_below_lines_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_below_lines_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_below_lines_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">pixels_below_lines_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">pixels_below_lines_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_inside_wrap</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_inside_wrap</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_inside_wrap</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_inside_wrap</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">pixels_inside_wrap</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">pixels_inside_wrap</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_inside_wrap_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_inside_wrap_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pixels_inside_wrap_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pixels_inside_wrap_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">pixels_inside_wrap_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">pixels_inside_wrap_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_margin</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">right_margin</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_margin</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">right_margin</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">right_margin</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">right_margin</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_margin_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">right_margin_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">right_margin_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">right_margin_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">right_margin_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">right_margin_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rise</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rise</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rise</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rise</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">rise</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">rise</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rise_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rise_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rise_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">rise_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">rise_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">rise_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">scale</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">scale</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">scale_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">scale_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_spaces_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">show_spaces_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">show_spaces_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">show_spaces_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">show_spaces_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">show_spaces_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">size</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size_points</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size_points</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size_points</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size_points</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">size_points</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">size_points</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">size_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">size_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">size_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">size_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stretch_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">stretch_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stretch_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">stretch_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">stretch_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">stretch_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikethrough</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">strikethrough</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikethrough</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">strikethrough</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">strikethrough</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">strikethrough</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikethrough_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">strikethrough_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikethrough_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">strikethrough_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">strikethrough_rgba</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">strikethrough_rgba</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikethrough_rgba_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">strikethrough_rgba_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikethrough_rgba_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">strikethrough_rgba_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">strikethrough_rgba_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">strikethrough_rgba_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikethrough_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">strikethrough_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikethrough_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">strikethrough_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">strikethrough_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">strikethrough_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">style_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">style_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">style_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">style_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">style_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">style_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tabs_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">tabs_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tabs_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">tabs_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">tabs_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">tabs_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline</span>: <span class="ident">pango</span>::<span class="ident">Underline</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline</span>: <span class="ident">pango</span>::<span class="ident">Underline</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">underline</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">underline</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline_rgba</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline_rgba</span>: <span class="kw-2">&amp;</span><span class="ident">gdk</span>::<span class="ident">RGBA</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">underline_rgba</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">underline_rgba</span>.<span class="ident">clone</span>());
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline_rgba_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline_rgba_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline_rgba_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline_rgba_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">underline_rgba_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">underline_rgba_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">underline_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">underline_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">underline_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">underline_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">variant_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">variant_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">variant_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">variant_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">variant_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">variant_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">weight</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">weight</span>: <span class="ident">i32</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">weight</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">weight</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">weight</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">weight</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">weight_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">weight_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">weight_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">weight_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">weight_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">weight_set</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wrap_mode</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">wrap_mode</span>: <span class="ident">gtk</span>::<span class="ident">WrapMode</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wrap_mode</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">wrap_mode</span>: <span class="ident">gtk</span>::<span class="ident">WrapMode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">wrap_mode</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">wrap_mode</span>);
         <span class="self">self</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wrap_mode_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">wrap_mode_set</span>: <span class="ident">bool</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wrap_mode_set</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">wrap_mode_set</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">wrap_mode_set</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">wrap_mode_set</span>);
         <span class="self">self</span>
     }
@@ -1668,7 +1670,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Setting this property also changes `Tag:draw-spaces-set` to</span>
     <span class="doccomment">/// `true`.</span>
-    <span class="kw">fn</span> <span class="ident">get_property_draw_spaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">get_property_draw_spaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
 
     <span class="doccomment">/// Whether to draw white spaces. This property takes precedence over the value</span>
     <span class="doccomment">/// defined by the `SpaceDrawer`&#39;s `SpaceDrawer:matrix` property</span>
@@ -1680,22 +1682,22 @@
 
     <span class="doccomment">/// Whether the `Tag:draw-spaces` property is set and must be</span>
     <span class="doccomment">/// taken into account.</span>
-    <span class="kw">fn</span> <span class="ident">get_property_draw_spaces_set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">get_property_draw_spaces_set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
 
     <span class="doccomment">/// Whether the `Tag:draw-spaces` property is set and must be</span>
     <span class="doccomment">/// taken into account.</span>
     <span class="kw">fn</span> <span class="ident">set_property_draw_spaces_set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">draw_spaces_set</span>: <span class="ident">bool</span>);
 
-    <span class="kw">fn</span> <span class="ident">connect_property_draw_spaces_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">SignalHandlerId</span>;
+    <span class="kw">fn</span> <span class="ident">connect_property_draw_spaces_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SignalHandlerId</span>;
 
     <span class="kw">fn</span> <span class="ident">connect_property_draw_spaces_set_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">f</span>: <span class="ident">F</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">SignalHandlerId</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SignalHandlerId</span>;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Tag</span><span class="op">&gt;&gt;</span> <span class="ident">TagExt</span> <span class="kw">for</span> <span class="ident">O</span> {
-    <span class="kw">fn</span> <span class="ident">get_property_draw_spaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">O</span>: <span class="ident">IsA</span><span class="op">&lt;</span><span class="ident">Tag</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">TagExt</span> <span class="kw">for</span> <span class="ident">O</span> {
+    <span class="kw">fn</span> <span class="ident">get_property_draw_spaces</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from_type</span>(<span class="op">&lt;</span><span class="ident">bool</span> <span class="kw">as</span> <span class="ident">StaticType</span><span class="op">&gt;</span>::<span class="ident">static_type</span>());
             <span class="ident">gobject_sys</span>::<span class="ident">g_object_get_property</span>(
@@ -1720,7 +1722,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">get_property_draw_spaces_set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">get_property_draw_spaces_set</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="ident">from_type</span>(<span class="op">&lt;</span><span class="ident">bool</span> <span class="kw">as</span> <span class="ident">StaticType</span><span class="op">&gt;</span>::<span class="ident">static_type</span>());
             <span class="ident">gobject_sys</span>::<span class="ident">g_object_get_property</span>(
@@ -1745,7 +1747,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">connect_property_draw_spaces_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="ident">SignalHandlerId</span> {
+    <span class="kw">fn</span> <span class="ident">connect_property_draw_spaces_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SignalHandlerId</span> {
         <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_draw_spaces_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
             <span class="ident">this</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gtk_source_sys</span>::<span class="ident">GtkSourceTag</span>,
             <span class="ident">_param_spec</span>: <span class="ident">glib_sys</span>::<span class="ident">gpointer</span>,
@@ -1772,7 +1774,7 @@
     <span class="kw">fn</span> <span class="ident">connect_property_draw_spaces_set_notify</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">f</span>: <span class="ident">F</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">SignalHandlerId</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SignalHandlerId</span> {
         <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">notify_draw_spaces_set_trampoline</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="ident">P</span>) <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(
             <span class="ident">this</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">gtk_source_sys</span>::<span class="ident">GtkSourceTag</span>,
             <span class="ident">_param_spec</span>: <span class="ident">glib_sys</span>::<span class="ident">gpointer</span>,
@@ -1798,7 +1800,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Tag</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Tag&quot;</span>)
     }
 }
