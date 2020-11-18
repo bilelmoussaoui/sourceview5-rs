@@ -19,7 +19,7 @@ jobs:
           toolchain: nightly
           override: true
       - run: cp ./GtkSource-5.gir ./gir-files/
-      - run: ./gir/target/release/gir -c ./sourceview5/Gir.toml -d ./gir-files --doc-target-path docs.md -m doc
+      - run: "./gir/target/release/gir -c ./sourceview5/Gir.toml -d ./gir-files --doc-target-path docs.md -m doc"
       - run: cargo install rustdoc-stripper
       - run: rustdoc-stripper -g -o ./sourceview5/docs.md
       - uses: actions-rs/cargo@v1
