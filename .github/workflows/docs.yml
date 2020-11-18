@@ -16,16 +16,16 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
-          toolchain: stable
+          toolchain: nightly
           override: true
       - run: cp ./GtkSource-5.gir ./gir-files/
-      - run: "./gir/target/release/gir -c ./sourceview5/Gir.toml -d ./gir-files --doc-target-path docs.md -m doc
+      - run: ./gir/target/release/gir -c ./sourceview5/Gir.toml -d ./gir-files --doc-target-path docs.md -m doc
       - run: cargo install rustdoc-stripper
       - run: rustdoc-stripper -g -o ./sourceview5/docs.md
       - uses: actions-rs/cargo@v1
         with:
           command: doc
-          args: --package sourceview5 --package sourceview5-sys --no-deps
+          args: --package sourceview5 --package sourceview5-sys --no-deps --all-features
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v2
