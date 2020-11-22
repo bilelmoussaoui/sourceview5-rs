@@ -6,6 +6,8 @@ extern crate glib;
 extern crate gtk;
 extern crate libc;
 extern crate pango;
+// Re-export -sys
+pub use ffi;
 
 macro_rules! assert_initialized_main_thread {
     () => {
