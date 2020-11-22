@@ -1,3 +1,3 @@
-pub use auto::traits::*;
-pub use gutter_lines::GutterLinesManualExt;
-pub use view::ViewManualExt;
+pub use crate::auto::traits::*;
+pub use crate::gutter_lines::GutterLinesManualExt;
+pub use crate::view::ViewManualExt;
