@@ -2,7 +2,12 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gio;
+use crate::Buffer;
+use crate::CompressionType;
+use crate::Encoding;
+use crate::File;
+use crate::FileSaverFlags;
+use crate::NewlineType;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -10,23 +15,15 @@ use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use glib_sys;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use Buffer;
-use CompressionType;
-use Encoding;
-use File;
-use FileSaverFlags;
-use NewlineType;
 
-glib_wrapper! {
-    pub struct FileSaver(Object<gtk_source_sys::GtkSourceFileSaver, gtk_source_sys::GtkSourceFileSaverClass>);
+glib::glib_wrapper! {
+    pub struct FileSaver(Object<ffi::GtkSourceFileSaver, ffi::GtkSourceFileSaverClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_file_saver_get_type(),
+        get_type => || ffi::gtk_source_file_saver_get_type(),
     }
 }
 
@@ -34,7 +31,7 @@ impl FileSaver {
     pub fn new<P: IsA<Buffer>, Q: IsA<File>>(buffer: &P, file: &Q) -> FileSaver {
         skip_assert_initialized!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_file_saver_new(
+            from_glib_full(ffi::gtk_source_file_saver_new(
                 buffer.as_ref().to_glib_none().0,
                 file.as_ref().to_glib_none().0,
             ))
@@ -48,7 +45,7 @@ impl FileSaver {
     ) -> FileSaver {
         skip_assert_initialized!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_file_saver_new_with_target(
+            from_glib_full(ffi::gtk_source_file_saver_new_with_target(
                 buffer.as_ref().to_glib_none().0,
                 file.as_ref().to_glib_none().0,
                 target_location.as_ref().to_glib_none().0,
@@ -185,7 +182,7 @@ pub trait FileSaverExt: 'static {
 impl<O: IsA<FileSaver>> FileSaverExt for O {
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_buffer(
+            from_glib_none(ffi::gtk_source_file_saver_get_buffer(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -193,7 +190,7 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn get_compression_type(&self) -> CompressionType {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_file_saver_get_compression_type(
+            from_glib(ffi::gtk_source_file_saver_get_compression_type(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -201,7 +198,7 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn get_encoding(&self) -> Option<Encoding> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_encoding(
+            from_glib_none(ffi::gtk_source_file_saver_get_encoding(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -209,7 +206,7 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn get_file(&self) -> Option<File> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_file(
+            from_glib_none(ffi::gtk_source_file_saver_get_file(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -217,7 +214,7 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn get_flags(&self) -> FileSaverFlags {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_file_saver_get_flags(
+            from_glib(ffi::gtk_source_file_saver_get_flags(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -225,7 +222,7 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn get_location(&self) -> Option<gio::File> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_saver_get_location(
+            from_glib_none(ffi::gtk_source_file_saver_get_location(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -233,14 +230,14 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn get_newline_type(&self) -> NewlineType {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_file_saver_get_newline_type(
+            from_glib(ffi::gtk_source_file_saver_get_newline_type(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
     //fn save_async<P: IsA<gio::Cancellable>, Q: FnOnce(Result<(), glib::Error>) + Send + 'static, R: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, io_priority: glib::Priority, cancellable: Option<&P>, progress_callback: Q, progress_callback_notify: Fn() + 'static, callback: R) {
-    //    unsafe { TODO: call gtk_source_sys:gtk_source_file_saver_save_async() }
+    //    unsafe { TODO: call ffi:gtk_source_file_saver_save_async() }
     //}
 
     //
@@ -266,7 +263,7 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn set_compression_type(&self, compression_type: CompressionType) {
         unsafe {
-            gtk_source_sys::gtk_source_file_saver_set_compression_type(
+            ffi::gtk_source_file_saver_set_compression_type(
                 self.as_ref().to_glib_none().0,
                 compression_type.to_glib(),
             );
@@ -275,7 +272,7 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn set_encoding(&self, encoding: Option<&Encoding>) {
         unsafe {
-            gtk_source_sys::gtk_source_file_saver_set_encoding(
+            ffi::gtk_source_file_saver_set_encoding(
                 self.as_ref().to_glib_none().0,
                 encoding.to_glib_none().0,
             );
@@ -284,16 +281,13 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn set_flags(&self, flags: FileSaverFlags) {
         unsafe {
-            gtk_source_sys::gtk_source_file_saver_set_flags(
-                self.as_ref().to_glib_none().0,
-                flags.to_glib(),
-            );
+            ffi::gtk_source_file_saver_set_flags(self.as_ref().to_glib_none().0, flags.to_glib());
         }
     }
 
     fn set_newline_type(&self, newline_type: NewlineType) {
         unsafe {
-            gtk_source_sys::gtk_source_file_saver_set_newline_type(
+            ffi::gtk_source_file_saver_set_newline_type(
                 self.as_ref().to_glib_none().0,
                 newline_type.to_glib(),
             );
@@ -305,9 +299,9 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_compression_type_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceFileSaver,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceFileSaver,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<FileSaver>,
         {
@@ -329,9 +323,9 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn connect_property_encoding_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_encoding_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceFileSaver,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceFileSaver,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<FileSaver>,
         {
@@ -353,9 +347,9 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
 
     fn connect_property_flags_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_flags_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceFileSaver,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceFileSaver,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<FileSaver>,
         {
@@ -380,9 +374,9 @@ impl<O: IsA<FileSaver>> FileSaverExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_newline_type_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceFileSaver,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceFileSaver,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<FileSaver>,
         {

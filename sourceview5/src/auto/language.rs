@@ -7,43 +7,40 @@ use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
-use glib_sys;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib_wrapper! {
-    pub struct Language(Object<gtk_source_sys::GtkSourceLanguage, gtk_source_sys::GtkSourceLanguageClass>);
+glib::glib_wrapper! {
+    pub struct Language(Object<ffi::GtkSourceLanguage, ffi::GtkSourceLanguageClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_language_get_type(),
+        get_type => || ffi::gtk_source_language_get_type(),
     }
 }
 
 pub const NONE_LANGUAGE: Option<&Language> = None;
 
 pub trait LanguageExt: 'static {
-    fn get_globs(&self) -> Vec<GString>;
+    fn get_globs(&self) -> Vec<glib::GString>;
 
     fn get_hidden(&self) -> bool;
 
-    fn get_id(&self) -> Option<GString>;
+    fn get_id(&self) -> Option<glib::GString>;
 
-    fn get_metadata(&self, name: &str) -> Option<GString>;
+    fn get_metadata(&self, name: &str) -> Option<glib::GString>;
 
-    fn get_mime_types(&self) -> Vec<GString>;
+    fn get_mime_types(&self) -> Vec<glib::GString>;
 
-    fn get_name(&self) -> Option<GString>;
+    fn get_name(&self) -> Option<glib::GString>;
 
-    fn get_section(&self) -> Option<GString>;
+    fn get_section(&self) -> Option<glib::GString>;
 
-    fn get_style_fallback(&self, style_id: &str) -> Option<GString>;
+    fn get_style_fallback(&self, style_id: &str) -> Option<glib::GString>;
 
-    fn get_style_ids(&self) -> Vec<GString>;
+    fn get_style_ids(&self) -> Vec<glib::GString>;
 
-    fn get_style_name(&self, style_id: &str) -> Option<GString>;
+    fn get_style_name(&self, style_id: &str) -> Option<glib::GString>;
 
     fn connect_property_hidden_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
@@ -55,9 +52,9 @@ pub trait LanguageExt: 'static {
 }
 
 impl<O: IsA<Language>> LanguageExt for O {
-    fn get_globs(&self) -> Vec<GString> {
+    fn get_globs(&self) -> Vec<glib::GString> {
         unsafe {
-            FromGlibPtrContainer::from_glib_full(gtk_source_sys::gtk_source_language_get_globs(
+            FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_globs(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -65,73 +62,73 @@ impl<O: IsA<Language>> LanguageExt for O {
 
     fn get_hidden(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_language_get_hidden(
+            from_glib(ffi::gtk_source_language_get_hidden(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_id(&self) -> Option<GString> {
+    fn get_id(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_language_get_id(
+            from_glib_none(ffi::gtk_source_language_get_id(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_metadata(&self, name: &str) -> Option<GString> {
+    fn get_metadata(&self, name: &str) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_language_get_metadata(
+            from_glib_none(ffi::gtk_source_language_get_metadata(
                 self.as_ref().to_glib_none().0,
                 name.to_glib_none().0,
             ))
         }
     }
 
-    fn get_mime_types(&self) -> Vec<GString> {
+    fn get_mime_types(&self) -> Vec<glib::GString> {
         unsafe {
-            FromGlibPtrContainer::from_glib_full(
-                gtk_source_sys::gtk_source_language_get_mime_types(self.as_ref().to_glib_none().0),
-            )
-        }
-    }
-
-    fn get_name(&self) -> Option<GString> {
-        unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_language_get_name(
+            FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_mime_types(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_section(&self) -> Option<GString> {
+    fn get_name(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_language_get_section(
+            from_glib_none(ffi::gtk_source_language_get_name(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_style_fallback(&self, style_id: &str) -> Option<GString> {
+    fn get_section(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_language_get_style_fallback(
+            from_glib_none(ffi::gtk_source_language_get_section(
+                self.as_ref().to_glib_none().0,
+            ))
+        }
+    }
+
+    fn get_style_fallback(&self, style_id: &str) -> Option<glib::GString> {
+        unsafe {
+            from_glib_none(ffi::gtk_source_language_get_style_fallback(
                 self.as_ref().to_glib_none().0,
                 style_id.to_glib_none().0,
             ))
         }
     }
 
-    fn get_style_ids(&self) -> Vec<GString> {
+    fn get_style_ids(&self) -> Vec<glib::GString> {
         unsafe {
-            FromGlibPtrContainer::from_glib_full(gtk_source_sys::gtk_source_language_get_style_ids(
+            FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_style_ids(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_style_name(&self, style_id: &str) -> Option<GString> {
+    fn get_style_name(&self, style_id: &str) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_language_get_style_name(
+            from_glib_none(ffi::gtk_source_language_get_style_name(
                 self.as_ref().to_glib_none().0,
                 style_id.to_glib_none().0,
             ))
@@ -140,9 +137,9 @@ impl<O: IsA<Language>> LanguageExt for O {
 
     fn connect_property_hidden_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_hidden_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceLanguage,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceLanguage,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Language>,
         {
@@ -164,9 +161,9 @@ impl<O: IsA<Language>> LanguageExt for O {
 
     fn connect_property_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_id_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceLanguage,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceLanguage,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Language>,
         {
@@ -188,9 +185,9 @@ impl<O: IsA<Language>> LanguageExt for O {
 
     fn connect_property_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_name_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceLanguage,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceLanguage,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Language>,
         {
@@ -212,9 +209,9 @@ impl<O: IsA<Language>> LanguageExt for O {
 
     fn connect_property_section_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_section_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceLanguage,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceLanguage,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Language>,
         {

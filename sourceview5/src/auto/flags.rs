@@ -2,6 +2,7 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use bitflags::bitflags;
 use glib::translate::*;
 use glib::value::FromValue;
 use glib::value::FromValueOptional;
@@ -9,8 +10,6 @@ use glib::value::SetValue;
 use glib::value::Value;
 use glib::StaticType;
 use glib::Type;
-use gobject_sys;
-use gtk_source_sys;
 
 bitflags! {
     pub struct FileSaverFlags: u32 {
@@ -23,16 +22,16 @@ bitflags! {
 
 #[doc(hidden)]
 impl ToGlib for FileSaverFlags {
-    type GlibType = gtk_source_sys::GtkSourceFileSaverFlags;
+    type GlibType = ffi::GtkSourceFileSaverFlags;
 
-    fn to_glib(&self) -> gtk_source_sys::GtkSourceFileSaverFlags {
+    fn to_glib(&self) -> ffi::GtkSourceFileSaverFlags {
         self.bits()
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<gtk_source_sys::GtkSourceFileSaverFlags> for FileSaverFlags {
-    fn from_glib(value: gtk_source_sys::GtkSourceFileSaverFlags) -> FileSaverFlags {
+impl FromGlib<ffi::GtkSourceFileSaverFlags> for FileSaverFlags {
+    fn from_glib(value: ffi::GtkSourceFileSaverFlags) -> FileSaverFlags {
         skip_assert_initialized!();
         FileSaverFlags::from_bits_truncate(value)
     }
@@ -40,7 +39,7 @@ impl FromGlib<gtk_source_sys::GtkSourceFileSaverFlags> for FileSaverFlags {
 
 impl StaticType for FileSaverFlags {
     fn static_type() -> Type {
-        unsafe { from_glib(gtk_source_sys::gtk_source_file_saver_flags_get_type()) }
+        unsafe { from_glib(ffi::gtk_source_file_saver_flags_get_type()) }
     }
 }
 
@@ -52,13 +51,13 @@ impl<'a> FromValueOptional<'a> for FileSaverFlags {
 
 impl<'a> FromValue<'a> for FileSaverFlags {
     unsafe fn from_value(value: &Value) -> Self {
-        from_glib(gobject_sys::g_value_get_flags(value.to_glib_none().0))
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
     }
 }
 
 impl SetValue for FileSaverFlags {
     unsafe fn set_value(value: &mut Value, this: &Self) {
-        gobject_sys::g_value_set_flags(value.to_glib_none_mut().0, this.to_glib())
+        glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, this.to_glib())
     }
 }
 
@@ -73,16 +72,16 @@ bitflags! {
 
 #[doc(hidden)]
 impl ToGlib for SortFlags {
-    type GlibType = gtk_source_sys::GtkSourceSortFlags;
+    type GlibType = ffi::GtkSourceSortFlags;
 
-    fn to_glib(&self) -> gtk_source_sys::GtkSourceSortFlags {
+    fn to_glib(&self) -> ffi::GtkSourceSortFlags {
         self.bits()
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<gtk_source_sys::GtkSourceSortFlags> for SortFlags {
-    fn from_glib(value: gtk_source_sys::GtkSourceSortFlags) -> SortFlags {
+impl FromGlib<ffi::GtkSourceSortFlags> for SortFlags {
+    fn from_glib(value: ffi::GtkSourceSortFlags) -> SortFlags {
         skip_assert_initialized!();
         SortFlags::from_bits_truncate(value)
     }
@@ -90,7 +89,7 @@ impl FromGlib<gtk_source_sys::GtkSourceSortFlags> for SortFlags {
 
 impl StaticType for SortFlags {
     fn static_type() -> Type {
-        unsafe { from_glib(gtk_source_sys::gtk_source_sort_flags_get_type()) }
+        unsafe { from_glib(ffi::gtk_source_sort_flags_get_type()) }
     }
 }
 
@@ -102,13 +101,13 @@ impl<'a> FromValueOptional<'a> for SortFlags {
 
 impl<'a> FromValue<'a> for SortFlags {
     unsafe fn from_value(value: &Value) -> Self {
-        from_glib(gobject_sys::g_value_get_flags(value.to_glib_none().0))
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
     }
 }
 
 impl SetValue for SortFlags {
     unsafe fn set_value(value: &mut Value, this: &Self) {
-        gobject_sys::g_value_set_flags(value.to_glib_none_mut().0, this.to_glib())
+        glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, this.to_glib())
     }
 }
 
@@ -124,16 +123,16 @@ bitflags! {
 
 #[doc(hidden)]
 impl ToGlib for SpaceLocationFlags {
-    type GlibType = gtk_source_sys::GtkSourceSpaceLocationFlags;
+    type GlibType = ffi::GtkSourceSpaceLocationFlags;
 
-    fn to_glib(&self) -> gtk_source_sys::GtkSourceSpaceLocationFlags {
+    fn to_glib(&self) -> ffi::GtkSourceSpaceLocationFlags {
         self.bits()
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<gtk_source_sys::GtkSourceSpaceLocationFlags> for SpaceLocationFlags {
-    fn from_glib(value: gtk_source_sys::GtkSourceSpaceLocationFlags) -> SpaceLocationFlags {
+impl FromGlib<ffi::GtkSourceSpaceLocationFlags> for SpaceLocationFlags {
+    fn from_glib(value: ffi::GtkSourceSpaceLocationFlags) -> SpaceLocationFlags {
         skip_assert_initialized!();
         SpaceLocationFlags::from_bits_truncate(value)
     }
@@ -141,7 +140,7 @@ impl FromGlib<gtk_source_sys::GtkSourceSpaceLocationFlags> for SpaceLocationFlag
 
 impl StaticType for SpaceLocationFlags {
     fn static_type() -> Type {
-        unsafe { from_glib(gtk_source_sys::gtk_source_space_location_flags_get_type()) }
+        unsafe { from_glib(ffi::gtk_source_space_location_flags_get_type()) }
     }
 }
 
@@ -153,13 +152,13 @@ impl<'a> FromValueOptional<'a> for SpaceLocationFlags {
 
 impl<'a> FromValue<'a> for SpaceLocationFlags {
     unsafe fn from_value(value: &Value) -> Self {
-        from_glib(gobject_sys::g_value_get_flags(value.to_glib_none().0))
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
     }
 }
 
 impl SetValue for SpaceLocationFlags {
     unsafe fn set_value(value: &mut Value, this: &Self) {
-        gobject_sys::g_value_set_flags(value.to_glib_none_mut().0, this.to_glib())
+        glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, this.to_glib())
     }
 }
 
@@ -176,16 +175,16 @@ bitflags! {
 
 #[doc(hidden)]
 impl ToGlib for SpaceTypeFlags {
-    type GlibType = gtk_source_sys::GtkSourceSpaceTypeFlags;
+    type GlibType = ffi::GtkSourceSpaceTypeFlags;
 
-    fn to_glib(&self) -> gtk_source_sys::GtkSourceSpaceTypeFlags {
+    fn to_glib(&self) -> ffi::GtkSourceSpaceTypeFlags {
         self.bits()
     }
 }
 
 #[doc(hidden)]
-impl FromGlib<gtk_source_sys::GtkSourceSpaceTypeFlags> for SpaceTypeFlags {
-    fn from_glib(value: gtk_source_sys::GtkSourceSpaceTypeFlags) -> SpaceTypeFlags {
+impl FromGlib<ffi::GtkSourceSpaceTypeFlags> for SpaceTypeFlags {
+    fn from_glib(value: ffi::GtkSourceSpaceTypeFlags) -> SpaceTypeFlags {
         skip_assert_initialized!();
         SpaceTypeFlags::from_bits_truncate(value)
     }
@@ -193,7 +192,7 @@ impl FromGlib<gtk_source_sys::GtkSourceSpaceTypeFlags> for SpaceTypeFlags {
 
 impl StaticType for SpaceTypeFlags {
     fn static_type() -> Type {
-        unsafe { from_glib(gtk_source_sys::gtk_source_space_type_flags_get_type()) }
+        unsafe { from_glib(ffi::gtk_source_space_type_flags_get_type()) }
     }
 }
 
@@ -205,12 +204,12 @@ impl<'a> FromValueOptional<'a> for SpaceTypeFlags {
 
 impl<'a> FromValue<'a> for SpaceTypeFlags {
     unsafe fn from_value(value: &Value) -> Self {
-        from_glib(gobject_sys::g_value_get_flags(value.to_glib_none().0))
+        from_glib(glib::gobject_ffi::g_value_get_flags(value.to_glib_none().0))
     }
 }
 
 impl SetValue for SpaceTypeFlags {
     unsafe fn set_value(value: &mut Value, this: &Self) {
-        gobject_sys::g_value_set_flags(value.to_glib_none_mut().0, this.to_glib())
+        glib::gobject_ffi::g_value_set_flags(value.to_glib_none_mut().0, this.to_glib())
     }
 }

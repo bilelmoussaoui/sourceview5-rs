@@ -2,25 +2,23 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gio;
+use crate::Buffer;
+use crate::CompressionType;
+use crate::Encoding;
+use crate::File;
+use crate::NewlineType;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use gtk_source_sys;
 use std::fmt;
-use Buffer;
-use CompressionType;
-use Encoding;
-use File;
-use NewlineType;
 
-glib_wrapper! {
-    pub struct FileLoader(Object<gtk_source_sys::GtkSourceFileLoader, gtk_source_sys::GtkSourceFileLoaderClass>);
+glib::glib_wrapper! {
+    pub struct FileLoader(Object<ffi::GtkSourceFileLoader, ffi::GtkSourceFileLoaderClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_file_loader_get_type(),
+        get_type => || ffi::gtk_source_file_loader_get_type(),
     }
 }
 
@@ -28,7 +26,7 @@ impl FileLoader {
     pub fn new<P: IsA<Buffer>, Q: IsA<File>>(buffer: &P, file: &Q) -> FileLoader {
         skip_assert_initialized!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_file_loader_new(
+            from_glib_full(ffi::gtk_source_file_loader_new(
                 buffer.as_ref().to_glib_none().0,
                 file.as_ref().to_glib_none().0,
             ))
@@ -42,7 +40,7 @@ impl FileLoader {
     ) -> FileLoader {
         skip_assert_initialized!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_file_loader_new_from_stream(
+            from_glib_full(ffi::gtk_source_file_loader_new_from_stream(
                 buffer.as_ref().to_glib_none().0,
                 file.as_ref().to_glib_none().0,
                 stream.as_ref().to_glib_none().0,
@@ -132,7 +130,7 @@ pub trait FileLoaderExt: 'static {
 impl<O: IsA<FileLoader>> FileLoaderExt for O {
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_loader_get_buffer(
+            from_glib_none(ffi::gtk_source_file_loader_get_buffer(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -140,7 +138,7 @@ impl<O: IsA<FileLoader>> FileLoaderExt for O {
 
     fn get_compression_type(&self) -> CompressionType {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_file_loader_get_compression_type(
+            from_glib(ffi::gtk_source_file_loader_get_compression_type(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -148,7 +146,7 @@ impl<O: IsA<FileLoader>> FileLoaderExt for O {
 
     fn get_encoding(&self) -> Option<Encoding> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_loader_get_encoding(
+            from_glib_none(ffi::gtk_source_file_loader_get_encoding(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -156,7 +154,7 @@ impl<O: IsA<FileLoader>> FileLoaderExt for O {
 
     fn get_file(&self) -> Option<File> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_loader_get_file(
+            from_glib_none(ffi::gtk_source_file_loader_get_file(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -164,7 +162,7 @@ impl<O: IsA<FileLoader>> FileLoaderExt for O {
 
     fn get_input_stream(&self) -> Option<gio::InputStream> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_loader_get_input_stream(
+            from_glib_none(ffi::gtk_source_file_loader_get_input_stream(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -172,7 +170,7 @@ impl<O: IsA<FileLoader>> FileLoaderExt for O {
 
     fn get_location(&self) -> Option<gio::File> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_file_loader_get_location(
+            from_glib_none(ffi::gtk_source_file_loader_get_location(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -180,14 +178,14 @@ impl<O: IsA<FileLoader>> FileLoaderExt for O {
 
     fn get_newline_type(&self) -> NewlineType {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_file_loader_get_newline_type(
+            from_glib(ffi::gtk_source_file_loader_get_newline_type(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
     //fn load_async<P: IsA<gio::Cancellable>, Q: FnOnce(Result<(), glib::Error>) + Send + 'static, R: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, io_priority: glib::Priority, cancellable: Option<&P>, progress_callback: Q, progress_callback_notify: Fn() + 'static, callback: R) {
-    //    unsafe { TODO: call gtk_source_sys:gtk_source_file_loader_load_async() }
+    //    unsafe { TODO: call ffi:gtk_source_file_loader_load_async() }
     //}
 
     //

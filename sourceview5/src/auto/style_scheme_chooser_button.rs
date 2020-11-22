@@ -2,18 +2,16 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use crate::StyleSchemeChooser;
 use glib::object::Cast;
 use glib::translate::*;
-use gtk;
-use gtk_source_sys;
 use std::fmt;
-use StyleSchemeChooser;
 
-glib_wrapper! {
-    pub struct StyleSchemeChooserButton(Object<gtk_source_sys::GtkSourceStyleSchemeChooserButton, gtk_source_sys::GtkSourceStyleSchemeChooserButtonClass>) @extends gtk::Button, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Actionable, StyleSchemeChooser;
+glib::glib_wrapper! {
+    pub struct StyleSchemeChooserButton(Object<ffi::GtkSourceStyleSchemeChooserButton, ffi::GtkSourceStyleSchemeChooserButtonClass>) @extends gtk::Button, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Actionable, StyleSchemeChooser;
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_style_scheme_chooser_button_get_type(),
+        get_type => || ffi::gtk_source_style_scheme_chooser_button_get_type(),
     }
 }
 
@@ -21,7 +19,8 @@ impl StyleSchemeChooserButton {
     pub fn new() -> StyleSchemeChooserButton {
         assert_initialized_main_thread!();
         unsafe {
-            gtk::Widget::from_glib_none(gtk_source_sys::gtk_source_style_scheme_chooser_button_new()).unsafe_cast()
+            gtk::Widget::from_glib_none(ffi::gtk_source_style_scheme_chooser_button_new())
+                .unsafe_cast()
         }
     }
 }

@@ -2,31 +2,26 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use crate::GutterRenderer;
+use crate::GutterRendererAlignmentMode;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem;
 use std::mem::transmute;
-use GutterRenderer;
-use GutterRendererAlignmentMode;
 
-glib_wrapper! {
-    pub struct GutterRendererText(Object<gtk_source_sys::GtkSourceGutterRendererText, gtk_source_sys::GtkSourceGutterRendererTextClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+glib::glib_wrapper! {
+    pub struct GutterRendererText(Object<ffi::GtkSourceGutterRendererText, ffi::GtkSourceGutterRendererTextClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_gutter_renderer_text_get_type(),
+        get_type => || ffi::gtk_source_gutter_renderer_text_get_type(),
     }
 }
 
@@ -34,8 +29,7 @@ impl GutterRendererText {
     pub fn new() -> GutterRendererText {
         assert_initialized_main_thread!();
         unsafe {
-            GutterRenderer::from_glib_full(gtk_source_sys::gtk_source_gutter_renderer_text_new())
-                .unsafe_cast()
+            GutterRenderer::from_glib_full(ffi::gtk_source_gutter_renderer_text_new()).unsafe_cast()
         }
     }
 }
@@ -361,9 +355,9 @@ pub trait GutterRendererTextExt: 'static {
 
     fn set_text(&self, text: &str);
 
-    fn get_property_markup(&self) -> Option<GString>;
+    fn get_property_markup(&self) -> Option<glib::GString>;
 
-    fn get_property_text(&self) -> Option<GString>;
+    fn get_property_text(&self) -> Option<glib::GString>;
 
     fn connect_property_markup_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
 
@@ -375,7 +369,7 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
         unsafe {
             let mut width = mem::MaybeUninit::uninit();
             let mut height = mem::MaybeUninit::uninit();
-            gtk_source_sys::gtk_source_gutter_renderer_text_measure(
+            ffi::gtk_source_gutter_renderer_text_measure(
                 self.as_ref().to_glib_none().0,
                 text.to_glib_none().0,
                 width.as_mut_ptr(),
@@ -391,7 +385,7 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
         unsafe {
             let mut width = mem::MaybeUninit::uninit();
             let mut height = mem::MaybeUninit::uninit();
-            gtk_source_sys::gtk_source_gutter_renderer_text_measure_markup(
+            ffi::gtk_source_gutter_renderer_text_measure_markup(
                 self.as_ref().to_glib_none().0,
                 markup.to_glib_none().0,
                 width.as_mut_ptr(),
@@ -406,7 +400,7 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
     fn set_markup(&self, markup: &str) {
         let length = markup.len() as i32;
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_text_set_markup(
+            ffi::gtk_source_gutter_renderer_text_set_markup(
                 self.as_ref().to_glib_none().0,
                 markup.to_glib_none().0,
                 length,
@@ -417,7 +411,7 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
     fn set_text(&self, text: &str) {
         let length = text.len() as i32;
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_text_set_text(
+            ffi::gtk_source_gutter_renderer_text_set_text(
                 self.as_ref().to_glib_none().0,
                 text.to_glib_none().0,
                 length,
@@ -425,11 +419,11 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
         }
     }
 
-    fn get_property_markup(&self) -> Option<GString> {
+    fn get_property_markup(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"markup\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -439,11 +433,11 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
         }
     }
 
-    fn get_property_text(&self) -> Option<GString> {
+    fn get_property_text(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"text\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -455,9 +449,9 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
 
     fn connect_property_markup_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_markup_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRendererText,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRendererText,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRendererText>,
         {
@@ -479,9 +473,9 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
 
     fn connect_property_text_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_text_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRendererText,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRendererText,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRendererText>,
         {

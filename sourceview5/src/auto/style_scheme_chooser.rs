@@ -2,23 +2,21 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use crate::StyleScheme;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib_sys;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use StyleScheme;
 
-glib_wrapper! {
-    pub struct StyleSchemeChooser(Interface<gtk_source_sys::GtkSourceStyleSchemeChooser>);
+glib::glib_wrapper! {
+    pub struct StyleSchemeChooser(Interface<ffi::GtkSourceStyleSchemeChooser>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_style_scheme_chooser_get_type(),
+        get_type => || ffi::gtk_source_style_scheme_chooser_get_type(),
     }
 }
 
@@ -36,17 +34,15 @@ pub trait StyleSchemeChooserExt: 'static {
 impl<O: IsA<StyleSchemeChooser>> StyleSchemeChooserExt for O {
     fn get_style_scheme(&self) -> Option<StyleScheme> {
         unsafe {
-            from_glib_none(
-                gtk_source_sys::gtk_source_style_scheme_chooser_get_style_scheme(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib_none(ffi::gtk_source_style_scheme_chooser_get_style_scheme(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn set_style_scheme<P: IsA<StyleScheme>>(&self, scheme: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_style_scheme_chooser_set_style_scheme(
+            ffi::gtk_source_style_scheme_chooser_set_style_scheme(
                 self.as_ref().to_glib_none().0,
                 scheme.as_ref().to_glib_none().0,
             );
@@ -58,9 +54,9 @@ impl<O: IsA<StyleSchemeChooser>> StyleSchemeChooserExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_style_scheme_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceStyleSchemeChooser,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceStyleSchemeChooser,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<StyleSchemeChooser>,
         {

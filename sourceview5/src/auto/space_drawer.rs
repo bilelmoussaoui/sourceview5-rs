@@ -2,8 +2,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gio;
-use glib;
+use crate::SpaceLocationFlags;
+use crate::SpaceTypeFlags;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -11,26 +11,22 @@ use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use glib_sys;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use SpaceLocationFlags;
-use SpaceTypeFlags;
 
-glib_wrapper! {
-    pub struct SpaceDrawer(Object<gtk_source_sys::GtkSourceSpaceDrawer, gtk_source_sys::GtkSourceSpaceDrawerClass>);
+glib::glib_wrapper! {
+    pub struct SpaceDrawer(Object<ffi::GtkSourceSpaceDrawer, ffi::GtkSourceSpaceDrawerClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_space_drawer_get_type(),
+        get_type => || ffi::gtk_source_space_drawer_get_type(),
     }
 }
 
 impl SpaceDrawer {
     pub fn new() -> SpaceDrawer {
         assert_initialized_main_thread!();
-        unsafe { from_glib_full(gtk_source_sys::gtk_source_space_drawer_new()) }
+        unsafe { from_glib_full(ffi::gtk_source_space_drawer_new()) }
     }
 }
 
@@ -115,7 +111,7 @@ impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
         flags: gio::SettingsBindFlags,
     ) {
         unsafe {
-            gtk_source_sys::gtk_source_space_drawer_bind_matrix_setting(
+            ffi::gtk_source_space_drawer_bind_matrix_setting(
                 self.as_ref().to_glib_none().0,
                 settings.as_ref().to_glib_none().0,
                 key.to_glib_none().0,
@@ -126,7 +122,7 @@ impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
 
     fn get_enable_matrix(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_space_drawer_get_enable_matrix(
+            from_glib(ffi::gtk_source_space_drawer_get_enable_matrix(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -134,7 +130,7 @@ impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
 
     fn get_matrix(&self) -> Option<glib::Variant> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_space_drawer_get_matrix(
+            from_glib_full(ffi::gtk_source_space_drawer_get_matrix(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -142,18 +138,16 @@ impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
 
     fn get_types_for_locations(&self, locations: SpaceLocationFlags) -> SpaceTypeFlags {
         unsafe {
-            from_glib(
-                gtk_source_sys::gtk_source_space_drawer_get_types_for_locations(
-                    self.as_ref().to_glib_none().0,
-                    locations.to_glib(),
-                ),
-            )
+            from_glib(ffi::gtk_source_space_drawer_get_types_for_locations(
+                self.as_ref().to_glib_none().0,
+                locations.to_glib(),
+            ))
         }
     }
 
     fn set_enable_matrix(&self, enable_matrix: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_space_drawer_set_enable_matrix(
+            ffi::gtk_source_space_drawer_set_enable_matrix(
                 self.as_ref().to_glib_none().0,
                 enable_matrix.to_glib(),
             );
@@ -162,7 +156,7 @@ impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
 
     fn set_matrix(&self, matrix: Option<&glib::Variant>) {
         unsafe {
-            gtk_source_sys::gtk_source_space_drawer_set_matrix(
+            ffi::gtk_source_space_drawer_set_matrix(
                 self.as_ref().to_glib_none().0,
                 matrix.to_glib_none().0,
             );
@@ -171,7 +165,7 @@ impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
 
     fn set_types_for_locations(&self, locations: SpaceLocationFlags, types: SpaceTypeFlags) {
         unsafe {
-            gtk_source_sys::gtk_source_space_drawer_set_types_for_locations(
+            ffi::gtk_source_space_drawer_set_types_for_locations(
                 self.as_ref().to_glib_none().0,
                 locations.to_glib(),
                 types.to_glib(),
@@ -184,9 +178,9 @@ impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_enable_matrix_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSpaceDrawer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSpaceDrawer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SpaceDrawer>,
         {
@@ -208,9 +202,9 @@ impl<O: IsA<SpaceDrawer>> SpaceDrawerExt for O {
 
     fn connect_property_matrix_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_matrix_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSpaceDrawer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSpaceDrawer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SpaceDrawer>,
         {

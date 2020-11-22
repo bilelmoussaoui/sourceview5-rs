@@ -5,21 +5,16 @@
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
-use pango;
 use std::fmt;
 
-glib_wrapper! {
-    pub struct Style(Object<gtk_source_sys::GtkSourceStyle, gtk_source_sys::GtkSourceStyleClass>);
+glib::glib_wrapper! {
+    pub struct Style(Object<ffi::GtkSourceStyle, ffi::GtkSourceStyleClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_style_get_type(),
+        get_type => || ffi::gtk_source_style_get_type(),
     }
 }
 
@@ -211,7 +206,7 @@ pub trait StyleExt: 'static {
 
     fn copy(&self) -> Option<Style>;
 
-    fn get_property_background(&self) -> Option<GString>;
+    fn get_property_background(&self) -> Option<glib::GString>;
 
     fn get_property_background_set(&self) -> bool;
 
@@ -219,7 +214,7 @@ pub trait StyleExt: 'static {
 
     fn get_property_bold_set(&self) -> bool;
 
-    fn get_property_foreground(&self) -> Option<GString>;
+    fn get_property_foreground(&self) -> Option<glib::GString>;
 
     fn get_property_foreground_set(&self) -> bool;
 
@@ -227,13 +222,13 @@ pub trait StyleExt: 'static {
 
     fn get_property_italic_set(&self) -> bool;
 
-    fn get_property_line_background(&self) -> Option<GString>;
+    fn get_property_line_background(&self) -> Option<glib::GString>;
 
     fn get_property_line_background_set(&self) -> bool;
 
     fn get_property_pango_underline(&self) -> pango::Underline;
 
-    fn get_property_scale(&self) -> Option<GString>;
+    fn get_property_scale(&self) -> Option<glib::GString>;
 
     fn get_property_scale_set(&self) -> bool;
 
@@ -241,7 +236,7 @@ pub trait StyleExt: 'static {
 
     fn get_property_strikethrough_set(&self) -> bool;
 
-    fn get_property_underline_color(&self) -> Option<GString>;
+    fn get_property_underline_color(&self) -> Option<glib::GString>;
 
     fn get_property_underline_color_set(&self) -> bool;
 
@@ -251,7 +246,7 @@ pub trait StyleExt: 'static {
 impl<O: IsA<Style>> StyleExt for O {
     fn apply<P: IsA<gtk::TextTag>>(&self, tag: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_style_apply(
+            ffi::gtk_source_style_apply(
                 const_override(self.as_ref().to_glib_none().0),
                 tag.as_ref().to_glib_none().0,
             );
@@ -260,17 +255,17 @@ impl<O: IsA<Style>> StyleExt for O {
 
     fn copy(&self) -> Option<Style> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_style_copy(const_override(
+            from_glib_full(ffi::gtk_source_style_copy(const_override(
                 self.as_ref().to_glib_none().0,
             )))
         }
     }
 
-    fn get_property_background(&self) -> Option<GString> {
+    fn get_property_background(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"background\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -283,8 +278,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_background_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"background-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -298,8 +293,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_bold(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"bold\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -313,8 +308,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_bold_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"bold-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -325,11 +320,11 @@ impl<O: IsA<Style>> StyleExt for O {
         }
     }
 
-    fn get_property_foreground(&self) -> Option<GString> {
+    fn get_property_foreground(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"foreground\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -342,8 +337,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_foreground_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"foreground-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -357,8 +352,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_italic(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"italic\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -372,8 +367,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_italic_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"italic-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -384,11 +379,11 @@ impl<O: IsA<Style>> StyleExt for O {
         }
     }
 
-    fn get_property_line_background(&self) -> Option<GString> {
+    fn get_property_line_background(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"line-background\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -401,8 +396,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_line_background_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"line-background-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -416,8 +411,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_pango_underline(&self) -> pango::Underline {
         unsafe {
             let mut value = Value::from_type(<pango::Underline as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"pango-underline\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -428,11 +423,11 @@ impl<O: IsA<Style>> StyleExt for O {
         }
     }
 
-    fn get_property_scale(&self) -> Option<GString> {
+    fn get_property_scale(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"scale\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -445,8 +440,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_scale_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"scale-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -460,8 +455,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_strikethrough(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"strikethrough\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -475,8 +470,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_strikethrough_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"strikethrough-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -487,11 +482,11 @@ impl<O: IsA<Style>> StyleExt for O {
         }
     }
 
-    fn get_property_underline_color(&self) -> Option<GString> {
+    fn get_property_underline_color(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"underline-color\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -504,8 +499,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_underline_color_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"underline-color-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -519,8 +514,8 @@ impl<O: IsA<Style>> StyleExt for O {
     fn get_property_underline_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"underline-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );

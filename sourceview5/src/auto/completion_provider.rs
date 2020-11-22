@@ -2,30 +2,21 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gdk;
-use gio;
-use gio_sys;
-use glib;
+use crate::CompletionCell;
+use crate::CompletionContext;
+use crate::CompletionProposal;
 use glib::object::IsA;
 use glib::translate::*;
-use glib::GString;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::pin::Pin;
 use std::ptr;
-use CompletionCell;
-use CompletionContext;
-use CompletionProposal;
 
-glib_wrapper! {
-    pub struct CompletionProvider(Interface<gtk_source_sys::GtkSourceCompletionProvider>);
+glib::glib_wrapper! {
+    pub struct CompletionProvider(Interface<ffi::GtkSourceCompletionProvider>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_completion_provider_get_type(),
+        get_type => || ffi::gtk_source_completion_provider_get_type(),
     }
 }
 
@@ -47,7 +38,7 @@ pub trait CompletionProviderExt: 'static {
 
     fn get_priority<P: IsA<CompletionContext>>(&self, context: &P) -> i32;
 
-    fn get_title(&self) -> Option<GString>;
+    fn get_title(&self) -> Option<glib::GString>;
 
     fn is_trigger(&self, iter: &gtk::TextIter, ch: char) -> bool;
 
@@ -93,7 +84,7 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
         proposal: &Q,
     ) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_provider_activate(
+            ffi::gtk_source_completion_provider_activate(
                 self.as_ref().to_glib_none().0,
                 context.as_ref().to_glib_none().0,
                 proposal.as_ref().to_glib_none().0,
@@ -108,7 +99,7 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
         cell: &R,
     ) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_provider_display(
+            ffi::gtk_source_completion_provider_display(
                 self.as_ref().to_glib_none().0,
                 context.as_ref().to_glib_none().0,
                 proposal.as_ref().to_glib_none().0,
@@ -119,16 +110,16 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
 
     fn get_priority<P: IsA<CompletionContext>>(&self, context: &P) -> i32 {
         unsafe {
-            gtk_source_sys::gtk_source_completion_provider_get_priority(
+            ffi::gtk_source_completion_provider_get_priority(
                 self.as_ref().to_glib_none().0,
                 context.as_ref().to_glib_none().0,
             )
         }
     }
 
-    fn get_title(&self) -> Option<GString> {
+    fn get_title(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_completion_provider_get_title(
+            from_glib_full(ffi::gtk_source_completion_provider_get_title(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -136,7 +127,7 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
 
     fn is_trigger(&self, iter: &gtk::TextIter, ch: char) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_completion_provider_is_trigger(
+            from_glib(ffi::gtk_source_completion_provider_is_trigger(
                 self.as_ref().to_glib_none().0,
                 iter.to_glib_none().0,
                 ch.to_glib(),
@@ -152,15 +143,13 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
         state: gdk::ModifierType,
     ) -> bool {
         unsafe {
-            from_glib(
-                gtk_source_sys::gtk_source_completion_provider_key_activates(
-                    self.as_ref().to_glib_none().0,
-                    context.as_ref().to_glib_none().0,
-                    proposal.as_ref().to_glib_none().0,
-                    keyval,
-                    state.to_glib(),
-                ),
-            )
+            from_glib(ffi::gtk_source_completion_provider_key_activates(
+                self.as_ref().to_glib_none().0,
+                context.as_ref().to_glib_none().0,
+                proposal.as_ref().to_glib_none().0,
+                keyval,
+                state.to_glib(),
+            ))
         }
     }
 
@@ -173,7 +162,7 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
     ) -> Vec<CompletionProposal> {
         unsafe {
             FromGlibPtrContainer::from_glib_full(
-                gtk_source_sys::gtk_source_completion_provider_list_alternates(
+                ffi::gtk_source_completion_provider_list_alternates(
                     self.as_ref().to_glib_none().0,
                     context.as_ref().to_glib_none().0,
                     proposal.as_ref().to_glib_none().0,
@@ -196,12 +185,12 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
         unsafe extern "C" fn populate_async_trampoline<
             R: FnOnce(Result<gio::ListModel, glib::Error>) + Send + 'static,
         >(
-            _source_object: *mut gobject_sys::GObject,
-            res: *mut gio_sys::GAsyncResult,
-            user_data: glib_sys::gpointer,
+            _source_object: *mut glib::gobject_ffi::GObject,
+            res: *mut gio::ffi::GAsyncResult,
+            user_data: glib::ffi::gpointer,
         ) {
             let mut error = ptr::null_mut();
-            let ret = gtk_source_sys::gtk_source_completion_provider_populate_finish(
+            let ret = ffi::gtk_source_completion_provider_populate_finish(
                 _source_object as *mut _,
                 res,
                 &mut error,
@@ -216,7 +205,7 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
         }
         let callback = populate_async_trampoline::<R>;
         unsafe {
-            gtk_source_sys::gtk_source_completion_provider_populate_async(
+            ffi::gtk_source_completion_provider_populate_async(
                 self.as_ref().to_glib_none().0,
                 context.as_ref().to_glib_none().0,
                 cancellable.map(|p| p.as_ref()).to_glib_none().0,
@@ -244,7 +233,7 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
 
     fn refilter<P: IsA<CompletionContext>, Q: IsA<gio::ListModel>>(&self, context: &P, model: &Q) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_provider_refilter(
+            ffi::gtk_source_completion_provider_refilter(
                 self.as_ref().to_glib_none().0,
                 context.as_ref().to_glib_none().0,
                 model.as_ref().to_glib_none().0,

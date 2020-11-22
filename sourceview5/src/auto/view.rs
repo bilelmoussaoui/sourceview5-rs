@@ -2,9 +2,14 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gdk;
-use gdk_sys;
-use glib;
+use crate::BackgroundPatternType;
+use crate::Buffer;
+use crate::ChangeCaseType;
+use crate::Completion;
+use crate::Gutter;
+use crate::MarkAttributes;
+use crate::SmartHomeEndType;
+use crate::SpaceDrawer;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::object::ObjectExt;
@@ -13,42 +18,28 @@ use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
-use gtk_sys;
-use libc;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use BackgroundPatternType;
-use Buffer;
-use ChangeCaseType;
-use Completion;
-use Gutter;
-use MarkAttributes;
-use SmartHomeEndType;
-use SpaceDrawer;
 
-glib_wrapper! {
-    pub struct View(Object<gtk_source_sys::GtkSourceView, gtk_source_sys::GtkSourceViewClass>) @extends gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
+glib::glib_wrapper! {
+    pub struct View(Object<ffi::GtkSourceView, ffi::GtkSourceViewClass>) @extends gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_view_get_type(),
+        get_type => || ffi::gtk_source_view_get_type(),
     }
 }
 
 impl View {
     pub fn new() -> View {
         assert_initialized_main_thread!();
-        unsafe { gtk::Widget::from_glib_none(gtk_source_sys::gtk_source_view_new()).unsafe_cast() }
+        unsafe { gtk::Widget::from_glib_none(ffi::gtk_source_view_new()).unsafe_cast() }
     }
 
     pub fn with_buffer<P: IsA<Buffer>>(buffer: &P) -> View {
         skip_assert_initialized!();
         unsafe {
-            gtk::Widget::from_glib_none(gtk_source_sys::gtk_source_view_new_with_buffer(
+            gtk::Widget::from_glib_none(ffi::gtk_source_view_new_with_buffer(
                 buffer.as_ref().to_glib_none().0,
             ))
             .unsafe_cast()
@@ -151,11 +142,8 @@ impl ViewBuilder {
             properties.push(("background-pattern", background_pattern));
         }
         #[cfg(any(feature = "v5_0", feature = "dox"))]
-        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-        {
-            if let Some(ref enable_snippets) = self.enable_snippets {
-                properties.push(("enable-snippets", enable_snippets));
-            }
+        if let Some(ref enable_snippets) = self.enable_snippets {
+            properties.push(("enable-snippets", enable_snippets));
         }
         if let Some(ref highlight_current_line) = self.highlight_current_line {
             properties.push(("highlight-current-line", highlight_current_line));
@@ -795,7 +783,7 @@ pub trait ViewExt: 'static {
 impl<O: IsA<View>> ViewExt for O {
     fn get_auto_indent(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_auto_indent(
+            from_glib(ffi::gtk_source_view_get_auto_indent(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -803,7 +791,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_background_pattern(&self) -> BackgroundPatternType {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_background_pattern(
+            from_glib(ffi::gtk_source_view_get_background_pattern(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -811,7 +799,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_completion(&self) -> Option<Completion> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_view_get_completion(
+            from_glib_none(ffi::gtk_source_view_get_completion(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -821,7 +809,7 @@ impl<O: IsA<View>> ViewExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_enable_snippets(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_enable_snippets(
+            from_glib(ffi::gtk_source_view_get_enable_snippets(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -829,7 +817,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_gutter(&self, window_type: gtk::TextWindowType) -> Option<Gutter> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_view_get_gutter(
+            from_glib_none(ffi::gtk_source_view_get_gutter(
                 self.as_ref().to_glib_none().0,
                 window_type.to_glib(),
             ))
@@ -838,7 +826,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_highlight_current_line(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_highlight_current_line(
+            from_glib(ffi::gtk_source_view_get_highlight_current_line(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -846,37 +834,31 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_indent_on_tab(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_indent_on_tab(
+            from_glib(ffi::gtk_source_view_get_indent_on_tab(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
     fn get_indent_width(&self) -> i32 {
-        unsafe { gtk_source_sys::gtk_source_view_get_indent_width(self.as_ref().to_glib_none().0) }
+        unsafe { ffi::gtk_source_view_get_indent_width(self.as_ref().to_glib_none().0) }
     }
 
     fn get_insert_spaces_instead_of_tabs(&self) -> bool {
         unsafe {
-            from_glib(
-                gtk_source_sys::gtk_source_view_get_insert_spaces_instead_of_tabs(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib(ffi::gtk_source_view_get_insert_spaces_instead_of_tabs(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_right_margin_position(&self) -> u32 {
-        unsafe {
-            gtk_source_sys::gtk_source_view_get_right_margin_position(
-                self.as_ref().to_glib_none().0,
-            )
-        }
+        unsafe { ffi::gtk_source_view_get_right_margin_position(self.as_ref().to_glib_none().0) }
     }
 
     fn get_show_line_marks(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_show_line_marks(
+            from_glib(ffi::gtk_source_view_get_show_line_marks(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -884,7 +866,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_show_line_numbers(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_show_line_numbers(
+            from_glib(ffi::gtk_source_view_get_show_line_numbers(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -892,7 +874,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_show_right_margin(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_show_right_margin(
+            from_glib(ffi::gtk_source_view_get_show_right_margin(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -900,7 +882,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_smart_backspace(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_smart_backspace(
+            from_glib(ffi::gtk_source_view_get_smart_backspace(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -908,7 +890,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_smart_home_end(&self) -> SmartHomeEndType {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_view_get_smart_home_end(
+            from_glib(ffi::gtk_source_view_get_smart_home_end(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -916,19 +898,19 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn get_space_drawer(&self) -> Option<SpaceDrawer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_view_get_space_drawer(
+            from_glib_none(ffi::gtk_source_view_get_space_drawer(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
     fn get_tab_width(&self) -> u32 {
-        unsafe { gtk_source_sys::gtk_source_view_get_tab_width(self.as_ref().to_glib_none().0) }
+        unsafe { ffi::gtk_source_view_get_tab_width(self.as_ref().to_glib_none().0) }
     }
 
     fn get_visual_column(&self, iter: &gtk::TextIter) -> u32 {
         unsafe {
-            gtk_source_sys::gtk_source_view_get_visual_column(
+            ffi::gtk_source_view_get_visual_column(
                 self.as_ref().to_glib_none().0,
                 iter.to_glib_none().0,
             )
@@ -937,7 +919,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn indent_lines(&self, start: &mut gtk::TextIter, end: &mut gtk::TextIter) {
         unsafe {
-            gtk_source_sys::gtk_source_view_indent_lines(
+            ffi::gtk_source_view_indent_lines(
                 self.as_ref().to_glib_none().0,
                 start.to_glib_none_mut().0,
                 end.to_glib_none_mut().0,
@@ -947,16 +929,13 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_auto_indent(&self, enable: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_auto_indent(
-                self.as_ref().to_glib_none().0,
-                enable.to_glib(),
-            );
+            ffi::gtk_source_view_set_auto_indent(self.as_ref().to_glib_none().0, enable.to_glib());
         }
     }
 
     fn set_background_pattern(&self, background_pattern: BackgroundPatternType) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_background_pattern(
+            ffi::gtk_source_view_set_background_pattern(
                 self.as_ref().to_glib_none().0,
                 background_pattern.to_glib(),
             );
@@ -967,7 +946,7 @@ impl<O: IsA<View>> ViewExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_enable_snippets(&self, enable_snippets: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_enable_snippets(
+            ffi::gtk_source_view_set_enable_snippets(
                 self.as_ref().to_glib_none().0,
                 enable_snippets.to_glib(),
             );
@@ -976,7 +955,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_highlight_current_line(&self, highlight: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_highlight_current_line(
+            ffi::gtk_source_view_set_highlight_current_line(
                 self.as_ref().to_glib_none().0,
                 highlight.to_glib(),
             );
@@ -985,7 +964,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_indent_on_tab(&self, enable: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_indent_on_tab(
+            ffi::gtk_source_view_set_indent_on_tab(
                 self.as_ref().to_glib_none().0,
                 enable.to_glib(),
             );
@@ -994,13 +973,13 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_indent_width(&self, width: i32) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_indent_width(self.as_ref().to_glib_none().0, width);
+            ffi::gtk_source_view_set_indent_width(self.as_ref().to_glib_none().0, width);
         }
     }
 
     fn set_insert_spaces_instead_of_tabs(&self, enable: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_insert_spaces_instead_of_tabs(
+            ffi::gtk_source_view_set_insert_spaces_instead_of_tabs(
                 self.as_ref().to_glib_none().0,
                 enable.to_glib(),
             );
@@ -1014,7 +993,7 @@ impl<O: IsA<View>> ViewExt for O {
         priority: i32,
     ) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_mark_attributes(
+            ffi::gtk_source_view_set_mark_attributes(
                 self.as_ref().to_glib_none().0,
                 category.to_glib_none().0,
                 attributes.as_ref().to_glib_none().0,
@@ -1025,16 +1004,13 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_right_margin_position(&self, pos: u32) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_right_margin_position(
-                self.as_ref().to_glib_none().0,
-                pos,
-            );
+            ffi::gtk_source_view_set_right_margin_position(self.as_ref().to_glib_none().0, pos);
         }
     }
 
     fn set_show_line_marks(&self, show: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_show_line_marks(
+            ffi::gtk_source_view_set_show_line_marks(
                 self.as_ref().to_glib_none().0,
                 show.to_glib(),
             );
@@ -1043,7 +1019,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_show_line_numbers(&self, show: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_show_line_numbers(
+            ffi::gtk_source_view_set_show_line_numbers(
                 self.as_ref().to_glib_none().0,
                 show.to_glib(),
             );
@@ -1052,7 +1028,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_show_right_margin(&self, show: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_show_right_margin(
+            ffi::gtk_source_view_set_show_right_margin(
                 self.as_ref().to_glib_none().0,
                 show.to_glib(),
             );
@@ -1061,7 +1037,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_smart_backspace(&self, smart_backspace: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_smart_backspace(
+            ffi::gtk_source_view_set_smart_backspace(
                 self.as_ref().to_glib_none().0,
                 smart_backspace.to_glib(),
             );
@@ -1070,7 +1046,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_smart_home_end(&self, smart_home_end: SmartHomeEndType) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_smart_home_end(
+            ffi::gtk_source_view_set_smart_home_end(
                 self.as_ref().to_glib_none().0,
                 smart_home_end.to_glib(),
             );
@@ -1079,13 +1055,13 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn set_tab_width(&self, width: u32) {
         unsafe {
-            gtk_source_sys::gtk_source_view_set_tab_width(self.as_ref().to_glib_none().0, width);
+            ffi::gtk_source_view_set_tab_width(self.as_ref().to_glib_none().0, width);
         }
     }
 
     fn unindent_lines(&self, start: &mut gtk::TextIter, end: &mut gtk::TextIter) {
         unsafe {
-            gtk_source_sys::gtk_source_view_unindent_lines(
+            ffi::gtk_source_view_unindent_lines(
                 self.as_ref().to_glib_none().0,
                 start.to_glib_none_mut().0,
                 end.to_glib_none_mut().0,
@@ -1095,9 +1071,9 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_change_case<F: Fn(&Self, ChangeCaseType) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn change_case_trampoline<P, F: Fn(&P, ChangeCaseType) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            case_type: gtk_source_sys::GtkSourceChangeCaseType,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            case_type: ffi::GtkSourceChangeCaseType,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1122,7 +1098,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn emit_change_case(&self, case_type: ChangeCaseType) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("change-case", &[&case_type])
                 .unwrap()
         };
@@ -1130,9 +1106,9 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_change_number<F: Fn(&Self, i32) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn change_number_trampoline<P, F: Fn(&P, i32) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
+            this: *mut ffi::GtkSourceView,
             count: libc::c_int,
-            f: glib_sys::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1154,7 +1130,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn emit_change_number(&self, count: i32) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("change-number", &[&count])
                 .unwrap()
         };
@@ -1162,8 +1138,8 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_join_lines<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn join_lines_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1185,7 +1161,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn emit_join_lines(&self) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("join-lines", &[])
                 .unwrap()
         };
@@ -1201,12 +1177,12 @@ impl<O: IsA<View>> ViewExt for O {
             P,
             F: Fn(&P, &gtk::TextIter, u32, gdk::ModifierType, i32) + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceView,
-            iter: *mut gtk_sys::GtkTextIter,
+            this: *mut ffi::GtkSourceView,
+            iter: *mut gtk::ffi::GtkTextIter,
             button: libc::c_uint,
-            state: gdk_sys::GdkModifierType,
+            state: gdk::ffi::GdkModifierType,
             n_presses: libc::c_int,
-            f: glib_sys::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1234,9 +1210,9 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_move_lines<F: Fn(&Self, bool) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn move_lines_trampoline<P, F: Fn(&P, bool) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            down: glib_sys::gboolean,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            down: glib::ffi::gboolean,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1261,7 +1237,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn emit_move_lines(&self, down: bool) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("move-lines", &[&down])
                 .unwrap()
         };
@@ -1272,9 +1248,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn move_to_matching_bracket_trampoline<P, F: Fn(&P, bool) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            extend_selection: glib_sys::gboolean,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            extend_selection: glib::ffi::gboolean,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1299,7 +1275,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn emit_move_to_matching_bracket(&self, extend_selection: bool) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("move-to-matching-bracket", &[&extend_selection])
                 .unwrap()
         };
@@ -1307,9 +1283,9 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_move_words<F: Fn(&Self, i32) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn move_words_trampoline<P, F: Fn(&P, i32) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
+            this: *mut ffi::GtkSourceView,
             count: libc::c_int,
-            f: glib_sys::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1331,7 +1307,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn emit_move_words(&self, count: i32) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("move-words", &[&count])
                 .unwrap()
         };
@@ -1345,8 +1321,8 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_show_completion<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn show_completion_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1368,7 +1344,7 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn emit_show_completion(&self) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("show-completion", &[])
                 .unwrap()
         };
@@ -1382,10 +1358,10 @@ impl<O: IsA<View>> ViewExt for O {
             P,
             F: Fn(&P, &gtk::TextIter, i32) + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceView,
-            iter: *mut gtk_sys::GtkTextIter,
+            this: *mut ffi::GtkSourceView,
+            iter: *mut gtk::ffi::GtkTextIter,
             count: libc::c_int,
-            f: glib_sys::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1411,9 +1387,9 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_property_auto_indent_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_auto_indent_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1438,9 +1414,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_background_pattern_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1462,9 +1438,9 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_property_completion_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_completion_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1491,9 +1467,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_enable_snippets_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1518,9 +1494,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_highlight_current_line_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1545,9 +1521,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_indent_on_tab_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1572,9 +1548,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_indent_width_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1602,9 +1578,9 @@ impl<O: IsA<View>> ViewExt for O {
             P,
             F: Fn(&P) + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1629,9 +1605,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_right_margin_position_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1656,9 +1632,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_show_line_marks_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1683,9 +1659,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_show_line_numbers_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1710,9 +1686,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_show_right_margin_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1737,9 +1713,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_smart_backspace_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1764,9 +1740,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_smart_home_end_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1791,9 +1767,9 @@ impl<O: IsA<View>> ViewExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_space_drawer_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {
@@ -1815,9 +1791,9 @@ impl<O: IsA<View>> ViewExt for O {
 
     fn connect_property_tab_width_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_tab_width_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceView,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceView,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<View>,
         {

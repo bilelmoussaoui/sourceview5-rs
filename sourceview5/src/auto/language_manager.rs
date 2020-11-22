@@ -2,38 +2,35 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use crate::Language;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
-use glib_sys;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use Language;
 
-glib_wrapper! {
-    pub struct LanguageManager(Object<gtk_source_sys::GtkSourceLanguageManager, gtk_source_sys::GtkSourceLanguageManagerClass>);
+glib::glib_wrapper! {
+    pub struct LanguageManager(Object<ffi::GtkSourceLanguageManager, ffi::GtkSourceLanguageManagerClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_language_manager_get_type(),
+        get_type => || ffi::gtk_source_language_manager_get_type(),
     }
 }
 
 impl LanguageManager {
     pub fn new() -> LanguageManager {
         assert_initialized_main_thread!();
-        unsafe { from_glib_full(gtk_source_sys::gtk_source_language_manager_new()) }
+        unsafe { from_glib_full(ffi::gtk_source_language_manager_new()) }
     }
 
     pub fn get_default() -> Option<LanguageManager> {
         assert_initialized_main_thread!();
-        unsafe { from_glib_none(gtk_source_sys::gtk_source_language_manager_get_default()) }
+        unsafe { from_glib_none(ffi::gtk_source_language_manager_get_default()) }
     }
 }
 
@@ -76,9 +73,9 @@ pub const NONE_LANGUAGE_MANAGER: Option<&LanguageManager> = None;
 pub trait LanguageManagerExt: 'static {
     fn get_language(&self, id: &str) -> Option<Language>;
 
-    fn get_language_ids(&self) -> Vec<GString>;
+    fn get_language_ids(&self) -> Vec<glib::GString>;
 
-    fn get_search_path(&self) -> Vec<GString>;
+    fn get_search_path(&self) -> Vec<glib::GString>;
 
     fn guess_language(
         &self,
@@ -97,30 +94,26 @@ pub trait LanguageManagerExt: 'static {
 impl<O: IsA<LanguageManager>> LanguageManagerExt for O {
     fn get_language(&self, id: &str) -> Option<Language> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_language_manager_get_language(
+            from_glib_none(ffi::gtk_source_language_manager_get_language(
                 self.as_ref().to_glib_none().0,
                 id.to_glib_none().0,
             ))
         }
     }
 
-    fn get_language_ids(&self) -> Vec<GString> {
+    fn get_language_ids(&self) -> Vec<glib::GString> {
         unsafe {
-            FromGlibPtrContainer::from_glib_none(
-                gtk_source_sys::gtk_source_language_manager_get_language_ids(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            FromGlibPtrContainer::from_glib_none(ffi::gtk_source_language_manager_get_language_ids(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
-    fn get_search_path(&self) -> Vec<GString> {
+    fn get_search_path(&self) -> Vec<glib::GString> {
         unsafe {
-            FromGlibPtrContainer::from_glib_none(
-                gtk_source_sys::gtk_source_language_manager_get_search_path(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            FromGlibPtrContainer::from_glib_none(ffi::gtk_source_language_manager_get_search_path(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -130,7 +123,7 @@ impl<O: IsA<LanguageManager>> LanguageManagerExt for O {
         content_type: Option<&str>,
     ) -> Option<Language> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_language_manager_guess_language(
+            from_glib_none(ffi::gtk_source_language_manager_guess_language(
                 self.as_ref().to_glib_none().0,
                 filename.to_glib_none().0,
                 content_type.to_glib_none().0,
@@ -140,7 +133,7 @@ impl<O: IsA<LanguageManager>> LanguageManagerExt for O {
 
     fn set_search_path(&self, dirs: &[&str]) {
         unsafe {
-            gtk_source_sys::gtk_source_language_manager_set_search_path(
+            ffi::gtk_source_language_manager_set_search_path(
                 self.as_ref().to_glib_none().0,
                 dirs.to_glib_none().0,
             );
@@ -152,9 +145,9 @@ impl<O: IsA<LanguageManager>> LanguageManagerExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_language_ids_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceLanguageManager,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceLanguageManager,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<LanguageManager>,
         {
@@ -176,9 +169,9 @@ impl<O: IsA<LanguageManager>> LanguageManagerExt for O {
 
     fn connect_property_search_path_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_search_path_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceLanguageManager,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceLanguageManager,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<LanguageManager>,
         {

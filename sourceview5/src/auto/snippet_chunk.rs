@@ -2,28 +2,24 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use crate::SnippetContext;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use glib_sys;
-use gobject_sys;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use SnippetContext;
 
-glib_wrapper! {
-    pub struct SnippetChunk(Object<gtk_source_sys::GtkSourceSnippetChunk, gtk_source_sys::GtkSourceSnippetChunkClass>);
+glib::glib_wrapper! {
+    pub struct SnippetChunk(Object<ffi::GtkSourceSnippetChunk, ffi::GtkSourceSnippetChunkClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_snippet_chunk_get_type(),
+        get_type => || ffi::gtk_source_snippet_chunk_get_type(),
     }
 }
 
@@ -32,7 +28,7 @@ impl SnippetChunk {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn new() -> SnippetChunk {
         assert_initialized_main_thread!();
-        unsafe { from_glib_none(gtk_source_sys::gtk_source_snippet_chunk_new()) }
+        unsafe { from_glib_none(ffi::gtk_source_snippet_chunk_new()) }
     }
 }
 
@@ -134,17 +130,17 @@ pub trait SnippetChunkExt: 'static {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_spec(&self) -> Option<GString>;
+    fn get_spec(&self) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_text(&self) -> Option<GString>;
+    fn get_text(&self) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_text_set(&self) -> bool;
 
-    fn get_tooltip_text(&self) -> Option<GString>;
+    fn get_tooltip_text(&self) -> Option<glib::GString>;
 
     fn set_context<P: IsA<SnippetContext>>(&self, context: &P);
 
@@ -172,11 +168,11 @@ pub trait SnippetChunkExt: 'static {
 
     fn set_property_focus_position(&self, focus_position: i32);
 
-    fn get_property_spec(&self) -> Option<GString>;
+    fn get_property_spec(&self) -> Option<glib::GString>;
 
     fn set_property_spec(&self, spec: Option<&str>);
 
-    fn get_property_text(&self) -> Option<GString>;
+    fn get_property_text(&self) -> Option<glib::GString>;
 
     fn set_property_text(&self, text: Option<&str>);
 
@@ -206,7 +202,7 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn copy(&self) -> Option<SnippetChunk> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_snippet_chunk_copy(
+            from_glib_full(ffi::gtk_source_snippet_chunk_copy(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -216,7 +212,7 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_context(&self) -> Option<SnippetContext> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_chunk_get_context(
+            from_glib_none(ffi::gtk_source_snippet_chunk_get_context(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -225,18 +221,14 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_focus_position(&self) -> i32 {
-        unsafe {
-            gtk_source_sys::gtk_source_snippet_chunk_get_focus_position(
-                self.as_ref().to_glib_none().0,
-            )
-        }
+        unsafe { ffi::gtk_source_snippet_chunk_get_focus_position(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_spec(&self) -> Option<GString> {
+    fn get_spec(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_chunk_get_spec(
+            from_glib_none(ffi::gtk_source_snippet_chunk_get_spec(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -244,9 +236,9 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_text(&self) -> Option<GString> {
+    fn get_text(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_chunk_get_text(
+            from_glib_none(ffi::gtk_source_snippet_chunk_get_text(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -256,15 +248,15 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_text_set(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_snippet_chunk_get_text_set(
+            from_glib(ffi::gtk_source_snippet_chunk_get_text_set(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_tooltip_text(&self) -> Option<GString> {
+    fn get_tooltip_text(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_chunk_get_tooltip_text(
+            from_glib_none(ffi::gtk_source_snippet_chunk_get_tooltip_text(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -272,7 +264,7 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn set_context<P: IsA<SnippetContext>>(&self, context: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_chunk_set_context(
+            ffi::gtk_source_snippet_chunk_set_context(
                 self.as_ref().to_glib_none().0,
                 context.as_ref().to_glib_none().0,
             );
@@ -283,7 +275,7 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_focus_position(&self, focus_position: i32) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_chunk_set_focus_position(
+            ffi::gtk_source_snippet_chunk_set_focus_position(
                 self.as_ref().to_glib_none().0,
                 focus_position,
             );
@@ -294,7 +286,7 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_spec(&self, spec: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_chunk_set_spec(
+            ffi::gtk_source_snippet_chunk_set_spec(
                 self.as_ref().to_glib_none().0,
                 spec.to_glib_none().0,
             );
@@ -305,7 +297,7 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_text(&self, text: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_chunk_set_text(
+            ffi::gtk_source_snippet_chunk_set_text(
                 self.as_ref().to_glib_none().0,
                 text.to_glib_none().0,
             );
@@ -316,7 +308,7 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_text_set(&self, text_set: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_chunk_set_text_set(
+            ffi::gtk_source_snippet_chunk_set_text_set(
                 self.as_ref().to_glib_none().0,
                 text_set.to_glib(),
             );
@@ -325,7 +317,7 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn set_tooltip_text(&self, tooltip_text: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_chunk_set_tooltip_text(
+            ffi::gtk_source_snippet_chunk_set_tooltip_text(
                 self.as_ref().to_glib_none().0,
                 tooltip_text.to_glib_none().0,
             );
@@ -335,8 +327,8 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     fn get_property_context(&self) -> Option<SnippetContext> {
         unsafe {
             let mut value = Value::from_type(<SnippetContext as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"context\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -349,8 +341,8 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     fn get_property_focus_position(&self) -> i32 {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"focus-position\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -363,19 +355,19 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn set_property_focus_position(&self, focus_position: i32) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"focus-position\0".as_ptr() as *const _,
                 Value::from(&focus_position).to_glib_none().0,
             );
         }
     }
 
-    fn get_property_spec(&self) -> Option<GString> {
+    fn get_property_spec(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"spec\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -387,19 +379,19 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn set_property_spec(&self, spec: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"spec\0".as_ptr() as *const _,
                 Value::from(spec).to_glib_none().0,
             );
         }
     }
 
-    fn get_property_text(&self) -> Option<GString> {
+    fn get_property_text(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"text\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -411,8 +403,8 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn set_property_text(&self, text: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"text\0".as_ptr() as *const _,
                 Value::from(text).to_glib_none().0,
             );
@@ -422,8 +414,8 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
     fn get_property_text_set(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"text-set\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -436,8 +428,8 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn set_property_text_set(&self, text_set: bool) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"text-set\0".as_ptr() as *const _,
                 Value::from(&text_set).to_glib_none().0,
             );
@@ -446,9 +438,9 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn connect_property_context_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_context_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippetChunk,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippetChunk,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SnippetChunk>,
         {
@@ -473,9 +465,9 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_focus_position_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippetChunk,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippetChunk,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SnippetChunk>,
         {
@@ -497,9 +489,9 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn connect_property_spec_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_spec_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippetChunk,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippetChunk,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SnippetChunk>,
         {
@@ -521,9 +513,9 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn connect_property_text_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_text_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippetChunk,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippetChunk,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SnippetChunk>,
         {
@@ -545,9 +537,9 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
 
     fn connect_property_text_set_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_text_set_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippetChunk,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippetChunk,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SnippetChunk>,
         {
@@ -572,9 +564,9 @@ impl<O: IsA<SnippetChunk>> SnippetChunkExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_tooltip_text_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippetChunk,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippetChunk,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SnippetChunk>,
         {

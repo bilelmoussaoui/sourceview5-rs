@@ -2,33 +2,25 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gdk;
-use gdk_pixbuf;
-use gio;
+use crate::GutterRenderer;
+use crate::GutterRendererAlignmentMode;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use GutterRenderer;
-use GutterRendererAlignmentMode;
 
-glib_wrapper! {
-    pub struct GutterRendererPixbuf(Object<gtk_source_sys::GtkSourceGutterRendererPixbuf, gtk_source_sys::GtkSourceGutterRendererPixbufClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+glib::glib_wrapper! {
+    pub struct GutterRendererPixbuf(Object<ffi::GtkSourceGutterRendererPixbuf, ffi::GtkSourceGutterRendererPixbufClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_type(),
+        get_type => || ffi::gtk_source_gutter_renderer_pixbuf_get_type(),
     }
 }
 
@@ -36,7 +28,7 @@ impl GutterRendererPixbuf {
     pub fn new() -> GutterRendererPixbuf {
         assert_initialized_main_thread!();
         unsafe {
-            GutterRenderer::from_glib_full(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_new())
+            GutterRenderer::from_glib_full(ffi::gtk_source_gutter_renderer_pixbuf_new())
                 .unsafe_cast()
         }
     }
@@ -375,7 +367,7 @@ pub const NONE_GUTTER_RENDERER_PIXBUF: Option<&GutterRendererPixbuf> = None;
 pub trait GutterRendererPixbufExt: 'static {
     fn get_gicon(&self) -> Option<gio::Icon>;
 
-    fn get_icon_name(&self) -> Option<GString>;
+    fn get_icon_name(&self) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
@@ -409,19 +401,17 @@ pub trait GutterRendererPixbufExt: 'static {
 impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
     fn get_gicon(&self) -> Option<gio::Icon> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_gicon(
+            from_glib_none(ffi::gtk_source_gutter_renderer_pixbuf_get_gicon(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_icon_name(&self) -> Option<GString> {
+    fn get_icon_name(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(
-                gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_icon_name(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib_none(ffi::gtk_source_gutter_renderer_pixbuf_get_icon_name(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -429,21 +419,17 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_paintable(&self) -> Option<gdk::Paintable> {
         unsafe {
-            from_glib_none(
-                gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_paintable(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib_none(ffi::gtk_source_gutter_renderer_pixbuf_get_paintable(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_pixbuf(&self) -> Option<gdk_pixbuf::Pixbuf> {
         unsafe {
-            from_glib_none(
-                gtk_source_sys::gtk_source_gutter_renderer_pixbuf_get_pixbuf(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib_none(ffi::gtk_source_gutter_renderer_pixbuf_get_pixbuf(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -451,7 +437,7 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn overlay_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_overlay_paintable(
+            ffi::gtk_source_gutter_renderer_pixbuf_overlay_paintable(
                 self.as_ref().to_glib_none().0,
                 paintable.as_ref().to_glib_none().0,
             );
@@ -460,7 +446,7 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
 
     fn set_gicon<P: IsA<gio::Icon>>(&self, icon: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_gicon(
+            ffi::gtk_source_gutter_renderer_pixbuf_set_gicon(
                 self.as_ref().to_glib_none().0,
                 icon.map(|p| p.as_ref()).to_glib_none().0,
             );
@@ -469,7 +455,7 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
 
     fn set_icon_name(&self, icon_name: Option<&str>) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_icon_name(
+            ffi::gtk_source_gutter_renderer_pixbuf_set_icon_name(
                 self.as_ref().to_glib_none().0,
                 icon_name.to_glib_none().0,
             );
@@ -478,7 +464,7 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
 
     fn set_paintable<P: IsA<gdk::Paintable>>(&self, paintable: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_paintable(
+            ffi::gtk_source_gutter_renderer_pixbuf_set_paintable(
                 self.as_ref().to_glib_none().0,
                 paintable.map(|p| p.as_ref()).to_glib_none().0,
             );
@@ -487,7 +473,7 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
 
     fn set_pixbuf(&self, pixbuf: Option<&gdk_pixbuf::Pixbuf>) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_pixbuf_set_pixbuf(
+            ffi::gtk_source_gutter_renderer_pixbuf_set_pixbuf(
                 self.as_ref().to_glib_none().0,
                 pixbuf.to_glib_none().0,
             );
@@ -497,8 +483,8 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
     fn get_property_paintable(&self) -> Option<gdk::Paintable> {
         unsafe {
             let mut value = Value::from_type(<gdk::Paintable as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"paintable\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -510,9 +496,9 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
 
     fn connect_property_gicon_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_gicon_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRendererPixbuf,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRendererPixbuf>,
         {
@@ -534,9 +520,9 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
 
     fn connect_property_icon_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_icon_name_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRendererPixbuf,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRendererPixbuf>,
         {
@@ -558,9 +544,9 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
 
     fn connect_property_paintable_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_paintable_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRendererPixbuf,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRendererPixbuf>,
         {
@@ -582,9 +568,9 @@ impl<O: IsA<GutterRendererPixbuf>> GutterRendererPixbufExt for O {
 
     fn connect_property_pixbuf_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_pixbuf_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRendererPixbuf,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRendererPixbuf,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRendererPixbuf>,
         {

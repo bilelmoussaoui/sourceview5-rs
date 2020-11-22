@@ -2,8 +2,12 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gdk;
-use gdk_sys;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+use crate::Buffer;
+use crate::GutterLines;
+use crate::GutterRendererAlignmentMode;
+use crate::View;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -11,30 +15,18 @@ use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use glib::Value;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
-use gtk_sys;
-use libc;
 use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem;
 use std::mem::transmute;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use Buffer;
-use GutterLines;
-use GutterRendererAlignmentMode;
-use View;
 
-glib_wrapper! {
-    pub struct GutterRenderer(Object<gtk_source_sys::GtkSourceGutterRenderer, gtk_source_sys::GtkSourceGutterRendererClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+glib::glib_wrapper! {
+    pub struct GutterRenderer(Object<ffi::GtkSourceGutterRenderer, ffi::GtkSourceGutterRendererClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_gutter_renderer_get_type(),
+        get_type => || ffi::gtk_source_gutter_renderer_get_type(),
     }
 }
 
@@ -158,7 +150,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
         n_presses: i32,
     ) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_activate(
+            ffi::gtk_source_gutter_renderer_activate(
                 self.as_ref().to_glib_none().0,
                 iter.to_glib_none().0,
                 area.to_glib_none().0,
@@ -175,7 +167,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
         unsafe {
             let mut x = mem::MaybeUninit::uninit();
             let mut y = mem::MaybeUninit::uninit();
-            gtk_source_sys::gtk_source_gutter_renderer_align_cell(
+            ffi::gtk_source_gutter_renderer_align_cell(
                 self.as_ref().to_glib_none().0,
                 line,
                 width,
@@ -191,11 +183,9 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn get_alignment_mode(&self) -> GutterRendererAlignmentMode {
         unsafe {
-            from_glib(
-                gtk_source_sys::gtk_source_gutter_renderer_get_alignment_mode(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib(ffi::gtk_source_gutter_renderer_get_alignment_mode(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
@@ -203,7 +193,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_get_buffer(
+            from_glib_none(ffi::gtk_source_gutter_renderer_get_buffer(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -211,7 +201,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn get_view(&self) -> Option<View> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_renderer_get_view(
+            from_glib_none(ffi::gtk_source_gutter_renderer_get_view(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -220,50 +210,40 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_xalign(&self) -> f32 {
-        unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_get_xalign(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::gtk_source_gutter_renderer_get_xalign(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_xpad(&self) -> i32 {
-        unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_get_xpad(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::gtk_source_gutter_renderer_get_xpad(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_yalign(&self) -> f32 {
-        unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_get_yalign(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::gtk_source_gutter_renderer_get_yalign(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_ypad(&self) -> i32 {
-        unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_get_ypad(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::gtk_source_gutter_renderer_get_ypad(self.as_ref().to_glib_none().0) }
     }
 
     fn query_activatable(&self, iter: &gtk::TextIter, area: &gdk::Rectangle) -> bool {
         unsafe {
-            from_glib(
-                gtk_source_sys::gtk_source_gutter_renderer_query_activatable(
-                    self.as_ref().to_glib_none().0,
-                    iter.to_glib_none().0,
-                    area.to_glib_none().0,
-                ),
-            )
+            from_glib(ffi::gtk_source_gutter_renderer_query_activatable(
+                self.as_ref().to_glib_none().0,
+                iter.to_glib_none().0,
+                area.to_glib_none().0,
+            ))
         }
     }
 
     fn set_alignment_mode(&self, mode: GutterRendererAlignmentMode) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_set_alignment_mode(
+            ffi::gtk_source_gutter_renderer_set_alignment_mode(
                 self.as_ref().to_glib_none().0,
                 mode.to_glib(),
             );
@@ -274,10 +254,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_xalign(&self, xalign: f32) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_set_xalign(
-                self.as_ref().to_glib_none().0,
-                xalign,
-            );
+            ffi::gtk_source_gutter_renderer_set_xalign(self.as_ref().to_glib_none().0, xalign);
         }
     }
 
@@ -285,10 +262,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_xpad(&self, xpad: i32) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_set_xpad(
-                self.as_ref().to_glib_none().0,
-                xpad,
-            );
+            ffi::gtk_source_gutter_renderer_set_xpad(self.as_ref().to_glib_none().0, xpad);
         }
     }
 
@@ -296,10 +270,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_yalign(&self, yalign: f32) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_set_yalign(
-                self.as_ref().to_glib_none().0,
-                yalign,
-            );
+            ffi::gtk_source_gutter_renderer_set_yalign(self.as_ref().to_glib_none().0, yalign);
         }
     }
 
@@ -307,18 +278,15 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_ypad(&self, ypad: i32) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_renderer_set_ypad(
-                self.as_ref().to_glib_none().0,
-                ypad,
-            );
+            ffi::gtk_source_gutter_renderer_set_ypad(self.as_ref().to_glib_none().0, ypad);
         }
     }
 
     fn get_property_lines(&self) -> Option<GutterLines> {
         unsafe {
             let mut value = Value::from_type(<GutterLines as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"lines\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -331,8 +299,8 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     fn get_property_xalign(&self) -> f32 {
         unsafe {
             let mut value = Value::from_type(<f32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"xalign\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -345,8 +313,8 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn set_property_xalign(&self, xalign: f32) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"xalign\0".as_ptr() as *const _,
                 Value::from(&xalign).to_glib_none().0,
             );
@@ -356,8 +324,8 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     fn get_property_xpad(&self) -> i32 {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"xpad\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -370,8 +338,8 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn set_property_xpad(&self, xpad: i32) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"xpad\0".as_ptr() as *const _,
                 Value::from(&xpad).to_glib_none().0,
             );
@@ -381,8 +349,8 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     fn get_property_yalign(&self) -> f32 {
         unsafe {
             let mut value = Value::from_type(<f32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"yalign\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -395,8 +363,8 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn set_property_yalign(&self, yalign: f32) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"yalign\0".as_ptr() as *const _,
                 Value::from(&yalign).to_glib_none().0,
             );
@@ -406,8 +374,8 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
     fn get_property_ypad(&self) -> i32 {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"ypad\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -420,8 +388,8 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn set_property_ypad(&self, ypad: i32) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"ypad\0".as_ptr() as *const _,
                 Value::from(&ypad).to_glib_none().0,
             );
@@ -438,13 +406,13 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
             P,
             F: Fn(&P, &gtk::TextIter, &gdk::Rectangle, u32, gdk::ModifierType, i32) + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            iter: *mut gtk_sys::GtkTextIter,
-            area: *mut gdk_sys::GdkRectangle,
+            this: *mut ffi::GtkSourceGutterRenderer,
+            iter: *mut gtk::ffi::GtkTextIter,
+            area: *mut gdk::ffi::GdkRectangle,
             button: libc::c_uint,
-            state: gdk_sys::GdkModifierType,
+            state: gdk::ffi::GdkModifierType,
             n_presses: libc::c_int,
-            f: glib_sys::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRenderer>,
         {
@@ -481,11 +449,11 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
             P,
             F: Fn(&P, &gtk::TextIter, &gdk::Rectangle) -> bool + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            iter: *mut gtk_sys::GtkTextIter,
-            area: *mut gdk_sys::GdkRectangle,
-            f: glib_sys::gpointer,
-        ) -> glib_sys::gboolean
+            this: *mut ffi::GtkSourceGutterRenderer,
+            iter: *mut gtk::ffi::GtkTextIter,
+            area: *mut gdk::ffi::GdkRectangle,
+            f: glib::ffi::gpointer,
+        ) -> glib::ffi::gboolean
         where
             P: IsA<GutterRenderer>,
         {
@@ -519,9 +487,9 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_alignment_mode_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRenderer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRenderer>,
         {
@@ -543,9 +511,9 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn connect_property_lines_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_lines_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRenderer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRenderer>,
         {
@@ -567,9 +535,9 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn connect_property_view_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_view_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRenderer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRenderer>,
         {
@@ -591,9 +559,9 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn connect_property_xalign_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_xalign_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRenderer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRenderer>,
         {
@@ -615,9 +583,9 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn connect_property_xpad_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_xpad_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRenderer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRenderer>,
         {
@@ -639,9 +607,9 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn connect_property_yalign_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_yalign_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRenderer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRenderer>,
         {
@@ -663,9 +631,9 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn connect_property_ypad_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_ypad_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceGutterRenderer,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceGutterRenderer,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<GutterRenderer>,
         {

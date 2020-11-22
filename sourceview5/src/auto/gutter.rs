@@ -2,24 +2,21 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use crate::GutterRenderer;
+use crate::View;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
 use std::fmt;
-use GutterRenderer;
-use View;
 
-glib_wrapper! {
-    pub struct Gutter(Object<gtk_source_sys::GtkSourceGutter, gtk_source_sys::GtkSourceGutterClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+glib::glib_wrapper! {
+    pub struct Gutter(Object<ffi::GtkSourceGutter, ffi::GtkSourceGutterClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_gutter_get_type(),
+        get_type => || ffi::gtk_source_gutter_get_type(),
     }
 }
 
@@ -299,7 +296,7 @@ pub trait GutterExt: 'static {
 impl<O: IsA<Gutter>> GutterExt for O {
     fn get_view(&self) -> Option<View> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_gutter_get_view(
+            from_glib_none(ffi::gtk_source_gutter_get_view(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -307,7 +304,7 @@ impl<O: IsA<Gutter>> GutterExt for O {
 
     fn insert<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_gutter_insert(
+            from_glib(ffi::gtk_source_gutter_insert(
                 self.as_ref().to_glib_none().0,
                 renderer.as_ref().to_glib_none().0,
                 position,
@@ -317,7 +314,7 @@ impl<O: IsA<Gutter>> GutterExt for O {
 
     fn remove<P: IsA<GutterRenderer>>(&self, renderer: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_remove(
+            ffi::gtk_source_gutter_remove(
                 self.as_ref().to_glib_none().0,
                 renderer.as_ref().to_glib_none().0,
             );
@@ -326,7 +323,7 @@ impl<O: IsA<Gutter>> GutterExt for O {
 
     fn reorder<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) {
         unsafe {
-            gtk_source_sys::gtk_source_gutter_reorder(
+            ffi::gtk_source_gutter_reorder(
                 self.as_ref().to_glib_none().0,
                 renderer.as_ref().to_glib_none().0,
                 position,
@@ -337,8 +334,8 @@ impl<O: IsA<Gutter>> GutterExt for O {
     fn get_property_window_type(&self) -> gtk::TextWindowType {
         unsafe {
             let mut value = Value::from_type(<gtk::TextWindowType as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"window-type\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );

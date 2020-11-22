@@ -3,63 +3,47 @@
 // DO NOT EDIT
 
 use glib::translate::*;
-use glib::GString;
-use gtk_source_sys;
 use std::fmt;
 
-glib_wrapper! {
+glib::glib_wrapper! {
     #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct Encoding(Boxed<gtk_source_sys::GtkSourceEncoding>);
+    pub struct Encoding(Boxed<ffi::GtkSourceEncoding>);
 
     match fn {
-        copy => |ptr| gtk_source_sys::gtk_source_encoding_copy(mut_override(ptr)),
-        free => |ptr| gtk_source_sys::gtk_source_encoding_free(ptr),
-        get_type => || gtk_source_sys::gtk_source_encoding_get_type(),
+        copy => |ptr| ffi::gtk_source_encoding_copy(mut_override(ptr)),
+        free => |ptr| ffi::gtk_source_encoding_free(ptr),
+        get_type => || ffi::gtk_source_encoding_get_type(),
     }
 }
 
 impl Encoding {
-    pub fn get_charset(&self) -> Option<GString> {
-        unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_encoding_get_charset(
-                self.to_glib_none().0,
-            ))
-        }
+    pub fn get_charset(&self) -> Option<glib::GString> {
+        unsafe { from_glib_none(ffi::gtk_source_encoding_get_charset(self.to_glib_none().0)) }
     }
 
-    pub fn get_name(&self) -> Option<GString> {
-        unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_encoding_get_name(
-                self.to_glib_none().0,
-            ))
-        }
+    pub fn get_name(&self) -> Option<glib::GString> {
+        unsafe { from_glib_none(ffi::gtk_source_encoding_get_name(self.to_glib_none().0)) }
     }
 
-    fn to_string(&self) -> GString {
-        unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_encoding_to_string(
-                self.to_glib_none().0,
-            ))
-        }
+    fn to_string(&self) -> glib::GString {
+        unsafe { from_glib_full(ffi::gtk_source_encoding_to_string(self.to_glib_none().0)) }
     }
 
     pub fn get_all() -> Vec<Encoding> {
         assert_initialized_main_thread!();
-        unsafe {
-            FromGlibPtrContainer::from_glib_container(gtk_source_sys::gtk_source_encoding_get_all())
-        }
+        unsafe { FromGlibPtrContainer::from_glib_container(ffi::gtk_source_encoding_get_all()) }
     }
 
     pub fn get_current() -> Option<Encoding> {
         assert_initialized_main_thread!();
-        unsafe { from_glib_none(gtk_source_sys::gtk_source_encoding_get_current()) }
+        unsafe { from_glib_none(ffi::gtk_source_encoding_get_current()) }
     }
 
     pub fn get_default_candidates() -> Vec<Encoding> {
         assert_initialized_main_thread!();
         unsafe {
             FromGlibPtrContainer::from_glib_container(
-                gtk_source_sys::gtk_source_encoding_get_default_candidates(),
+                ffi::gtk_source_encoding_get_default_candidates(),
             )
         }
     }
@@ -67,7 +51,7 @@ impl Encoding {
     pub fn get_from_charset(charset: &str) -> Option<Encoding> {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_encoding_get_from_charset(
+            from_glib_none(ffi::gtk_source_encoding_get_from_charset(
                 charset.to_glib_none().0,
             ))
         }
@@ -75,7 +59,7 @@ impl Encoding {
 
     pub fn get_utf8() -> Option<Encoding> {
         assert_initialized_main_thread!();
-        unsafe { from_glib_none(gtk_source_sys::gtk_source_encoding_get_utf8()) }
+        unsafe { from_glib_none(ffi::gtk_source_encoding_get_utf8()) }
     }
 }
 

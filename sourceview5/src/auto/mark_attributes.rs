@@ -2,38 +2,30 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gdk;
-use gdk_pixbuf;
-use gio;
+use crate::Mark;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
-use glib_sys;
-use gtk;
-use gtk_source_sys;
-use libc;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use Mark;
 
-glib_wrapper! {
-    pub struct MarkAttributes(Object<gtk_source_sys::GtkSourceMarkAttributes, gtk_source_sys::GtkSourceMarkAttributesClass>);
+glib::glib_wrapper! {
+    pub struct MarkAttributes(Object<ffi::GtkSourceMarkAttributes, ffi::GtkSourceMarkAttributesClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_mark_attributes_get_type(),
+        get_type => || ffi::gtk_source_mark_attributes_get_type(),
     }
 }
 
 impl MarkAttributes {
     pub fn new() -> MarkAttributes {
         assert_initialized_main_thread!();
-        unsafe { from_glib_full(gtk_source_sys::gtk_source_mark_attributes_new()) }
+        unsafe { from_glib_full(ffi::gtk_source_mark_attributes_new()) }
     }
 }
 
@@ -105,13 +97,13 @@ pub trait MarkAttributesExt: 'static {
 
     fn get_gicon(&self) -> Option<gio::Icon>;
 
-    fn get_icon_name(&self) -> Option<GString>;
+    fn get_icon_name(&self) -> Option<glib::GString>;
 
     fn get_pixbuf(&self) -> Option<gdk_pixbuf::Pixbuf>;
 
-    fn get_tooltip_markup<P: IsA<Mark>>(&self, mark: &P) -> Option<GString>;
+    fn get_tooltip_markup<P: IsA<Mark>>(&self, mark: &P) -> Option<glib::GString>;
 
-    fn get_tooltip_text<P: IsA<Mark>>(&self, mark: &P) -> Option<GString>;
+    fn get_tooltip_text<P: IsA<Mark>>(&self, mark: &P) -> Option<glib::GString>;
 
     fn render_icon<P: IsA<gtk::Widget>>(&self, widget: &P, size: i32) -> Option<gdk::Paintable>;
 
@@ -146,7 +138,7 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
     fn get_background(&self) -> Option<gdk::RGBA> {
         unsafe {
             let mut background = gdk::RGBA::uninitialized();
-            let ret = from_glib(gtk_source_sys::gtk_source_mark_attributes_get_background(
+            let ret = from_glib(ffi::gtk_source_mark_attributes_get_background(
                 self.as_ref().to_glib_none().0,
                 background.to_glib_none_mut().0,
             ));
@@ -160,15 +152,15 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn get_gicon(&self) -> Option<gio::Icon> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_mark_attributes_get_gicon(
+            from_glib_none(ffi::gtk_source_mark_attributes_get_gicon(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_icon_name(&self) -> Option<GString> {
+    fn get_icon_name(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_mark_attributes_get_icon_name(
+            from_glib_none(ffi::gtk_source_mark_attributes_get_icon_name(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -176,26 +168,24 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn get_pixbuf(&self) -> Option<gdk_pixbuf::Pixbuf> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_mark_attributes_get_pixbuf(
+            from_glib_none(ffi::gtk_source_mark_attributes_get_pixbuf(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
-    fn get_tooltip_markup<P: IsA<Mark>>(&self, mark: &P) -> Option<GString> {
+    fn get_tooltip_markup<P: IsA<Mark>>(&self, mark: &P) -> Option<glib::GString> {
         unsafe {
-            from_glib_full(
-                gtk_source_sys::gtk_source_mark_attributes_get_tooltip_markup(
-                    self.as_ref().to_glib_none().0,
-                    mark.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib_full(ffi::gtk_source_mark_attributes_get_tooltip_markup(
+                self.as_ref().to_glib_none().0,
+                mark.as_ref().to_glib_none().0,
+            ))
         }
     }
 
-    fn get_tooltip_text<P: IsA<Mark>>(&self, mark: &P) -> Option<GString> {
+    fn get_tooltip_text<P: IsA<Mark>>(&self, mark: &P) -> Option<glib::GString> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_mark_attributes_get_tooltip_text(
+            from_glib_full(ffi::gtk_source_mark_attributes_get_tooltip_text(
                 self.as_ref().to_glib_none().0,
                 mark.as_ref().to_glib_none().0,
             ))
@@ -204,7 +194,7 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn render_icon<P: IsA<gtk::Widget>>(&self, widget: &P, size: i32) -> Option<gdk::Paintable> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_mark_attributes_render_icon(
+            from_glib_none(ffi::gtk_source_mark_attributes_render_icon(
                 self.as_ref().to_glib_none().0,
                 widget.as_ref().to_glib_none().0,
                 size,
@@ -214,7 +204,7 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn set_background(&self, background: &gdk::RGBA) {
         unsafe {
-            gtk_source_sys::gtk_source_mark_attributes_set_background(
+            ffi::gtk_source_mark_attributes_set_background(
                 self.as_ref().to_glib_none().0,
                 background.to_glib_none().0,
             );
@@ -223,7 +213,7 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn set_gicon<P: IsA<gio::Icon>>(&self, gicon: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_mark_attributes_set_gicon(
+            ffi::gtk_source_mark_attributes_set_gicon(
                 self.as_ref().to_glib_none().0,
                 gicon.as_ref().to_glib_none().0,
             );
@@ -232,7 +222,7 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn set_icon_name(&self, icon_name: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_mark_attributes_set_icon_name(
+            ffi::gtk_source_mark_attributes_set_icon_name(
                 self.as_ref().to_glib_none().0,
                 icon_name.to_glib_none().0,
             );
@@ -241,7 +231,7 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn set_pixbuf(&self, pixbuf: &gdk_pixbuf::Pixbuf) {
         unsafe {
-            gtk_source_sys::gtk_source_mark_attributes_set_pixbuf(
+            ffi::gtk_source_mark_attributes_set_pixbuf(
                 self.as_ref().to_glib_none().0,
                 pixbuf.to_glib_none().0,
             );
@@ -256,9 +246,9 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
             P,
             F: Fn(&P, &Mark) -> String + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceMarkAttributes,
-            mark: *mut gtk_source_sys::GtkSourceMark,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceMarkAttributes,
+            mark: *mut ffi::GtkSourceMark,
+            f: glib::ffi::gpointer,
         ) -> *mut libc::c_char
         where
             P: IsA<MarkAttributes>,
@@ -291,9 +281,9 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
             P,
             F: Fn(&P, &Mark) -> String + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceMarkAttributes,
-            mark: *mut gtk_source_sys::GtkSourceMark,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceMarkAttributes,
+            mark: *mut ffi::GtkSourceMark,
+            f: glib::ffi::gpointer,
         ) -> *mut libc::c_char
         where
             P: IsA<MarkAttributes>,
@@ -320,9 +310,9 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn connect_property_background_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_background_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceMarkAttributes,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceMarkAttributes,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<MarkAttributes>,
         {
@@ -344,9 +334,9 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn connect_property_gicon_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_gicon_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceMarkAttributes,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceMarkAttributes,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<MarkAttributes>,
         {
@@ -368,9 +358,9 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn connect_property_icon_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_icon_name_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceMarkAttributes,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceMarkAttributes,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<MarkAttributes>,
         {
@@ -392,9 +382,9 @@ impl<O: IsA<MarkAttributes>> MarkAttributesExt for O {
 
     fn connect_property_pixbuf_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_pixbuf_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceMarkAttributes,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceMarkAttributes,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<MarkAttributes>,
         {

@@ -2,31 +2,24 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gdk;
-use gio;
+use crate::CompletionColumn;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use CompletionColumn;
 
-glib_wrapper! {
-    pub struct CompletionCell(Object<gtk_source_sys::GtkSourceCompletionCell, gtk_source_sys::GtkSourceCompletionCellClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
+glib::glib_wrapper! {
+    pub struct CompletionCell(Object<ffi::GtkSourceCompletionCell, ffi::GtkSourceCompletionCellClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_completion_cell_get_type(),
+        get_type => || ffi::gtk_source_completion_cell_get_type(),
     }
 }
 
@@ -339,11 +332,11 @@ pub trait CompletionCellExt: 'static {
 
     fn set_widget<P: IsA<gtk::Widget>>(&self, child: &P);
 
-    fn get_property_markup(&self) -> Option<GString>;
+    fn get_property_markup(&self) -> Option<glib::GString>;
 
     fn get_property_paintable(&self) -> Option<gdk::Paintable>;
 
-    fn get_property_text(&self) -> Option<GString>;
+    fn get_property_text(&self) -> Option<glib::GString>;
 
     fn get_property_widget(&self) -> Option<gtk::Widget>;
 
@@ -359,7 +352,7 @@ pub trait CompletionCellExt: 'static {
 impl<O: IsA<CompletionCell>> CompletionCellExt for O {
     fn get_column(&self) -> CompletionColumn {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_completion_cell_get_column(
+            from_glib(ffi::gtk_source_completion_cell_get_column(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -369,7 +362,7 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_widget(&self) -> Option<gtk::Widget> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_cell_get_widget(
+            from_glib_none(ffi::gtk_source_completion_cell_get_widget(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -377,7 +370,7 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn set_gicon<P: IsA<gio::Icon>>(&self, gicon: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_cell_set_gicon(
+            ffi::gtk_source_completion_cell_set_gicon(
                 self.as_ref().to_glib_none().0,
                 gicon.as_ref().to_glib_none().0,
             );
@@ -386,7 +379,7 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn set_icon_name(&self, icon_name: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_cell_set_icon_name(
+            ffi::gtk_source_completion_cell_set_icon_name(
                 self.as_ref().to_glib_none().0,
                 icon_name.to_glib_none().0,
             );
@@ -395,7 +388,7 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn set_markup(&self, markup: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_cell_set_markup(
+            ffi::gtk_source_completion_cell_set_markup(
                 self.as_ref().to_glib_none().0,
                 markup.to_glib_none().0,
             );
@@ -404,7 +397,7 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn set_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_cell_set_paintable(
+            ffi::gtk_source_completion_cell_set_paintable(
                 self.as_ref().to_glib_none().0,
                 paintable.as_ref().to_glib_none().0,
             );
@@ -413,7 +406,7 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn set_text(&self, text: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_cell_set_text(
+            ffi::gtk_source_completion_cell_set_text(
                 self.as_ref().to_glib_none().0,
                 text.to_glib_none().0,
             );
@@ -421,23 +414,23 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
     }
 
     //fn set_text_with_attributes(&self, text: &str, attrs: /*Ignored*/&pango::AttrList) {
-    //    unsafe { TODO: call gtk_source_sys:gtk_source_completion_cell_set_text_with_attributes() }
+    //    unsafe { TODO: call ffi:gtk_source_completion_cell_set_text_with_attributes() }
     //}
 
     fn set_widget<P: IsA<gtk::Widget>>(&self, child: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_cell_set_widget(
+            ffi::gtk_source_completion_cell_set_widget(
                 self.as_ref().to_glib_none().0,
                 child.as_ref().to_glib_none().0,
             );
         }
     }
 
-    fn get_property_markup(&self) -> Option<GString> {
+    fn get_property_markup(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"markup\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -450,8 +443,8 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
     fn get_property_paintable(&self) -> Option<gdk::Paintable> {
         unsafe {
             let mut value = Value::from_type(<gdk::Paintable as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"paintable\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -461,11 +454,11 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
         }
     }
 
-    fn get_property_text(&self) -> Option<GString> {
+    fn get_property_text(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"text\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -478,8 +471,8 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
     fn get_property_widget(&self) -> Option<gtk::Widget> {
         unsafe {
             let mut value = Value::from_type(<gtk::Widget as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"widget\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -491,9 +484,9 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn connect_property_markup_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_markup_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletionCell,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletionCell,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<CompletionCell>,
         {
@@ -515,9 +508,9 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn connect_property_paintable_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_paintable_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletionCell,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletionCell,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<CompletionCell>,
         {
@@ -539,9 +532,9 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn connect_property_text_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_text_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletionCell,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletionCell,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<CompletionCell>,
         {
@@ -563,9 +556,9 @@ impl<O: IsA<CompletionCell>> CompletionCellExt for O {
 
     fn connect_property_widget_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_widget_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletionCell,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletionCell,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<CompletionCell>,
         {

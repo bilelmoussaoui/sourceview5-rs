@@ -13,11 +13,6 @@ use glib::signal::connect_raw;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use glib_sys;
-use gtk_source_sys;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::boxed::Box as Box_;
@@ -26,11 +21,11 @@ use std::fmt;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem::transmute;
 
-glib_wrapper! {
-    pub struct SnippetContext(Object<gtk_source_sys::GtkSourceSnippetContext, gtk_source_sys::GtkSourceSnippetContextClass>);
+glib::glib_wrapper! {
+    pub struct SnippetContext(Object<ffi::GtkSourceSnippetContext, ffi::GtkSourceSnippetContextClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_snippet_context_get_type(),
+        get_type => || ffi::gtk_source_snippet_context_get_type(),
     }
 }
 
@@ -39,7 +34,7 @@ impl SnippetContext {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn new() -> SnippetContext {
         assert_initialized_main_thread!();
-        unsafe { from_glib_full(gtk_source_sys::gtk_source_snippet_context_new()) }
+        unsafe { from_glib_full(ffi::gtk_source_snippet_context_new()) }
     }
 }
 
@@ -58,11 +53,11 @@ pub trait SnippetContextExt: 'static {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn clear_variables(&self);
 
-    fn expand(&self, input: &str) -> Option<GString>;
+    fn expand(&self, input: &str) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_variable(&self, key: &str) -> Option<GString>;
+    fn get_variable(&self, key: &str) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
@@ -88,15 +83,13 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn clear_variables(&self) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_context_clear_variables(
-                self.as_ref().to_glib_none().0,
-            );
+            ffi::gtk_source_snippet_context_clear_variables(self.as_ref().to_glib_none().0);
         }
     }
 
-    fn expand(&self, input: &str) -> Option<GString> {
+    fn expand(&self, input: &str) -> Option<glib::GString> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_snippet_context_expand(
+            from_glib_full(ffi::gtk_source_snippet_context_expand(
                 self.as_ref().to_glib_none().0,
                 input.to_glib_none().0,
             ))
@@ -105,9 +98,9 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_variable(&self, key: &str) -> Option<GString> {
+    fn get_variable(&self, key: &str) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_context_get_variable(
+            from_glib_none(ffi::gtk_source_snippet_context_get_variable(
                 self.as_ref().to_glib_none().0,
                 key.to_glib_none().0,
             ))
@@ -118,7 +111,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_constant(&self, key: &str, value: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_context_set_constant(
+            ffi::gtk_source_snippet_context_set_constant(
                 self.as_ref().to_glib_none().0,
                 key.to_glib_none().0,
                 value.to_glib_none().0,
@@ -128,7 +121,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
 
     fn set_line_prefix(&self, line_prefix: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_context_set_line_prefix(
+            ffi::gtk_source_snippet_context_set_line_prefix(
                 self.as_ref().to_glib_none().0,
                 line_prefix.to_glib_none().0,
             );
@@ -137,7 +130,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
 
     fn set_tab_width(&self, tab_width: i32) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_context_set_tab_width(
+            ffi::gtk_source_snippet_context_set_tab_width(
                 self.as_ref().to_glib_none().0,
                 tab_width,
             );
@@ -146,7 +139,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
 
     fn set_use_spaces(&self, use_spaces: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_context_set_use_spaces(
+            ffi::gtk_source_snippet_context_set_use_spaces(
                 self.as_ref().to_glib_none().0,
                 use_spaces.to_glib(),
             );
@@ -157,7 +150,7 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_variable(&self, key: &str, value: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_context_set_variable(
+            ffi::gtk_source_snippet_context_set_variable(
                 self.as_ref().to_glib_none().0,
                 key.to_glib_none().0,
                 value.to_glib_none().0,
@@ -169,8 +162,8 @@ impl<O: IsA<SnippetContext>> SnippetContextExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn changed_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippetContext,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippetContext,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SnippetContext>,
         {

@@ -4,14 +4,13 @@
 
 use glib::object::IsA;
 use glib::translate::*;
-use gtk_source_sys;
 use std::fmt;
 
-glib_wrapper! {
-    pub struct CompletionProposal(Interface<gtk_source_sys::GtkSourceCompletionProposal>);
+glib::glib_wrapper! {
+    pub struct CompletionProposal(Interface<ffi::GtkSourceCompletionProposal>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_completion_proposal_get_type(),
+        get_type => || ffi::gtk_source_completion_proposal_get_type(),
     }
 }
 

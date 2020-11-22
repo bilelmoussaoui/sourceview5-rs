@@ -2,6 +2,9 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+use crate::BackgroundPatternType;
+use crate::SmartHomeEndType;
+use crate::View;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -10,30 +13,22 @@ use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
-use pango;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-use BackgroundPatternType;
-use SmartHomeEndType;
-use View;
 
-glib_wrapper! {
-    pub struct Map(Object<gtk_source_sys::GtkSourceMap, gtk_source_sys::GtkSourceMapClass>) @extends View, gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
+glib::glib_wrapper! {
+    pub struct Map(Object<ffi::GtkSourceMap, ffi::GtkSourceMapClass>) @extends View, gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_map_get_type(),
+        get_type => || ffi::gtk_source_map_get_type(),
     }
 }
 
 impl Map {
     pub fn new() -> Map {
         assert_initialized_main_thread!();
-        unsafe { gtk::Widget::from_glib_none(gtk_source_sys::gtk_source_map_new()).unsafe_cast() }
+        unsafe { gtk::Widget::from_glib_none(ffi::gtk_source_map_new()).unsafe_cast() }
     }
 }
 
@@ -140,11 +135,8 @@ impl MapBuilder {
             properties.push(("background-pattern", background_pattern));
         }
         #[cfg(any(feature = "v5_0", feature = "dox"))]
-        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-        {
-            if let Some(ref enable_snippets) = self.enable_snippets {
-                properties.push(("enable-snippets", enable_snippets));
-            }
+        if let Some(ref enable_snippets) = self.enable_snippets {
+            properties.push(("enable-snippets", enable_snippets));
         }
         if let Some(ref highlight_current_line) = self.highlight_current_line {
             properties.push(("highlight-current-line", highlight_current_line));
@@ -610,16 +602,12 @@ pub trait MapExt: 'static {
 
 impl<O: IsA<Map>> MapExt for O {
     fn get_view(&self) -> Option<View> {
-        unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_map_get_view(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
+        unsafe { from_glib_none(ffi::gtk_source_map_get_view(self.as_ref().to_glib_none().0)) }
     }
 
     fn set_view<P: IsA<View>>(&self, view: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_map_set_view(
+            ffi::gtk_source_map_set_view(
                 self.as_ref().to_glib_none().0,
                 view.as_ref().to_glib_none().0,
             );
@@ -629,8 +617,8 @@ impl<O: IsA<Map>> MapExt for O {
     fn get_property_font_desc(&self) -> Option<pango::FontDescription> {
         unsafe {
             let mut value = Value::from_type(<pango::FontDescription as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"font-desc\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -642,8 +630,8 @@ impl<O: IsA<Map>> MapExt for O {
 
     fn set_property_font_desc(&self, font_desc: Option<&pango::FontDescription>) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"font-desc\0".as_ptr() as *const _,
                 Value::from(font_desc).to_glib_none().0,
             );
@@ -652,9 +640,9 @@ impl<O: IsA<Map>> MapExt for O {
 
     fn connect_property_font_desc_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_font_desc_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceMap,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceMap,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Map>,
         {
@@ -676,9 +664,9 @@ impl<O: IsA<Map>> MapExt for O {
 
     fn connect_property_view_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_view_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceMap,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceMap,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Map>,
         {

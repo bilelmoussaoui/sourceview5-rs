@@ -4,7 +4,13 @@
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use glib;
+use crate::Buffer;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+use crate::CompletionProvider;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+use crate::View;
 use glib::object::Cast;
 use glib::object::IsA;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
@@ -16,30 +22,18 @@ use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use glib_sys;
-use gobject_sys;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem;
 use std::mem::transmute;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use Buffer;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use CompletionProvider;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use View;
 
-glib_wrapper! {
-    pub struct Completion(Object<gtk_source_sys::GtkSourceCompletion, gtk_source_sys::GtkSourceCompletionClass>);
+glib::glib_wrapper! {
+    pub struct Completion(Object<ffi::GtkSourceCompletion, ffi::GtkSourceCompletionClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_completion_get_type(),
+        get_type => || ffi::gtk_source_completion_get_type(),
     }
 }
 
@@ -47,7 +41,7 @@ impl Completion {
     //#[cfg(any(feature = "v5_0", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     //pub fn fuzzy_highlight(haystack: &str, casefold_query: &str) -> /*Ignored*/Option<pango::AttrList> {
-    //    unsafe { TODO: call gtk_source_sys:gtk_source_completion_fuzzy_highlight() }
+    //    unsafe { TODO: call ffi:gtk_source_completion_fuzzy_highlight() }
     //}
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
@@ -56,7 +50,7 @@ impl Completion {
         assert_initialized_main_thread!();
         unsafe {
             let mut priority = mem::MaybeUninit::uninit();
-            let ret = from_glib(gtk_source_sys::gtk_source_completion_fuzzy_match(
+            let ret = from_glib(ffi::gtk_source_completion_fuzzy_match(
                 haystack.to_glib_none().0,
                 casefold_needle.to_glib_none().0,
                 priority.as_mut_ptr(),
@@ -92,11 +86,8 @@ impl CompletionBuilder {
     pub fn build(self) -> Completion {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
         #[cfg(any(feature = "v5_0", feature = "dox"))]
-        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-        {
-            if let Some(ref page_size) = self.page_size {
-                properties.push(("page-size", page_size));
-            }
+        if let Some(ref page_size) = self.page_size {
+            properties.push(("page-size", page_size));
         }
         if let Some(ref remember_info_visibility) = self.remember_info_visibility {
             properties.push(("remember-info-visibility", remember_info_visibility));
@@ -108,11 +99,8 @@ impl CompletionBuilder {
             properties.push(("show-icons", show_icons));
         }
         #[cfg(any(feature = "v5_0", feature = "dox"))]
-        #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-        {
-            if let Some(ref view) = self.view {
-                properties.push(("view", view));
-            }
+        if let Some(ref view) = self.view {
+            properties.push(("view", view));
         }
         let ret = glib::Object::new(Completion::static_type(), &properties)
             .expect("object new")
@@ -254,7 +242,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_provider<P: IsA<CompletionProvider>>(&self, provider: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_add_provider(
+            ffi::gtk_source_completion_add_provider(
                 self.as_ref().to_glib_none().0,
                 provider.as_ref().to_glib_none().0,
             );
@@ -263,7 +251,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
 
     fn block_interactive(&self) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_block_interactive(self.as_ref().to_glib_none().0);
+            ffi::gtk_source_completion_block_interactive(self.as_ref().to_glib_none().0);
         }
     }
 
@@ -271,23 +259,21 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_get_buffer(
+            from_glib_none(ffi::gtk_source_completion_get_buffer(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
     fn get_page_size(&self) -> u32 {
-        unsafe {
-            gtk_source_sys::gtk_source_completion_get_page_size(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::gtk_source_completion_get_page_size(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_view(&self) -> Option<View> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_completion_get_view(
+            from_glib_none(ffi::gtk_source_completion_get_view(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -297,7 +283,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn hide(&self) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_hide(self.as_ref().to_glib_none().0);
+            ffi::gtk_source_completion_hide(self.as_ref().to_glib_none().0);
         }
     }
 
@@ -305,7 +291,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn remove_provider<P: IsA<CompletionProvider>>(&self, provider: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_remove_provider(
+            ffi::gtk_source_completion_remove_provider(
                 self.as_ref().to_glib_none().0,
                 provider.as_ref().to_glib_none().0,
             );
@@ -314,10 +300,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
 
     fn set_page_size(&self, page_size: u32) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_set_page_size(
-                self.as_ref().to_glib_none().0,
-                page_size,
-            );
+            ffi::gtk_source_completion_set_page_size(self.as_ref().to_glib_none().0, page_size);
         }
     }
 
@@ -325,23 +308,21 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn show(&self) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_show(self.as_ref().to_glib_none().0);
+            ffi::gtk_source_completion_show(self.as_ref().to_glib_none().0);
         }
     }
 
     fn unblock_interactive(&self) {
         unsafe {
-            gtk_source_sys::gtk_source_completion_unblock_interactive(
-                self.as_ref().to_glib_none().0,
-            );
+            ffi::gtk_source_completion_unblock_interactive(self.as_ref().to_glib_none().0);
         }
     }
 
     fn get_property_remember_info_visibility(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"remember-info-visibility\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -354,8 +335,8 @@ impl<O: IsA<Completion>> CompletionExt for O {
 
     fn set_property_remember_info_visibility(&self, remember_info_visibility: bool) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"remember-info-visibility\0".as_ptr() as *const _,
                 Value::from(&remember_info_visibility).to_glib_none().0,
             );
@@ -365,8 +346,8 @@ impl<O: IsA<Completion>> CompletionExt for O {
     fn get_property_select_on_show(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"select-on-show\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -379,8 +360,8 @@ impl<O: IsA<Completion>> CompletionExt for O {
 
     fn set_property_select_on_show(&self, select_on_show: bool) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"select-on-show\0".as_ptr() as *const _,
                 Value::from(&select_on_show).to_glib_none().0,
             );
@@ -390,8 +371,8 @@ impl<O: IsA<Completion>> CompletionExt for O {
     fn get_property_show_icons(&self) -> bool {
         unsafe {
             let mut value = Value::from_type(<bool as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"show-icons\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -404,8 +385,8 @@ impl<O: IsA<Completion>> CompletionExt for O {
 
     fn set_property_show_icons(&self, show_icons: bool) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"show-icons\0".as_ptr() as *const _,
                 Value::from(&show_icons).to_glib_none().0,
             );
@@ -416,8 +397,8 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_hide<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn hide_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {
@@ -441,7 +422,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn emit_hide(&self) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("hide", &[])
                 .unwrap()
         };
@@ -457,9 +438,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
             P,
             F: Fn(&P, &CompletionProvider) + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            provider: *mut gtk_source_sys::GtkSourceCompletionProvider,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            provider: *mut ffi::GtkSourceCompletionProvider,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {
@@ -492,9 +473,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
             P,
             F: Fn(&P, &CompletionProvider) + 'static,
         >(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            provider: *mut gtk_source_sys::GtkSourceCompletionProvider,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            provider: *mut ffi::GtkSourceCompletionProvider,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {
@@ -521,8 +502,8 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_show<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn show_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {
@@ -546,7 +527,7 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn emit_show(&self) {
         let _ = unsafe {
-            glib::Object::from_glib_borrow(self.as_ptr() as *mut gobject_sys::GObject)
+            glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
                 .emit("show", &[])
                 .unwrap()
         };
@@ -556,9 +537,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_buffer_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_buffer_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {
@@ -582,9 +563,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn connect_property_page_size_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_page_size_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {
@@ -609,9 +590,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_remember_info_visibility_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {
@@ -636,9 +617,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_select_on_show_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {
@@ -660,9 +641,9 @@ impl<O: IsA<Completion>> CompletionExt for O {
 
     fn connect_property_show_icons_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_show_icons_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceCompletion,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceCompletion,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Completion>,
         {

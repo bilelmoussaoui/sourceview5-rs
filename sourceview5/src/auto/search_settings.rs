@@ -7,27 +7,24 @@ use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
-use glib_sys;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib_wrapper! {
-    pub struct SearchSettings(Object<gtk_source_sys::GtkSourceSearchSettings, gtk_source_sys::GtkSourceSearchSettingsClass>);
+glib::glib_wrapper! {
+    pub struct SearchSettings(Object<ffi::GtkSourceSearchSettings, ffi::GtkSourceSearchSettingsClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_search_settings_get_type(),
+        get_type => || ffi::gtk_source_search_settings_get_type(),
     }
 }
 
 impl SearchSettings {
     pub fn new() -> SearchSettings {
         assert_initialized_main_thread!();
-        unsafe { from_glib_full(gtk_source_sys::gtk_source_search_settings_new()) }
+        unsafe { from_glib_full(ffi::gtk_source_search_settings_new()) }
     }
 }
 
@@ -110,7 +107,7 @@ pub trait SearchSettingsExt: 'static {
 
     fn get_regex_enabled(&self) -> bool;
 
-    fn get_search_text(&self) -> Option<GString>;
+    fn get_search_text(&self) -> Option<glib::GString>;
 
     fn get_wrap_around(&self) -> bool;
 
@@ -147,37 +144,31 @@ pub trait SearchSettingsExt: 'static {
 impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
     fn get_at_word_boundaries(&self) -> bool {
         unsafe {
-            from_glib(
-                gtk_source_sys::gtk_source_search_settings_get_at_word_boundaries(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib(ffi::gtk_source_search_settings_get_at_word_boundaries(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_case_sensitive(&self) -> bool {
         unsafe {
-            from_glib(
-                gtk_source_sys::gtk_source_search_settings_get_case_sensitive(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib(ffi::gtk_source_search_settings_get_case_sensitive(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
     fn get_regex_enabled(&self) -> bool {
         unsafe {
-            from_glib(
-                gtk_source_sys::gtk_source_search_settings_get_regex_enabled(
-                    self.as_ref().to_glib_none().0,
-                ),
-            )
+            from_glib(ffi::gtk_source_search_settings_get_regex_enabled(
+                self.as_ref().to_glib_none().0,
+            ))
         }
     }
 
-    fn get_search_text(&self) -> Option<GString> {
+    fn get_search_text(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_search_settings_get_search_text(
+            from_glib_none(ffi::gtk_source_search_settings_get_search_text(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -185,7 +176,7 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
 
     fn get_wrap_around(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_search_settings_get_wrap_around(
+            from_glib(ffi::gtk_source_search_settings_get_wrap_around(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -193,7 +184,7 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
 
     fn set_at_word_boundaries(&self, at_word_boundaries: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_search_settings_set_at_word_boundaries(
+            ffi::gtk_source_search_settings_set_at_word_boundaries(
                 self.as_ref().to_glib_none().0,
                 at_word_boundaries.to_glib(),
             );
@@ -202,7 +193,7 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
 
     fn set_case_sensitive(&self, case_sensitive: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_search_settings_set_case_sensitive(
+            ffi::gtk_source_search_settings_set_case_sensitive(
                 self.as_ref().to_glib_none().0,
                 case_sensitive.to_glib(),
             );
@@ -211,7 +202,7 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
 
     fn set_regex_enabled(&self, regex_enabled: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_search_settings_set_regex_enabled(
+            ffi::gtk_source_search_settings_set_regex_enabled(
                 self.as_ref().to_glib_none().0,
                 regex_enabled.to_glib(),
             );
@@ -220,7 +211,7 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
 
     fn set_search_text(&self, search_text: Option<&str>) {
         unsafe {
-            gtk_source_sys::gtk_source_search_settings_set_search_text(
+            ffi::gtk_source_search_settings_set_search_text(
                 self.as_ref().to_glib_none().0,
                 search_text.to_glib_none().0,
             );
@@ -229,7 +220,7 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
 
     fn set_wrap_around(&self, wrap_around: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_search_settings_set_wrap_around(
+            ffi::gtk_source_search_settings_set_wrap_around(
                 self.as_ref().to_glib_none().0,
                 wrap_around.to_glib(),
             );
@@ -241,9 +232,9 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_at_word_boundaries_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchSettings,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchSettings,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchSettings>,
         {
@@ -268,9 +259,9 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_case_sensitive_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchSettings,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchSettings,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchSettings>,
         {
@@ -295,9 +286,9 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_regex_enabled_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchSettings,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchSettings,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchSettings>,
         {
@@ -319,9 +310,9 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
 
     fn connect_property_search_text_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_search_text_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchSettings,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchSettings,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchSettings>,
         {
@@ -343,9 +334,9 @@ impl<O: IsA<SearchSettings>> SearchSettingsExt for O {
 
     fn connect_property_wrap_around_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_wrap_around_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchSettings,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchSettings,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchSettings>,
         {

@@ -2,9 +2,9 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use gio;
-use gio_sys;
-use glib;
+use crate::Buffer;
+use crate::SearchSettings;
+use crate::Style;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
@@ -12,25 +12,18 @@ use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem;
 use std::mem::transmute;
 use std::pin::Pin;
 use std::ptr;
-use Buffer;
-use SearchSettings;
-use Style;
 
-glib_wrapper! {
-    pub struct SearchContext(Object<gtk_source_sys::GtkSourceSearchContext, gtk_source_sys::GtkSourceSearchContextClass>);
+glib::glib_wrapper! {
+    pub struct SearchContext(Object<ffi::GtkSourceSearchContext, ffi::GtkSourceSearchContextClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_search_context_get_type(),
+        get_type => || ffi::gtk_source_search_context_get_type(),
     }
 }
 
@@ -41,7 +34,7 @@ impl SearchContext {
     ) -> SearchContext {
         skip_assert_initialized!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_search_context_new(
+            from_glib_full(ffi::gtk_source_search_context_new(
                 buffer.as_ref().to_glib_none().0,
                 settings.map(|p| p.as_ref()).to_glib_none().0,
             ))
@@ -202,7 +195,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
             let mut match_start = gtk::TextIter::uninitialized();
             let mut match_end = gtk::TextIter::uninitialized();
             let mut has_wrapped_around = mem::MaybeUninit::uninit();
-            let ret = from_glib(gtk_source_sys::gtk_source_search_context_backward(
+            let ret = from_glib(ffi::gtk_source_search_context_backward(
                 self.as_ref().to_glib_none().0,
                 iter.to_glib_none().0,
                 match_start.to_glib_none_mut().0,
@@ -231,15 +224,15 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
         unsafe extern "C" fn backward_async_trampoline<
             Q: FnOnce(Result<(gtk::TextIter, gtk::TextIter, bool), glib::Error>) + Send + 'static,
         >(
-            _source_object: *mut gobject_sys::GObject,
-            res: *mut gio_sys::GAsyncResult,
-            user_data: glib_sys::gpointer,
+            _source_object: *mut glib::gobject_ffi::GObject,
+            res: *mut gio::ffi::GAsyncResult,
+            user_data: glib::ffi::gpointer,
         ) {
             let mut error = ptr::null_mut();
             let mut match_start = gtk::TextIter::uninitialized();
             let mut match_end = gtk::TextIter::uninitialized();
             let mut has_wrapped_around = mem::MaybeUninit::uninit();
-            let _ = gtk_source_sys::gtk_source_search_context_backward_finish(
+            let _ = ffi::gtk_source_search_context_backward_finish(
                 _source_object as *mut _,
                 res,
                 match_start.to_glib_none_mut().0,
@@ -258,7 +251,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
         }
         let callback = backward_async_trampoline::<Q>;
         unsafe {
-            gtk_source_sys::gtk_source_search_context_backward_async(
+            ffi::gtk_source_search_context_backward_async(
                 self.as_ref().to_glib_none().0,
                 iter.to_glib_none().0,
                 cancellable.map(|p| p.as_ref()).to_glib_none().0,
@@ -294,7 +287,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
             let mut match_start = gtk::TextIter::uninitialized();
             let mut match_end = gtk::TextIter::uninitialized();
             let mut has_wrapped_around = mem::MaybeUninit::uninit();
-            let ret = from_glib(gtk_source_sys::gtk_source_search_context_forward(
+            let ret = from_glib(ffi::gtk_source_search_context_forward(
                 self.as_ref().to_glib_none().0,
                 iter.to_glib_none().0,
                 match_start.to_glib_none_mut().0,
@@ -323,15 +316,15 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
         unsafe extern "C" fn forward_async_trampoline<
             Q: FnOnce(Result<(gtk::TextIter, gtk::TextIter, bool), glib::Error>) + Send + 'static,
         >(
-            _source_object: *mut gobject_sys::GObject,
-            res: *mut gio_sys::GAsyncResult,
-            user_data: glib_sys::gpointer,
+            _source_object: *mut glib::gobject_ffi::GObject,
+            res: *mut gio::ffi::GAsyncResult,
+            user_data: glib::ffi::gpointer,
         ) {
             let mut error = ptr::null_mut();
             let mut match_start = gtk::TextIter::uninitialized();
             let mut match_end = gtk::TextIter::uninitialized();
             let mut has_wrapped_around = mem::MaybeUninit::uninit();
-            let _ = gtk_source_sys::gtk_source_search_context_forward_finish(
+            let _ = ffi::gtk_source_search_context_forward_finish(
                 _source_object as *mut _,
                 res,
                 match_start.to_glib_none_mut().0,
@@ -350,7 +343,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
         }
         let callback = forward_async_trampoline::<Q>;
         unsafe {
-            gtk_source_sys::gtk_source_search_context_forward_async(
+            ffi::gtk_source_search_context_forward_async(
                 self.as_ref().to_glib_none().0,
                 iter.to_glib_none().0,
                 cancellable.map(|p| p.as_ref()).to_glib_none().0,
@@ -383,7 +376,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_search_context_get_buffer(
+            from_glib_none(ffi::gtk_source_search_context_get_buffer(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -391,7 +384,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn get_highlight(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_search_context_get_highlight(
+            from_glib(ffi::gtk_source_search_context_get_highlight(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -399,7 +392,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn get_match_style(&self) -> Option<Style> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_search_context_get_match_style(
+            from_glib_none(ffi::gtk_source_search_context_get_match_style(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -411,7 +404,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
         match_end: &gtk::TextIter,
     ) -> i32 {
         unsafe {
-            gtk_source_sys::gtk_source_search_context_get_occurrence_position(
+            ffi::gtk_source_search_context_get_occurrence_position(
                 self.as_ref().to_glib_none().0,
                 match_start.to_glib_none().0,
                 match_end.to_glib_none().0,
@@ -421,15 +414,13 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn get_occurrences_count(&self) -> i32 {
         unsafe {
-            gtk_source_sys::gtk_source_search_context_get_occurrences_count(
-                self.as_ref().to_glib_none().0,
-            )
+            ffi::gtk_source_search_context_get_occurrences_count(self.as_ref().to_glib_none().0)
         }
     }
 
     fn get_regex_error(&self) -> Option<glib::Error> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_search_context_get_regex_error(
+            from_glib_full(ffi::gtk_source_search_context_get_regex_error(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -437,7 +428,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn get_settings(&self) -> Option<SearchSettings> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_search_context_get_settings(
+            from_glib_none(ffi::gtk_source_search_context_get_settings(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -452,7 +443,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
         let replace_length = replace.len() as i32;
         unsafe {
             let mut error = ptr::null_mut();
-            let _ = gtk_source_sys::gtk_source_search_context_replace(
+            let _ = ffi::gtk_source_search_context_replace(
                 self.as_ref().to_glib_none().0,
                 match_start.to_glib_none_mut().0,
                 match_end.to_glib_none_mut().0,
@@ -472,7 +463,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
         let replace_length = replace.len() as i32;
         unsafe {
             let mut error = ptr::null_mut();
-            let _ = gtk_source_sys::gtk_source_search_context_replace_all(
+            let _ = ffi::gtk_source_search_context_replace_all(
                 self.as_ref().to_glib_none().0,
                 replace.to_glib_none().0,
                 replace_length,
@@ -488,7 +479,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn set_highlight(&self, highlight: bool) {
         unsafe {
-            gtk_source_sys::gtk_source_search_context_set_highlight(
+            ffi::gtk_source_search_context_set_highlight(
                 self.as_ref().to_glib_none().0,
                 highlight.to_glib(),
             );
@@ -497,7 +488,7 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn set_match_style<P: IsA<Style>>(&self, match_style: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_search_context_set_match_style(
+            ffi::gtk_source_search_context_set_match_style(
                 self.as_ref().to_glib_none().0,
                 match_style.map(|p| p.as_ref()).to_glib_none().0,
             );
@@ -506,9 +497,9 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn connect_property_highlight_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_highlight_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchContext,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchContext,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchContext>,
         {
@@ -530,9 +521,9 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn connect_property_match_style_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_match_style_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchContext,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchContext,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchContext>,
         {
@@ -557,9 +548,9 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_occurrences_count_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchContext,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchContext,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchContext>,
         {
@@ -581,9 +572,9 @@ impl<O: IsA<SearchContext>> SearchContextExt for O {
 
     fn connect_property_regex_error_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_regex_error_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSearchContext,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSearchContext,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<SearchContext>,
         {

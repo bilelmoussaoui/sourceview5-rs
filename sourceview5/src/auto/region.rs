@@ -5,29 +5,22 @@
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
-use gtk;
-use gtk_source_sys;
 use std::fmt;
 
-glib_wrapper! {
-    pub struct Region(Object<gtk_source_sys::GtkSourceRegion, gtk_source_sys::GtkSourceRegionClass>);
+glib::glib_wrapper! {
+    pub struct Region(Object<ffi::GtkSourceRegion, ffi::GtkSourceRegionClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_region_get_type(),
+        get_type => || ffi::gtk_source_region_get_type(),
     }
 }
 
 impl Region {
     pub fn new<P: IsA<gtk::TextBuffer>>(buffer: &P) -> Region {
         assert_initialized_main_thread!();
-        unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_region_new(
-                buffer.as_ref().to_glib_none().0,
-            ))
-        }
+        unsafe { from_glib_full(ffi::gtk_source_region_new(buffer.as_ref().to_glib_none().0)) }
     }
 }
 
@@ -82,13 +75,13 @@ pub trait RegionExt: 'static {
 
     fn subtract_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter);
 
-    fn to_string(&self) -> GString;
+    fn to_string(&self) -> glib::GString;
 }
 
 impl<O: IsA<Region>> RegionExt for O {
     fn add_region<P: IsA<Region>>(&self, region_to_add: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_region_add_region(
+            ffi::gtk_source_region_add_region(
                 self.as_ref().to_glib_none().0,
                 region_to_add.map(|p| p.as_ref()).to_glib_none().0,
             );
@@ -97,7 +90,7 @@ impl<O: IsA<Region>> RegionExt for O {
 
     fn add_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter) {
         unsafe {
-            gtk_source_sys::gtk_source_region_add_subregion(
+            ffi::gtk_source_region_add_subregion(
                 self.as_ref().to_glib_none().0,
                 _start.to_glib_none().0,
                 _end.to_glib_none().0,
@@ -109,7 +102,7 @@ impl<O: IsA<Region>> RegionExt for O {
         unsafe {
             let mut start = gtk::TextIter::uninitialized();
             let mut end = gtk::TextIter::uninitialized();
-            let ret = from_glib(gtk_source_sys::gtk_source_region_get_bounds(
+            let ret = from_glib(ffi::gtk_source_region_get_bounds(
                 self.as_ref().to_glib_none().0,
                 start.to_glib_none_mut().0,
                 end.to_glib_none_mut().0,
@@ -124,19 +117,19 @@ impl<O: IsA<Region>> RegionExt for O {
 
     fn get_buffer(&self) -> Option<gtk::TextBuffer> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_region_get_buffer(
+            from_glib_none(ffi::gtk_source_region_get_buffer(
                 self.as_ref().to_glib_none().0,
             ))
         }
     }
 
     //fn get_start_region_iter(&self, iter: /*Ignored*/RegionIter) {
-    //    unsafe { TODO: call gtk_source_sys:gtk_source_region_get_start_region_iter() }
+    //    unsafe { TODO: call ffi:gtk_source_region_get_start_region_iter() }
     //}
 
     fn intersect_region<P: IsA<Region>>(&self, region2: Option<&P>) -> Option<Region> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_region_intersect_region(
+            from_glib_full(ffi::gtk_source_region_intersect_region(
                 self.as_ref().to_glib_none().0,
                 region2.map(|p| p.as_ref()).to_glib_none().0,
             ))
@@ -145,7 +138,7 @@ impl<O: IsA<Region>> RegionExt for O {
 
     fn intersect_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter) -> Option<Region> {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_region_intersect_subregion(
+            from_glib_full(ffi::gtk_source_region_intersect_subregion(
                 self.as_ref().to_glib_none().0,
                 _start.to_glib_none().0,
                 _end.to_glib_none().0,
@@ -155,7 +148,7 @@ impl<O: IsA<Region>> RegionExt for O {
 
     fn is_empty(&self) -> bool {
         unsafe {
-            from_glib(gtk_source_sys::gtk_source_region_is_empty(
+            from_glib(ffi::gtk_source_region_is_empty(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -163,7 +156,7 @@ impl<O: IsA<Region>> RegionExt for O {
 
     fn subtract_region<P: IsA<Region>>(&self, region_to_subtract: Option<&P>) {
         unsafe {
-            gtk_source_sys::gtk_source_region_subtract_region(
+            ffi::gtk_source_region_subtract_region(
                 self.as_ref().to_glib_none().0,
                 region_to_subtract.map(|p| p.as_ref()).to_glib_none().0,
             );
@@ -172,7 +165,7 @@ impl<O: IsA<Region>> RegionExt for O {
 
     fn subtract_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter) {
         unsafe {
-            gtk_source_sys::gtk_source_region_subtract_subregion(
+            ffi::gtk_source_region_subtract_subregion(
                 self.as_ref().to_glib_none().0,
                 _start.to_glib_none().0,
                 _end.to_glib_none().0,
@@ -180,9 +173,9 @@ impl<O: IsA<Region>> RegionExt for O {
         }
     }
 
-    fn to_string(&self) -> GString {
+    fn to_string(&self) -> glib::GString {
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_region_to_string(
+            from_glib_full(ffi::gtk_source_region_to_string(
                 self.as_ref().to_glib_none().0,
             ))
         }

@@ -2,34 +2,29 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+use crate::SnippetChunk;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+use crate::SnippetContext;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
-use glib::GString;
 use glib::StaticType;
 use glib::ToValue;
 use glib::Value;
-use glib_sys;
-use gobject_sys;
-use gtk;
-use gtk_source_sys;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use SnippetChunk;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use SnippetContext;
 
-glib_wrapper! {
-    pub struct Snippet(Object<gtk_source_sys::GtkSourceSnippet, gtk_source_sys::GtkSourceSnippetClass>);
+glib::glib_wrapper! {
+    pub struct Snippet(Object<ffi::GtkSourceSnippet, ffi::GtkSourceSnippetClass>);
 
     match fn {
-        get_type => || gtk_source_sys::gtk_source_snippet_get_type(),
+        get_type => || ffi::gtk_source_snippet_get_type(),
     }
 }
 
@@ -39,7 +34,7 @@ impl Snippet {
     pub fn new(trigger: Option<&str>, language_id: Option<&str>) -> Snippet {
         assert_initialized_main_thread!();
         unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_snippet_new(
+            from_glib_full(ffi::gtk_source_snippet_new(
                 trigger.to_glib_none().0,
                 language_id.to_glib_none().0,
             ))
@@ -119,7 +114,7 @@ pub trait SnippetExt: 'static {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_description(&self) -> Option<GString>;
+    fn get_description(&self) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
@@ -127,7 +122,7 @@ pub trait SnippetExt: 'static {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_language_id(&self) -> Option<GString>;
+    fn get_language_id(&self) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
@@ -135,7 +130,7 @@ pub trait SnippetExt: 'static {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_name(&self) -> Option<GString>;
+    fn get_name(&self) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
@@ -143,7 +138,7 @@ pub trait SnippetExt: 'static {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_trigger(&self) -> Option<GString>;
+    fn get_trigger(&self) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
@@ -163,21 +158,21 @@ pub trait SnippetExt: 'static {
 
     fn get_property_buffer(&self) -> Option<gtk::TextBuffer>;
 
-    fn get_property_description(&self) -> Option<GString>;
+    fn get_property_description(&self) -> Option<glib::GString>;
 
     fn set_property_description(&self, description: Option<&str>);
 
     fn get_property_focus_position(&self) -> i32;
 
-    fn get_property_language_id(&self) -> Option<GString>;
+    fn get_property_language_id(&self) -> Option<glib::GString>;
 
     fn set_property_language_id(&self, language_id: Option<&str>);
 
-    fn get_property_name(&self) -> Option<GString>;
+    fn get_property_name(&self) -> Option<glib::GString>;
 
     fn set_property_name(&self, name: Option<&str>);
 
-    fn get_property_trigger(&self) -> Option<GString>;
+    fn get_property_trigger(&self) -> Option<glib::GString>;
 
     fn set_property_trigger(&self, trigger: Option<&str>);
 
@@ -202,7 +197,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn add_chunk<P: IsA<SnippetChunk>>(&self, chunk: &P) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_add_chunk(
+            ffi::gtk_source_snippet_add_chunk(
                 self.as_ref().to_glib_none().0,
                 chunk.as_ref().to_glib_none().0,
             );
@@ -212,18 +207,14 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn copy(&self) -> Option<Snippet> {
-        unsafe {
-            from_glib_full(gtk_source_sys::gtk_source_snippet_copy(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
+        unsafe { from_glib_full(ffi::gtk_source_snippet_copy(self.as_ref().to_glib_none().0)) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_context(&self) -> Option<SnippetContext> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_context(
+            from_glib_none(ffi::gtk_source_snippet_get_context(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -231,9 +222,9 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_description(&self) -> Option<GString> {
+    fn get_description(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_description(
+            from_glib_none(ffi::gtk_source_snippet_get_description(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -242,16 +233,14 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_focus_position(&self) -> i32 {
-        unsafe {
-            gtk_source_sys::gtk_source_snippet_get_focus_position(self.as_ref().to_glib_none().0)
-        }
+        unsafe { ffi::gtk_source_snippet_get_focus_position(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_language_id(&self) -> Option<GString> {
+    fn get_language_id(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_language_id(
+            from_glib_none(ffi::gtk_source_snippet_get_language_id(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -260,14 +249,14 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_n_chunks(&self) -> u32 {
-        unsafe { gtk_source_sys::gtk_source_snippet_get_n_chunks(self.as_ref().to_glib_none().0) }
+        unsafe { ffi::gtk_source_snippet_get_n_chunks(self.as_ref().to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_name(&self) -> Option<GString> {
+    fn get_name(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_name(
+            from_glib_none(ffi::gtk_source_snippet_get_name(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -277,7 +266,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn get_nth_chunk(&self, nth: u32) -> Option<SnippetChunk> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_nth_chunk(
+            from_glib_none(ffi::gtk_source_snippet_get_nth_chunk(
                 self.as_ref().to_glib_none().0,
                 nth,
             ))
@@ -286,9 +275,9 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_trigger(&self) -> Option<GString> {
+    fn get_trigger(&self) -> Option<glib::GString> {
         unsafe {
-            from_glib_none(gtk_source_sys::gtk_source_snippet_get_trigger(
+            from_glib_none(ffi::gtk_source_snippet_get_trigger(
                 self.as_ref().to_glib_none().0,
             ))
         }
@@ -298,7 +287,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_description(&self, description: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_set_description(
+            ffi::gtk_source_snippet_set_description(
                 self.as_ref().to_glib_none().0,
                 description.to_glib_none().0,
             );
@@ -309,7 +298,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_language_id(&self, language_id: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_set_language_id(
+            ffi::gtk_source_snippet_set_language_id(
                 self.as_ref().to_glib_none().0,
                 language_id.to_glib_none().0,
             );
@@ -320,10 +309,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_name(&self, name: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_set_name(
-                self.as_ref().to_glib_none().0,
-                name.to_glib_none().0,
-            );
+            ffi::gtk_source_snippet_set_name(self.as_ref().to_glib_none().0, name.to_glib_none().0);
         }
     }
 
@@ -331,7 +317,7 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     fn set_trigger(&self, trigger: &str) {
         unsafe {
-            gtk_source_sys::gtk_source_snippet_set_trigger(
+            ffi::gtk_source_snippet_set_trigger(
                 self.as_ref().to_glib_none().0,
                 trigger.to_glib_none().0,
             );
@@ -341,8 +327,8 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     fn get_property_buffer(&self) -> Option<gtk::TextBuffer> {
         unsafe {
             let mut value = Value::from_type(<gtk::TextBuffer as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"buffer\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -352,11 +338,11 @@ impl<O: IsA<Snippet>> SnippetExt for O {
         }
     }
 
-    fn get_property_description(&self) -> Option<GString> {
+    fn get_property_description(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"description\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -368,8 +354,8 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn set_property_description(&self, description: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"description\0".as_ptr() as *const _,
                 Value::from(description).to_glib_none().0,
             );
@@ -379,8 +365,8 @@ impl<O: IsA<Snippet>> SnippetExt for O {
     fn get_property_focus_position(&self) -> i32 {
         unsafe {
             let mut value = Value::from_type(<i32 as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"focus-position\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -391,11 +377,11 @@ impl<O: IsA<Snippet>> SnippetExt for O {
         }
     }
 
-    fn get_property_language_id(&self) -> Option<GString> {
+    fn get_property_language_id(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"language-id\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -407,19 +393,19 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn set_property_language_id(&self, language_id: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"language-id\0".as_ptr() as *const _,
                 Value::from(language_id).to_glib_none().0,
             );
         }
     }
 
-    fn get_property_name(&self) -> Option<GString> {
+    fn get_property_name(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"name\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -431,19 +417,19 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn set_property_name(&self, name: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"name\0".as_ptr() as *const _,
                 Value::from(name).to_glib_none().0,
             );
         }
     }
 
-    fn get_property_trigger(&self) -> Option<GString> {
+    fn get_property_trigger(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<GString as StaticType>::static_type());
-            gobject_sys::g_object_get_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"trigger\0".as_ptr() as *const _,
                 value.to_glib_none_mut().0,
             );
@@ -455,8 +441,8 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn set_property_trigger(&self, trigger: Option<&str>) {
         unsafe {
-            gobject_sys::g_object_set_property(
-                self.to_glib_none().0 as *mut gobject_sys::GObject,
+            glib::gobject_ffi::g_object_set_property(
+                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"trigger\0".as_ptr() as *const _,
                 Value::from(trigger).to_glib_none().0,
             );
@@ -465,9 +451,9 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn connect_property_buffer_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_buffer_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippet,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippet,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Snippet>,
         {
@@ -489,9 +475,9 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn connect_property_description_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_description_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippet,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippet,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Snippet>,
         {
@@ -516,9 +502,9 @@ impl<O: IsA<Snippet>> SnippetExt for O {
         f: F,
     ) -> SignalHandlerId {
         unsafe extern "C" fn notify_focus_position_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippet,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippet,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Snippet>,
         {
@@ -540,9 +526,9 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn connect_property_language_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_language_id_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippet,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippet,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Snippet>,
         {
@@ -564,9 +550,9 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn connect_property_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_name_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippet,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippet,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Snippet>,
         {
@@ -588,9 +574,9 @@ impl<O: IsA<Snippet>> SnippetExt for O {
 
     fn connect_property_trigger_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
         unsafe extern "C" fn notify_trigger_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut gtk_source_sys::GtkSourceSnippet,
-            _param_spec: glib_sys::gpointer,
-            f: glib_sys::gpointer,
+            this: *mut ffi::GtkSourceSnippet,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
         ) where
             P: IsA<Snippet>,
         {
