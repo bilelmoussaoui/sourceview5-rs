@@ -6,5 +6,5 @@ exclude = [
 members = [
   "demo",
   "sourceview5",
-  "sourceview5-sys",
+  "sourceview5/sys",
 ]

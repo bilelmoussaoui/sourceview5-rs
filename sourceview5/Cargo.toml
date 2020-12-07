@@ -30,7 +30,7 @@ git = "https://github.com/gtk-rs/gtk-rs"
 
 [dependencies.ffi]
 package = "sourceview5-sys"
-path = "../sourceview5-sys"
+path = "./sys"
 
 [features]
 default = ["v5_0"]
