@@ -38,7 +38,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: 'recursive'
+      - run: cp ./GtkSource-5.gir ./gir-files
       - run: python3 generator.py
+      - run: rm -rf ./gir-files/GtkSource-5.gir 
       - run: git diff -R --exit-code
   
   clippy:
@@ -73,7 +75,7 @@ jobs:
         run: cargo build --release
       - run: cargo run -- ../sourceview5
         working-directory: checker
-      - run: cargo run -- ../sourceview5-sys
+      - run: cargo run -- ../sourceview5/sys
         working-directory: checker
       - run: ./check_init_asserts ../sourceview5
         working-directory: checker
