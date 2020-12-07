@@ -32,18 +32,15 @@ jobs:
           command: build
 
   regen_check:
-    name: regen check
+    name: regen checker
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
         with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - run: rustup component add rustfmt
-      - run: make regen_check
-
+          submodules: 'recursive'
+      - run: python3 generator.py
+      - run: git diff -R --exit-code
+  
   clippy:
     name: clippy
     runs-on: ubuntu-20.04
