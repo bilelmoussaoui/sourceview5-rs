@@ -2,8 +2,7 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-use glib::object::Cast;
-use glib::object::IsA;
+use glib::object::ObjectType as ObjectType_;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
@@ -19,132 +18,85 @@ glib::glib_wrapper! {
     }
 }
 
-pub const NONE_LANGUAGE: Option<&Language> = None;
-
-pub trait LanguageExt: 'static {
-    fn get_globs(&self) -> Vec<glib::GString>;
-
-    fn get_hidden(&self) -> bool;
-
-    fn get_id(&self) -> Option<glib::GString>;
-
-    fn get_metadata(&self, name: &str) -> Option<glib::GString>;
-
-    fn get_mime_types(&self) -> Vec<glib::GString>;
-
-    fn get_name(&self) -> Option<glib::GString>;
-
-    fn get_section(&self) -> Option<glib::GString>;
-
-    fn get_style_fallback(&self, style_id: &str) -> Option<glib::GString>;
-
-    fn get_style_ids(&self) -> Vec<glib::GString>;
-
-    fn get_style_name(&self, style_id: &str) -> Option<glib::GString>;
-
-    fn connect_property_hidden_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_section_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-}
-
-impl<O: IsA<Language>> LanguageExt for O {
-    fn get_globs(&self) -> Vec<glib::GString> {
+impl Language {
+    pub fn get_globs(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_globs(
-                self.as_ref().to_glib_none().0,
+                self.to_glib_none().0,
             ))
         }
     }
 
-    fn get_hidden(&self) -> bool {
-        unsafe {
-            from_glib(ffi::gtk_source_language_get_hidden(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
+    pub fn get_hidden(&self) -> bool {
+        unsafe { from_glib(ffi::gtk_source_language_get_hidden(self.to_glib_none().0)) }
     }
 
-    fn get_id(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_language_get_id(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
+    pub fn get_id(&self) -> Option<glib::GString> {
+        unsafe { from_glib_none(ffi::gtk_source_language_get_id(self.to_glib_none().0)) }
     }
 
-    fn get_metadata(&self, name: &str) -> Option<glib::GString> {
+    pub fn get_metadata(&self, name: &str) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_language_get_metadata(
-                self.as_ref().to_glib_none().0,
+                self.to_glib_none().0,
                 name.to_glib_none().0,
             ))
         }
     }
 
-    fn get_mime_types(&self) -> Vec<glib::GString> {
+    pub fn get_mime_types(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_mime_types(
-                self.as_ref().to_glib_none().0,
+                self.to_glib_none().0,
             ))
         }
     }
 
-    fn get_name(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_language_get_name(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
+    pub fn get_name(&self) -> Option<glib::GString> {
+        unsafe { from_glib_none(ffi::gtk_source_language_get_name(self.to_glib_none().0)) }
     }
 
-    fn get_section(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_language_get_section(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
+    pub fn get_section(&self) -> Option<glib::GString> {
+        unsafe { from_glib_none(ffi::gtk_source_language_get_section(self.to_glib_none().0)) }
     }
 
-    fn get_style_fallback(&self, style_id: &str) -> Option<glib::GString> {
+    pub fn get_style_fallback(&self, style_id: &str) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_language_get_style_fallback(
-                self.as_ref().to_glib_none().0,
+                self.to_glib_none().0,
                 style_id.to_glib_none().0,
             ))
         }
     }
 
-    fn get_style_ids(&self) -> Vec<glib::GString> {
+    pub fn get_style_ids(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_style_ids(
-                self.as_ref().to_glib_none().0,
+                self.to_glib_none().0,
             ))
         }
     }
 
-    fn get_style_name(&self, style_id: &str) -> Option<glib::GString> {
+    pub fn get_style_name(&self, style_id: &str) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_language_get_style_name(
-                self.as_ref().to_glib_none().0,
+                self.to_glib_none().0,
                 style_id.to_glib_none().0,
             ))
         }
     }
 
-    fn connect_property_hidden_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_hidden_trampoline<P, F: Fn(&P) + 'static>(
+    pub fn connect_property_hidden_notify<F: Fn(&Language) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_hidden_trampoline<F: Fn(&Language) + 'static>(
             this: *mut ffi::GtkSourceLanguage,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
-        ) where
-            P: IsA<Language>,
-        {
+        ) {
             let f: &F = &*(f as *const F);
-            f(&Language::from_glib_borrow(this).unsafe_cast_ref())
+            f(&from_glib_borrow(this))
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
@@ -152,23 +104,21 @@ impl<O: IsA<Language>> LanguageExt for O {
                 self.as_ptr() as *mut _,
                 b"notify::hidden\0".as_ptr() as *const _,
                 Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_hidden_trampoline::<Self, F> as *const (),
+                    notify_hidden_trampoline::<F> as *const (),
                 )),
                 Box_::into_raw(f),
             )
         }
     }
 
-    fn connect_property_id_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_id_trampoline<P, F: Fn(&P) + 'static>(
+    pub fn connect_property_id_notify<F: Fn(&Language) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn notify_id_trampoline<F: Fn(&Language) + 'static>(
             this: *mut ffi::GtkSourceLanguage,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
-        ) where
-            P: IsA<Language>,
-        {
+        ) {
             let f: &F = &*(f as *const F);
-            f(&Language::from_glib_borrow(this).unsafe_cast_ref())
+            f(&from_glib_borrow(this))
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
@@ -176,23 +126,24 @@ impl<O: IsA<Language>> LanguageExt for O {
                 self.as_ptr() as *mut _,
                 b"notify::id\0".as_ptr() as *const _,
                 Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_id_trampoline::<Self, F> as *const (),
+                    notify_id_trampoline::<F> as *const (),
                 )),
                 Box_::into_raw(f),
             )
         }
     }
 
-    fn connect_property_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_name_trampoline<P, F: Fn(&P) + 'static>(
+    pub fn connect_property_name_notify<F: Fn(&Language) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_name_trampoline<F: Fn(&Language) + 'static>(
             this: *mut ffi::GtkSourceLanguage,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
-        ) where
-            P: IsA<Language>,
-        {
+        ) {
             let f: &F = &*(f as *const F);
-            f(&Language::from_glib_borrow(this).unsafe_cast_ref())
+            f(&from_glib_borrow(this))
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
@@ -200,23 +151,24 @@ impl<O: IsA<Language>> LanguageExt for O {
                 self.as_ptr() as *mut _,
                 b"notify::name\0".as_ptr() as *const _,
                 Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_name_trampoline::<Self, F> as *const (),
+                    notify_name_trampoline::<F> as *const (),
                 )),
                 Box_::into_raw(f),
             )
         }
     }
 
-    fn connect_property_section_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_section_trampoline<P, F: Fn(&P) + 'static>(
+    pub fn connect_property_section_notify<F: Fn(&Language) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_section_trampoline<F: Fn(&Language) + 'static>(
             this: *mut ffi::GtkSourceLanguage,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
-        ) where
-            P: IsA<Language>,
-        {
+        ) {
             let f: &F = &*(f as *const F);
-            f(&Language::from_glib_borrow(this).unsafe_cast_ref())
+            f(&from_glib_borrow(this))
         }
         unsafe {
             let f: Box_<F> = Box_::new(f);
@@ -224,7 +176,7 @@ impl<O: IsA<Language>> LanguageExt for O {
                 self.as_ptr() as *mut _,
                 b"notify::section\0".as_ptr() as *const _,
                 Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_section_trampoline::<Self, F> as *const (),
+                    notify_section_trampoline::<F> as *const (),
                 )),
                 Box_::into_raw(f),
             )
@@ -234,6 +186,6 @@ impl<O: IsA<Language>> LanguageExt for O {
 
 impl fmt::Display for Language {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Language")
+        f.write_str("Language")
     }
 }

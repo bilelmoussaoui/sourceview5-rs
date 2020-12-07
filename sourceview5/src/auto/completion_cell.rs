@@ -5,12 +5,12 @@
 use crate::CompletionColumn;
 use glib::object::Cast;
 use glib::object::IsA;
+use glib::object::ObjectType as ObjectType_;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use glib::Value;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
@@ -20,6 +20,237 @@ glib::glib_wrapper! {
 
     match fn {
         get_type => || ffi::gtk_source_completion_cell_get_type(),
+    }
+}
+
+impl CompletionCell {
+    pub fn get_column(&self) -> CompletionColumn {
+        unsafe {
+            from_glib(ffi::gtk_source_completion_cell_get_column(
+                self.to_glib_none().0,
+            ))
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn get_widget(&self) -> Option<gtk::Widget> {
+        unsafe {
+            from_glib_none(ffi::gtk_source_completion_cell_get_widget(
+                self.to_glib_none().0,
+            ))
+        }
+    }
+
+    pub fn set_gicon<P: IsA<gio::Icon>>(&self, gicon: &P) {
+        unsafe {
+            ffi::gtk_source_completion_cell_set_gicon(
+                self.to_glib_none().0,
+                gicon.as_ref().to_glib_none().0,
+            );
+        }
+    }
+
+    pub fn set_icon_name(&self, icon_name: &str) {
+        unsafe {
+            ffi::gtk_source_completion_cell_set_icon_name(
+                self.to_glib_none().0,
+                icon_name.to_glib_none().0,
+            );
+        }
+    }
+
+    pub fn set_markup(&self, markup: &str) {
+        unsafe {
+            ffi::gtk_source_completion_cell_set_markup(
+                self.to_glib_none().0,
+                markup.to_glib_none().0,
+            );
+        }
+    }
+
+    pub fn set_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P) {
+        unsafe {
+            ffi::gtk_source_completion_cell_set_paintable(
+                self.to_glib_none().0,
+                paintable.as_ref().to_glib_none().0,
+            );
+        }
+    }
+
+    pub fn set_text(&self, text: &str) {
+        unsafe {
+            ffi::gtk_source_completion_cell_set_text(self.to_glib_none().0, text.to_glib_none().0);
+        }
+    }
+
+    //pub fn set_text_with_attributes(&self, text: &str, attrs: /*Ignored*/&pango::AttrList) {
+    //    unsafe { TODO: call ffi:gtk_source_completion_cell_set_text_with_attributes() }
+    //}
+
+    pub fn set_widget<P: IsA<gtk::Widget>>(&self, child: &P) {
+        unsafe {
+            ffi::gtk_source_completion_cell_set_widget(
+                self.to_glib_none().0,
+                child.as_ref().to_glib_none().0,
+            );
+        }
+    }
+
+    pub fn get_property_markup(&self) -> Option<glib::GString> {
+        unsafe {
+            let mut value = glib::Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.as_ptr() as *mut glib::gobject_ffi::GObject,
+                b"markup\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `markup` getter")
+        }
+    }
+
+    pub fn get_property_paintable(&self) -> Option<gdk::Paintable> {
+        unsafe {
+            let mut value = glib::Value::from_type(<gdk::Paintable as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.as_ptr() as *mut glib::gobject_ffi::GObject,
+                b"paintable\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `paintable` getter")
+        }
+    }
+
+    pub fn get_property_text(&self) -> Option<glib::GString> {
+        unsafe {
+            let mut value = glib::Value::from_type(<glib::GString as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.as_ptr() as *mut glib::gobject_ffi::GObject,
+                b"text\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `text` getter")
+        }
+    }
+
+    pub fn get_property_widget(&self) -> Option<gtk::Widget> {
+        unsafe {
+            let mut value = glib::Value::from_type(<gtk::Widget as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.as_ptr() as *mut glib::gobject_ffi::GObject,
+                b"widget\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `widget` getter")
+        }
+    }
+
+    pub fn connect_property_markup_notify<F: Fn(&CompletionCell) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_markup_trampoline<F: Fn(&CompletionCell) + 'static>(
+            this: *mut ffi::GtkSourceCompletionCell,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::markup\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_markup_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
+    }
+
+    pub fn connect_property_paintable_notify<F: Fn(&CompletionCell) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_paintable_trampoline<F: Fn(&CompletionCell) + 'static>(
+            this: *mut ffi::GtkSourceCompletionCell,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::paintable\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_paintable_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
+    }
+
+    pub fn connect_property_text_notify<F: Fn(&CompletionCell) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_text_trampoline<F: Fn(&CompletionCell) + 'static>(
+            this: *mut ffi::GtkSourceCompletionCell,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::text\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_text_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
+    }
+
+    pub fn connect_property_widget_notify<F: Fn(&CompletionCell) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_widget_trampoline<F: Fn(&CompletionCell) + 'static>(
+            this: *mut ffi::GtkSourceCompletionCell,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::widget\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_widget_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
     }
 }
 
@@ -309,278 +540,8 @@ impl CompletionCellBuilder {
     }
 }
 
-pub const NONE_COMPLETION_CELL: Option<&CompletionCell> = None;
-
-pub trait CompletionCellExt: 'static {
-    fn get_column(&self) -> CompletionColumn;
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_widget(&self) -> Option<gtk::Widget>;
-
-    fn set_gicon<P: IsA<gio::Icon>>(&self, gicon: &P);
-
-    fn set_icon_name(&self, icon_name: &str);
-
-    fn set_markup(&self, markup: &str);
-
-    fn set_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P);
-
-    fn set_text(&self, text: &str);
-
-    //fn set_text_with_attributes(&self, text: &str, attrs: /*Ignored*/&pango::AttrList);
-
-    fn set_widget<P: IsA<gtk::Widget>>(&self, child: &P);
-
-    fn get_property_markup(&self) -> Option<glib::GString>;
-
-    fn get_property_paintable(&self) -> Option<gdk::Paintable>;
-
-    fn get_property_text(&self) -> Option<glib::GString>;
-
-    fn get_property_widget(&self) -> Option<gtk::Widget>;
-
-    fn connect_property_markup_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_paintable_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_text_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_widget_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-}
-
-impl<O: IsA<CompletionCell>> CompletionCellExt for O {
-    fn get_column(&self) -> CompletionColumn {
-        unsafe {
-            from_glib(ffi::gtk_source_completion_cell_get_column(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_widget(&self) -> Option<gtk::Widget> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_completion_cell_get_widget(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    fn set_gicon<P: IsA<gio::Icon>>(&self, gicon: &P) {
-        unsafe {
-            ffi::gtk_source_completion_cell_set_gicon(
-                self.as_ref().to_glib_none().0,
-                gicon.as_ref().to_glib_none().0,
-            );
-        }
-    }
-
-    fn set_icon_name(&self, icon_name: &str) {
-        unsafe {
-            ffi::gtk_source_completion_cell_set_icon_name(
-                self.as_ref().to_glib_none().0,
-                icon_name.to_glib_none().0,
-            );
-        }
-    }
-
-    fn set_markup(&self, markup: &str) {
-        unsafe {
-            ffi::gtk_source_completion_cell_set_markup(
-                self.as_ref().to_glib_none().0,
-                markup.to_glib_none().0,
-            );
-        }
-    }
-
-    fn set_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P) {
-        unsafe {
-            ffi::gtk_source_completion_cell_set_paintable(
-                self.as_ref().to_glib_none().0,
-                paintable.as_ref().to_glib_none().0,
-            );
-        }
-    }
-
-    fn set_text(&self, text: &str) {
-        unsafe {
-            ffi::gtk_source_completion_cell_set_text(
-                self.as_ref().to_glib_none().0,
-                text.to_glib_none().0,
-            );
-        }
-    }
-
-    //fn set_text_with_attributes(&self, text: &str, attrs: /*Ignored*/&pango::AttrList) {
-    //    unsafe { TODO: call ffi:gtk_source_completion_cell_set_text_with_attributes() }
-    //}
-
-    fn set_widget<P: IsA<gtk::Widget>>(&self, child: &P) {
-        unsafe {
-            ffi::gtk_source_completion_cell_set_widget(
-                self.as_ref().to_glib_none().0,
-                child.as_ref().to_glib_none().0,
-            );
-        }
-    }
-
-    fn get_property_markup(&self) -> Option<glib::GString> {
-        unsafe {
-            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(
-                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
-                b"markup\0".as_ptr() as *const _,
-                value.to_glib_none_mut().0,
-            );
-            value
-                .get()
-                .expect("Return Value for property `markup` getter")
-        }
-    }
-
-    fn get_property_paintable(&self) -> Option<gdk::Paintable> {
-        unsafe {
-            let mut value = Value::from_type(<gdk::Paintable as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(
-                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
-                b"paintable\0".as_ptr() as *const _,
-                value.to_glib_none_mut().0,
-            );
-            value
-                .get()
-                .expect("Return Value for property `paintable` getter")
-        }
-    }
-
-    fn get_property_text(&self) -> Option<glib::GString> {
-        unsafe {
-            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(
-                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
-                b"text\0".as_ptr() as *const _,
-                value.to_glib_none_mut().0,
-            );
-            value
-                .get()
-                .expect("Return Value for property `text` getter")
-        }
-    }
-
-    fn get_property_widget(&self) -> Option<gtk::Widget> {
-        unsafe {
-            let mut value = Value::from_type(<gtk::Widget as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(
-                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
-                b"widget\0".as_ptr() as *const _,
-                value.to_glib_none_mut().0,
-            );
-            value
-                .get()
-                .expect("Return Value for property `widget` getter")
-        }
-    }
-
-    fn connect_property_markup_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_markup_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceCompletionCell,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<CompletionCell>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&CompletionCell::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::markup\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_markup_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-
-    fn connect_property_paintable_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_paintable_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceCompletionCell,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<CompletionCell>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&CompletionCell::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::paintable\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_paintable_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-
-    fn connect_property_text_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_text_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceCompletionCell,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<CompletionCell>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&CompletionCell::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::text\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_text_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-
-    fn connect_property_widget_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_widget_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceCompletionCell,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<CompletionCell>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&CompletionCell::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::widget\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_widget_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-}
-
 impl fmt::Display for CompletionCell {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CompletionCell")
+        f.write_str("CompletionCell")
     }
 }

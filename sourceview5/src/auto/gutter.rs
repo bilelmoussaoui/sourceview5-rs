@@ -6,10 +6,10 @@ use crate::GutterRenderer;
 use crate::View;
 use glib::object::Cast;
 use glib::object::IsA;
+use glib::object::ObjectType as ObjectType_;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use glib::Value;
 use std::fmt;
 
 glib::glib_wrapper! {
@@ -17,6 +17,57 @@ glib::glib_wrapper! {
 
     match fn {
         get_type => || ffi::gtk_source_gutter_get_type(),
+    }
+}
+
+impl Gutter {
+    pub fn get_view(&self) -> Option<View> {
+        unsafe { from_glib_none(ffi::gtk_source_gutter_get_view(self.to_glib_none().0)) }
+    }
+
+    pub fn insert<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) -> bool {
+        unsafe {
+            from_glib(ffi::gtk_source_gutter_insert(
+                self.to_glib_none().0,
+                renderer.as_ref().to_glib_none().0,
+                position,
+            ))
+        }
+    }
+
+    pub fn remove<P: IsA<GutterRenderer>>(&self, renderer: &P) {
+        unsafe {
+            ffi::gtk_source_gutter_remove(
+                self.to_glib_none().0,
+                renderer.as_ref().to_glib_none().0,
+            );
+        }
+    }
+
+    pub fn reorder<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) {
+        unsafe {
+            ffi::gtk_source_gutter_reorder(
+                self.to_glib_none().0,
+                renderer.as_ref().to_glib_none().0,
+                position,
+            );
+        }
+    }
+
+    pub fn get_property_window_type(&self) -> gtk::TextWindowType {
+        unsafe {
+            let mut value =
+                glib::Value::from_type(<gtk::TextWindowType as StaticType>::static_type());
+            glib::gobject_ffi::g_object_get_property(
+                self.as_ptr() as *mut glib::gobject_ffi::GObject,
+                b"window-type\0".as_ptr() as *const _,
+                value.to_glib_none_mut().0,
+            );
+            value
+                .get()
+                .expect("Return Value for property `window-type` getter")
+                .unwrap()
+        }
     }
 }
 
@@ -279,76 +330,8 @@ impl GutterBuilder {
     }
 }
 
-pub const NONE_GUTTER: Option<&Gutter> = None;
-
-pub trait GutterExt: 'static {
-    fn get_view(&self) -> Option<View>;
-
-    fn insert<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) -> bool;
-
-    fn remove<P: IsA<GutterRenderer>>(&self, renderer: &P);
-
-    fn reorder<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32);
-
-    fn get_property_window_type(&self) -> gtk::TextWindowType;
-}
-
-impl<O: IsA<Gutter>> GutterExt for O {
-    fn get_view(&self) -> Option<View> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_gutter_get_view(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    fn insert<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) -> bool {
-        unsafe {
-            from_glib(ffi::gtk_source_gutter_insert(
-                self.as_ref().to_glib_none().0,
-                renderer.as_ref().to_glib_none().0,
-                position,
-            ))
-        }
-    }
-
-    fn remove<P: IsA<GutterRenderer>>(&self, renderer: &P) {
-        unsafe {
-            ffi::gtk_source_gutter_remove(
-                self.as_ref().to_glib_none().0,
-                renderer.as_ref().to_glib_none().0,
-            );
-        }
-    }
-
-    fn reorder<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) {
-        unsafe {
-            ffi::gtk_source_gutter_reorder(
-                self.as_ref().to_glib_none().0,
-                renderer.as_ref().to_glib_none().0,
-                position,
-            );
-        }
-    }
-
-    fn get_property_window_type(&self) -> gtk::TextWindowType {
-        unsafe {
-            let mut value = Value::from_type(<gtk::TextWindowType as StaticType>::static_type());
-            glib::gobject_ffi::g_object_get_property(
-                self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
-                b"window-type\0".as_ptr() as *const _,
-                value.to_glib_none_mut().0,
-            );
-            value
-                .get()
-                .expect("Return Value for property `window-type` getter")
-                .unwrap()
-        }
-    }
-}
-
 impl fmt::Display for Gutter {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Gutter")
+        f.write_str("Gutter")
     }
 }

@@ -22,6 +22,6 @@ impl<O: IsA<CompletionProposal>> CompletionProposalExt for O {}
 
 impl fmt::Display for CompletionProposal {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CompletionProposal")
+        f.write_str("CompletionProposal")
     }
 }

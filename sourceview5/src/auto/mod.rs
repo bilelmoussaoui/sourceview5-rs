@@ -8,19 +8,16 @@ pub use self::buffer::BufferExt;
 pub use self::buffer::{Buffer, NONE_BUFFER};
 
 mod completion;
+pub use self::completion::Completion;
 pub use self::completion::CompletionBuilder;
-pub use self::completion::CompletionExt;
-pub use self::completion::{Completion, NONE_COMPLETION};
 
 mod completion_cell;
+pub use self::completion_cell::CompletionCell;
 pub use self::completion_cell::CompletionCellBuilder;
-pub use self::completion_cell::CompletionCellExt;
-pub use self::completion_cell::{CompletionCell, NONE_COMPLETION_CELL};
 
 mod completion_context;
+pub use self::completion_context::CompletionContext;
 pub use self::completion_context::CompletionContextBuilder;
-pub use self::completion_context::CompletionContextExt;
-pub use self::completion_context::{CompletionContext, NONE_COMPLETION_CONTEXT};
 
 mod completion_proposal;
 pub use self::completion_proposal::CompletionProposalExt;
@@ -46,29 +43,23 @@ pub use self::file::FileExt;
 pub use self::file::{File, NONE_FILE};
 
 mod file_loader;
+pub use self::file_loader::FileLoader;
 pub use self::file_loader::FileLoaderBuilder;
-pub use self::file_loader::FileLoaderExt;
-pub use self::file_loader::{FileLoader, NONE_FILE_LOADER};
 
 mod file_saver;
+pub use self::file_saver::FileSaver;
 pub use self::file_saver::FileSaverBuilder;
-pub use self::file_saver::FileSaverExt;
-pub use self::file_saver::{FileSaver, NONE_FILE_SAVER};
 
 mod gutter;
+pub use self::gutter::Gutter;
 pub use self::gutter::GutterBuilder;
-pub use self::gutter::GutterExt;
-pub use self::gutter::{Gutter, NONE_GUTTER};
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 mod gutter_lines;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-pub use self::gutter_lines::GutterLinesExt;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-pub use self::gutter_lines::{GutterLines, NONE_GUTTER_LINES};
+pub use self::gutter_lines::GutterLines;
 
 mod gutter_renderer;
 pub use self::gutter_renderer::GutterRendererExt;
@@ -85,13 +76,11 @@ pub use self::gutter_renderer_text::GutterRendererTextExt;
 pub use self::gutter_renderer_text::{GutterRendererText, NONE_GUTTER_RENDERER_TEXT};
 
 mod language;
-pub use self::language::LanguageExt;
-pub use self::language::{Language, NONE_LANGUAGE};
+pub use self::language::Language;
 
 mod language_manager;
+pub use self::language_manager::LanguageManager;
 pub use self::language_manager::LanguageManagerBuilder;
-pub use self::language_manager::LanguageManagerExt;
-pub use self::language_manager::{LanguageManager, NONE_LANGUAGE_MANAGER};
 
 mod map;
 pub use self::map::MapBuilder;
@@ -104,9 +93,8 @@ pub use self::mark::MarkExt;
 pub use self::mark::{Mark, NONE_MARK};
 
 mod mark_attributes;
+pub use self::mark_attributes::MarkAttributes;
 pub use self::mark_attributes::MarkAttributesBuilder;
-pub use self::mark_attributes::MarkAttributesExt;
-pub use self::mark_attributes::{MarkAttributes, NONE_MARK_ATTRIBUTES};
 
 mod print_compositor;
 pub use self::print_compositor::PrintCompositorBuilder;
@@ -119,9 +107,8 @@ pub use self::region::RegionExt;
 pub use self::region::{Region, NONE_REGION};
 
 mod search_context;
+pub use self::search_context::SearchContext;
 pub use self::search_context::SearchContextBuilder;
-pub use self::search_context::SearchContextExt;
-pub use self::search_context::{SearchContext, NONE_SEARCH_CONTEXT};
 
 mod search_settings;
 pub use self::search_settings::SearchSettingsBuilder;
@@ -133,50 +120,39 @@ pub use self::search_settings::{SearchSettings, NONE_SEARCH_SETTINGS};
 mod snippet;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+pub use self::snippet::Snippet;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::snippet::SnippetBuilder;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-pub use self::snippet::SnippetExt;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-pub use self::snippet::{Snippet, NONE_SNIPPET};
 
 mod snippet_chunk;
+pub use self::snippet_chunk::SnippetChunk;
 pub use self::snippet_chunk::SnippetChunkBuilder;
-pub use self::snippet_chunk::SnippetChunkExt;
-pub use self::snippet_chunk::{SnippetChunk, NONE_SNIPPET_CHUNK};
 
 mod snippet_context;
-pub use self::snippet_context::SnippetContextExt;
-pub use self::snippet_context::{SnippetContext, NONE_SNIPPET_CONTEXT};
+pub use self::snippet_context::SnippetContext;
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 mod snippet_manager;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+pub use self::snippet_manager::SnippetManager;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 pub use self::snippet_manager::SnippetManagerBuilder;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-pub use self::snippet_manager::SnippetManagerExt;
-#[cfg(any(feature = "v5_0", feature = "dox"))]
-#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-pub use self::snippet_manager::{SnippetManager, NONE_SNIPPET_MANAGER};
 
 mod space_drawer;
+pub use self::space_drawer::SpaceDrawer;
 pub use self::space_drawer::SpaceDrawerBuilder;
-pub use self::space_drawer::SpaceDrawerExt;
-pub use self::space_drawer::{SpaceDrawer, NONE_SPACE_DRAWER};
 
 mod style;
+pub use self::style::Style;
 pub use self::style::StyleBuilder;
-pub use self::style::StyleExt;
-pub use self::style::{Style, NONE_STYLE};
 
 mod style_scheme;
+pub use self::style_scheme::StyleScheme;
 pub use self::style_scheme::StyleSchemeBuilder;
-pub use self::style_scheme::StyleSchemeExt;
-pub use self::style_scheme::{StyleScheme, NONE_STYLE_SCHEME};
 
 mod style_scheme_chooser;
 pub use self::style_scheme_chooser::StyleSchemeChooserExt;
@@ -193,9 +169,8 @@ pub use self::style_scheme_chooser_widget::{
 };
 
 mod style_scheme_manager;
+pub use self::style_scheme_manager::StyleSchemeManager;
 pub use self::style_scheme_manager::StyleSchemeManagerBuilder;
-pub use self::style_scheme_manager::StyleSchemeManagerExt;
-pub use self::style_scheme_manager::{StyleSchemeManager, NONE_STYLE_SCHEME_MANAGER};
 
 mod tag;
 pub use self::tag::TagBuilder;
@@ -233,45 +208,20 @@ pub use self::flags::SpaceTypeFlags;
 #[doc(hidden)]
 pub mod traits {
     pub use super::BufferExt;
-    pub use super::CompletionCellExt;
-    pub use super::CompletionContextExt;
-    pub use super::CompletionExt;
     pub use super::CompletionProposalExt;
     pub use super::CompletionProviderExt;
     pub use super::CompletionSnippetsExt;
     pub use super::CompletionWordsExt;
     pub use super::FileExt;
-    pub use super::FileLoaderExt;
-    pub use super::FileSaverExt;
-    pub use super::GutterExt;
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    pub use super::GutterLinesExt;
     pub use super::GutterRendererExt;
     pub use super::GutterRendererPixbufExt;
     pub use super::GutterRendererTextExt;
-    pub use super::LanguageExt;
-    pub use super::LanguageManagerExt;
     pub use super::MapExt;
-    pub use super::MarkAttributesExt;
     pub use super::MarkExt;
     pub use super::PrintCompositorExt;
     pub use super::RegionExt;
-    pub use super::SearchContextExt;
     pub use super::SearchSettingsExt;
-    pub use super::SnippetChunkExt;
-    pub use super::SnippetContextExt;
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    pub use super::SnippetExt;
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    pub use super::SnippetManagerExt;
-    pub use super::SpaceDrawerExt;
-    pub use super::StyleExt;
     pub use super::StyleSchemeChooserExt;
-    pub use super::StyleSchemeExt;
-    pub use super::StyleSchemeManagerExt;
     pub use super::TagExt;
     pub use super::ViewExt;
 }

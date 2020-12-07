@@ -10,7 +10,6 @@ use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use glib::Value;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
@@ -160,7 +159,7 @@ impl<O: IsA<CompletionWords>> CompletionWordsExt for O {
 
     fn get_property_minimum_word_size(&self) -> u32 {
         unsafe {
-            let mut value = Value::from_type(<u32 as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<u32 as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"minimum-word-size\0".as_ptr() as *const _,
@@ -178,14 +177,14 @@ impl<O: IsA<CompletionWords>> CompletionWordsExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"minimum-word-size\0".as_ptr() as *const _,
-                Value::from(&minimum_word_size).to_glib_none().0,
+                glib::Value::from(&minimum_word_size).to_glib_none().0,
             );
         }
     }
 
     fn get_property_priority(&self) -> i32 {
         unsafe {
-            let mut value = Value::from_type(<i32 as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<i32 as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"priority\0".as_ptr() as *const _,
@@ -203,14 +202,14 @@ impl<O: IsA<CompletionWords>> CompletionWordsExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"priority\0".as_ptr() as *const _,
-                Value::from(&priority).to_glib_none().0,
+                glib::Value::from(&priority).to_glib_none().0,
             );
         }
     }
 
     fn get_property_proposals_batch_size(&self) -> u32 {
         unsafe {
-            let mut value = Value::from_type(<u32 as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<u32 as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"proposals-batch-size\0".as_ptr() as *const _,
@@ -228,14 +227,14 @@ impl<O: IsA<CompletionWords>> CompletionWordsExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"proposals-batch-size\0".as_ptr() as *const _,
-                Value::from(&proposals_batch_size).to_glib_none().0,
+                glib::Value::from(&proposals_batch_size).to_glib_none().0,
             );
         }
     }
 
     fn get_property_scan_batch_size(&self) -> u32 {
         unsafe {
-            let mut value = Value::from_type(<u32 as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<u32 as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"scan-batch-size\0".as_ptr() as *const _,
@@ -253,7 +252,7 @@ impl<O: IsA<CompletionWords>> CompletionWordsExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"scan-batch-size\0".as_ptr() as *const _,
-                Value::from(&scan_batch_size).to_glib_none().0,
+                glib::Value::from(&scan_batch_size).to_glib_none().0,
             );
         }
     }
@@ -263,7 +262,7 @@ impl<O: IsA<CompletionWords>> CompletionWordsExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"title\0".as_ptr() as *const _,
-                Value::from(title).to_glib_none().0,
+                glib::Value::from(title).to_glib_none().0,
             );
         }
     }
@@ -400,6 +399,6 @@ impl<O: IsA<CompletionWords>> CompletionWordsExt for O {
 
 impl fmt::Display for CompletionWords {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CompletionWords")
+        f.write_str("CompletionWords")
     }
 }

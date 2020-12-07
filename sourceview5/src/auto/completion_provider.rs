@@ -23,96 +23,87 @@ glib::glib_wrapper! {
 pub const NONE_COMPLETION_PROVIDER: Option<&CompletionProvider> = None;
 
 pub trait CompletionProviderExt: 'static {
-    fn activate<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>>(
+    fn activate<P: IsA<CompletionProposal>>(&self, context: &CompletionContext, proposal: &P);
+
+    fn display<P: IsA<CompletionProposal>>(
         &self,
-        context: &P,
-        proposal: &Q,
+        context: &CompletionContext,
+        proposal: &P,
+        cell: &CompletionCell,
     );
 
-    fn display<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>, R: IsA<CompletionCell>>(
-        &self,
-        context: &P,
-        proposal: &Q,
-        cell: &R,
-    );
-
-    fn get_priority<P: IsA<CompletionContext>>(&self, context: &P) -> i32;
+    fn get_priority(&self, context: &CompletionContext) -> i32;
 
     fn get_title(&self) -> Option<glib::GString>;
 
     fn is_trigger(&self, iter: &gtk::TextIter, ch: char) -> bool;
 
-    fn key_activates<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>>(
+    fn key_activates<P: IsA<CompletionProposal>>(
         &self,
-        context: &P,
-        proposal: &Q,
+        context: &CompletionContext,
+        proposal: &P,
         keyval: u32,
         state: gdk::ModifierType,
     ) -> bool;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn list_alternates<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>>(
+    fn list_alternates<P: IsA<CompletionProposal>>(
         &self,
-        context: &P,
-        proposal: &Q,
+        context: &CompletionContext,
+        proposal: &P,
     ) -> Vec<CompletionProposal>;
 
     fn populate_async<
-        P: IsA<CompletionContext>,
-        Q: IsA<gio::Cancellable>,
-        R: FnOnce(Result<gio::ListModel, glib::Error>) + Send + 'static,
+        P: IsA<gio::Cancellable>,
+        Q: FnOnce(Result<gio::ListModel, glib::Error>) + Send + 'static,
     >(
         &self,
-        context: &P,
-        cancellable: Option<&Q>,
-        callback: R,
+        context: &CompletionContext,
+        cancellable: Option<&P>,
+        callback: Q,
     );
 
-    fn populate_async_future<P: IsA<CompletionContext> + Clone + 'static>(
+    fn populate_async_future(
         &self,
-        context: &P,
+        context: &CompletionContext,
     ) -> Pin<Box_<dyn std::future::Future<Output = Result<gio::ListModel, glib::Error>> + 'static>>;
 
-    fn refilter<P: IsA<CompletionContext>, Q: IsA<gio::ListModel>>(&self, context: &P, model: &Q);
+    fn refilter<P: IsA<gio::ListModel>>(&self, context: &CompletionContext, model: &P);
 }
 
 impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
-    fn activate<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>>(
-        &self,
-        context: &P,
-        proposal: &Q,
-    ) {
+    fn activate<P: IsA<CompletionProposal>>(&self, context: &CompletionContext, proposal: &P) {
         unsafe {
             ffi::gtk_source_completion_provider_activate(
                 self.as_ref().to_glib_none().0,
-                context.as_ref().to_glib_none().0,
+                context.to_glib_none().0,
                 proposal.as_ref().to_glib_none().0,
             );
         }
     }
 
-    fn display<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>, R: IsA<CompletionCell>>(
+    fn display<P: IsA<CompletionProposal>>(
         &self,
-        context: &P,
-        proposal: &Q,
-        cell: &R,
+        context: &CompletionContext,
+        proposal: &P,
+        cell: &CompletionCell,
     ) {
         unsafe {
             ffi::gtk_source_completion_provider_display(
                 self.as_ref().to_glib_none().0,
-                context.as_ref().to_glib_none().0,
+                context.to_glib_none().0,
                 proposal.as_ref().to_glib_none().0,
-                cell.as_ref().to_glib_none().0,
+                cell.to_glib_none().0,
             );
         }
     }
 
-    fn get_priority<P: IsA<CompletionContext>>(&self, context: &P) -> i32 {
+    fn get_priority(&self, context: &CompletionContext) -> i32 {
         unsafe {
             ffi::gtk_source_completion_provider_get_priority(
                 self.as_ref().to_glib_none().0,
-                context.as_ref().to_glib_none().0,
+                context.to_glib_none().0,
             )
         }
     }
@@ -135,17 +126,17 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
         }
     }
 
-    fn key_activates<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>>(
+    fn key_activates<P: IsA<CompletionProposal>>(
         &self,
-        context: &P,
-        proposal: &Q,
+        context: &CompletionContext,
+        proposal: &P,
         keyval: u32,
         state: gdk::ModifierType,
     ) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_completion_provider_key_activates(
                 self.as_ref().to_glib_none().0,
-                context.as_ref().to_glib_none().0,
+                context.to_glib_none().0,
                 proposal.as_ref().to_glib_none().0,
                 keyval,
                 state.to_glib(),
@@ -155,16 +146,16 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn list_alternates<P: IsA<CompletionContext>, Q: IsA<CompletionProposal>>(
+    fn list_alternates<P: IsA<CompletionProposal>>(
         &self,
-        context: &P,
-        proposal: &Q,
+        context: &CompletionContext,
+        proposal: &P,
     ) -> Vec<CompletionProposal> {
         unsafe {
             FromGlibPtrContainer::from_glib_full(
                 ffi::gtk_source_completion_provider_list_alternates(
                     self.as_ref().to_glib_none().0,
-                    context.as_ref().to_glib_none().0,
+                    context.to_glib_none().0,
                     proposal.as_ref().to_glib_none().0,
                 ),
             )
@@ -172,18 +163,17 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
     }
 
     fn populate_async<
-        P: IsA<CompletionContext>,
-        Q: IsA<gio::Cancellable>,
-        R: FnOnce(Result<gio::ListModel, glib::Error>) + Send + 'static,
+        P: IsA<gio::Cancellable>,
+        Q: FnOnce(Result<gio::ListModel, glib::Error>) + Send + 'static,
     >(
         &self,
-        context: &P,
-        cancellable: Option<&Q>,
-        callback: R,
+        context: &CompletionContext,
+        cancellable: Option<&P>,
+        callback: Q,
     ) {
-        let user_data: Box_<R> = Box_::new(callback);
+        let user_data: Box_<Q> = Box_::new(callback);
         unsafe extern "C" fn populate_async_trampoline<
-            R: FnOnce(Result<gio::ListModel, glib::Error>) + Send + 'static,
+            Q: FnOnce(Result<gio::ListModel, glib::Error>) + Send + 'static,
         >(
             _source_object: *mut glib::gobject_ffi::GObject,
             res: *mut gio::ffi::GAsyncResult,
@@ -200,14 +190,14 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
             } else {
                 Err(from_glib_full(error))
             };
-            let callback: Box_<R> = Box_::from_raw(user_data as *mut _);
+            let callback: Box_<Q> = Box_::from_raw(user_data as *mut _);
             callback(result);
         }
-        let callback = populate_async_trampoline::<R>;
+        let callback = populate_async_trampoline::<Q>;
         unsafe {
             ffi::gtk_source_completion_provider_populate_async(
                 self.as_ref().to_glib_none().0,
-                context.as_ref().to_glib_none().0,
+                context.to_glib_none().0,
                 cancellable.map(|p| p.as_ref()).to_glib_none().0,
                 Some(callback),
                 Box_::into_raw(user_data) as *mut _,
@@ -215,9 +205,9 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
         }
     }
 
-    fn populate_async_future<P: IsA<CompletionContext> + Clone + 'static>(
+    fn populate_async_future(
         &self,
-        context: &P,
+        context: &CompletionContext,
     ) -> Pin<Box_<dyn std::future::Future<Output = Result<gio::ListModel, glib::Error>> + 'static>>
     {
         let context = context.clone();
@@ -231,11 +221,11 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
         }))
     }
 
-    fn refilter<P: IsA<CompletionContext>, Q: IsA<gio::ListModel>>(&self, context: &P, model: &Q) {
+    fn refilter<P: IsA<gio::ListModel>>(&self, context: &CompletionContext, model: &P) {
         unsafe {
             ffi::gtk_source_completion_provider_refilter(
                 self.as_ref().to_glib_none().0,
-                context.as_ref().to_glib_none().0,
+                context.to_glib_none().0,
                 model.as_ref().to_glib_none().0,
             );
         }
@@ -244,6 +234,6 @@ impl<O: IsA<CompletionProvider>> CompletionProviderExt for O {
 
 impl fmt::Display for CompletionProvider {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "CompletionProvider")
+        f.write_str("CompletionProvider")
     }
 }

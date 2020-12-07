@@ -4,7 +4,7 @@
 
 use crate::Style;
 use glib::object::Cast;
-use glib::object::IsA;
+use glib::object::ObjectType as ObjectType_;
 use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
@@ -19,6 +19,124 @@ glib::glib_wrapper! {
 
     match fn {
         get_type => || ffi::gtk_source_style_scheme_get_type(),
+    }
+}
+
+impl StyleScheme {
+    pub fn get_authors(&self) -> Vec<glib::GString> {
+        unsafe {
+            FromGlibPtrContainer::from_glib_none(ffi::gtk_source_style_scheme_get_authors(
+                self.to_glib_none().0,
+            ))
+        }
+    }
+
+    pub fn get_description(&self) -> Option<glib::GString> {
+        unsafe {
+            from_glib_none(ffi::gtk_source_style_scheme_get_description(
+                self.to_glib_none().0,
+            ))
+        }
+    }
+
+    pub fn get_filename(&self) -> Option<glib::GString> {
+        unsafe {
+            from_glib_none(ffi::gtk_source_style_scheme_get_filename(
+                self.to_glib_none().0,
+            ))
+        }
+    }
+
+    pub fn get_id(&self) -> Option<glib::GString> {
+        unsafe { from_glib_none(ffi::gtk_source_style_scheme_get_id(self.to_glib_none().0)) }
+    }
+
+    pub fn get_name(&self) -> Option<glib::GString> {
+        unsafe { from_glib_none(ffi::gtk_source_style_scheme_get_name(self.to_glib_none().0)) }
+    }
+
+    pub fn get_style(&self, style_id: &str) -> Option<Style> {
+        unsafe {
+            from_glib_none(ffi::gtk_source_style_scheme_get_style(
+                self.to_glib_none().0,
+                style_id.to_glib_none().0,
+            ))
+        }
+    }
+
+    pub fn connect_property_description_notify<F: Fn(&StyleScheme) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_description_trampoline<F: Fn(&StyleScheme) + 'static>(
+            this: *mut ffi::GtkSourceStyleScheme,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::description\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_description_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
+    }
+
+    pub fn connect_property_filename_notify<F: Fn(&StyleScheme) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_filename_trampoline<F: Fn(&StyleScheme) + 'static>(
+            this: *mut ffi::GtkSourceStyleScheme,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::filename\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_filename_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
+    }
+
+    pub fn connect_property_name_notify<F: Fn(&StyleScheme) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_name_trampoline<F: Fn(&StyleScheme) + 'static>(
+            this: *mut ffi::GtkSourceStyleScheme,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::name\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_name_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
     }
 }
 
@@ -50,153 +168,8 @@ impl StyleSchemeBuilder {
     }
 }
 
-pub const NONE_STYLE_SCHEME: Option<&StyleScheme> = None;
-
-pub trait StyleSchemeExt: 'static {
-    fn get_authors(&self) -> Vec<glib::GString>;
-
-    fn get_description(&self) -> Option<glib::GString>;
-
-    fn get_filename(&self) -> Option<glib::GString>;
-
-    fn get_id(&self) -> Option<glib::GString>;
-
-    fn get_name(&self) -> Option<glib::GString>;
-
-    fn get_style(&self, style_id: &str) -> Option<Style>;
-
-    fn connect_property_description_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_filename_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-
-    fn connect_property_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-}
-
-impl<O: IsA<StyleScheme>> StyleSchemeExt for O {
-    fn get_authors(&self) -> Vec<glib::GString> {
-        unsafe {
-            FromGlibPtrContainer::from_glib_none(ffi::gtk_source_style_scheme_get_authors(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    fn get_description(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_style_scheme_get_description(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    fn get_filename(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_style_scheme_get_filename(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    fn get_id(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_style_scheme_get_id(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    fn get_name(&self) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_style_scheme_get_name(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    fn get_style(&self, style_id: &str) -> Option<Style> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_style_scheme_get_style(
-                self.as_ref().to_glib_none().0,
-                style_id.to_glib_none().0,
-            ))
-        }
-    }
-
-    fn connect_property_description_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_description_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceStyleScheme,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<StyleScheme>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&StyleScheme::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::description\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_description_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-
-    fn connect_property_filename_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_filename_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceStyleScheme,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<StyleScheme>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&StyleScheme::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::filename\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_filename_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-
-    fn connect_property_name_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_name_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceStyleScheme,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<StyleScheme>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&StyleScheme::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::name\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_name_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-}
-
 impl fmt::Display for StyleScheme {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "StyleScheme")
+        f.write_str("StyleScheme")
     }
 }

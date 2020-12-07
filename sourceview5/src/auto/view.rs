@@ -640,12 +640,7 @@ pub trait ViewExt: 'static {
 
     fn set_insert_spaces_instead_of_tabs(&self, enable: bool);
 
-    fn set_mark_attributes<P: IsA<MarkAttributes>>(
-        &self,
-        category: &str,
-        attributes: &P,
-        priority: i32,
-    );
+    fn set_mark_attributes(&self, category: &str, attributes: &MarkAttributes, priority: i32);
 
     fn set_right_margin_position(&self, pos: u32);
 
@@ -986,17 +981,12 @@ impl<O: IsA<View>> ViewExt for O {
         }
     }
 
-    fn set_mark_attributes<P: IsA<MarkAttributes>>(
-        &self,
-        category: &str,
-        attributes: &P,
-        priority: i32,
-    ) {
+    fn set_mark_attributes(&self, category: &str, attributes: &MarkAttributes, priority: i32) {
         unsafe {
             ffi::gtk_source_view_set_mark_attributes(
                 self.as_ref().to_glib_none().0,
                 category.to_glib_none().0,
-                attributes.as_ref().to_glib_none().0,
+                attributes.to_glib_none().0,
                 priority,
             );
         }
@@ -1816,6 +1806,6 @@ impl<O: IsA<View>> ViewExt for O {
 
 impl fmt::Display for View {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "View")
+        f.write_str("View")
     }
 }

@@ -115,6 +115,6 @@ impl<O: IsA<Mark>> MarkExt for O {
 
 impl fmt::Display for Mark {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Mark")
+        f.write_str("Mark")
     }
 }

@@ -6,7 +6,9 @@
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use crate::Snippet;
 use glib::object::Cast;
-use glib::object::IsA;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+use glib::object::ObjectType as ObjectType_;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::signal::connect_raw;
@@ -35,9 +37,103 @@ glib::glib_wrapper! {
 impl SnippetManager {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn get_search_path(&self) -> Vec<glib::GString> {
+        unsafe {
+            FromGlibPtrContainer::from_glib_none(ffi::gtk_source_snippet_manager_get_search_path(
+                self.to_glib_none().0,
+            ))
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn get_snippet(
+        &self,
+        group: Option<&str>,
+        language_id: Option<&str>,
+        trigger: &str,
+    ) -> Option<Snippet> {
+        unsafe {
+            from_glib_full(ffi::gtk_source_snippet_manager_get_snippet(
+                self.to_glib_none().0,
+                group.to_glib_none().0,
+                language_id.to_glib_none().0,
+                trigger.to_glib_none().0,
+            ))
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn list_groups(&self) -> Vec<glib::GString> {
+        unsafe {
+            FromGlibPtrContainer::from_glib_container(ffi::gtk_source_snippet_manager_list_groups(
+                self.to_glib_none().0,
+            ))
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn list_matching(
+        &self,
+        group: Option<&str>,
+        language_id: Option<&str>,
+        trigger_prefix: Option<&str>,
+    ) -> Option<gio::ListModel> {
+        unsafe {
+            from_glib_full(ffi::gtk_source_snippet_manager_list_matching(
+                self.to_glib_none().0,
+                group.to_glib_none().0,
+                language_id.to_glib_none().0,
+                trigger_prefix.to_glib_none().0,
+            ))
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn set_search_path(&self, dirs: &[&str]) {
+        unsafe {
+            ffi::gtk_source_snippet_manager_set_search_path(
+                self.to_glib_none().0,
+                dirs.to_glib_none().0,
+            );
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
     pub fn get_default() -> Option<SnippetManager> {
         assert_initialized_main_thread!();
         unsafe { from_glib_none(ffi::gtk_source_snippet_manager_get_default()) }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn connect_property_search_path_notify<F: Fn(&SnippetManager) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn notify_search_path_trampoline<F: Fn(&SnippetManager) + 'static>(
+            this: *mut ffi::GtkSourceSnippetManager,
+            _param_spec: glib::ffi::gpointer,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"notify::search-path\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    notify_search_path_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
     }
 }
 
@@ -74,141 +170,8 @@ impl SnippetManagerBuilder {
     }
 }
 
-pub const NONE_SNIPPET_MANAGER: Option<&SnippetManager> = None;
-
-pub trait SnippetManagerExt: 'static {
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_search_path(&self) -> Vec<glib::GString>;
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_snippet(
-        &self,
-        group: Option<&str>,
-        language_id: Option<&str>,
-        trigger: &str,
-    ) -> Option<Snippet>;
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn list_groups(&self) -> Vec<glib::GString>;
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn list_matching(
-        &self,
-        group: Option<&str>,
-        language_id: Option<&str>,
-        trigger_prefix: Option<&str>,
-    ) -> Option<gio::ListModel>;
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn set_search_path(&self, dirs: &[&str]);
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn connect_property_search_path_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-}
-
-impl<O: IsA<SnippetManager>> SnippetManagerExt for O {
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_search_path(&self) -> Vec<glib::GString> {
-        unsafe {
-            FromGlibPtrContainer::from_glib_none(ffi::gtk_source_snippet_manager_get_search_path(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_snippet(
-        &self,
-        group: Option<&str>,
-        language_id: Option<&str>,
-        trigger: &str,
-    ) -> Option<Snippet> {
-        unsafe {
-            from_glib_full(ffi::gtk_source_snippet_manager_get_snippet(
-                self.as_ref().to_glib_none().0,
-                group.to_glib_none().0,
-                language_id.to_glib_none().0,
-                trigger.to_glib_none().0,
-            ))
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn list_groups(&self) -> Vec<glib::GString> {
-        unsafe {
-            FromGlibPtrContainer::from_glib_container(ffi::gtk_source_snippet_manager_list_groups(
-                self.as_ref().to_glib_none().0,
-            ))
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn list_matching(
-        &self,
-        group: Option<&str>,
-        language_id: Option<&str>,
-        trigger_prefix: Option<&str>,
-    ) -> Option<gio::ListModel> {
-        unsafe {
-            from_glib_full(ffi::gtk_source_snippet_manager_list_matching(
-                self.as_ref().to_glib_none().0,
-                group.to_glib_none().0,
-                language_id.to_glib_none().0,
-                trigger_prefix.to_glib_none().0,
-            ))
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn set_search_path(&self, dirs: &[&str]) {
-        unsafe {
-            ffi::gtk_source_snippet_manager_set_search_path(
-                self.as_ref().to_glib_none().0,
-                dirs.to_glib_none().0,
-            );
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn connect_property_search_path_notify<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn notify_search_path_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceSnippetManager,
-            _param_spec: glib::ffi::gpointer,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<SnippetManager>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&SnippetManager::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"notify::search-path\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    notify_search_path_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-}
-
 impl fmt::Display for SnippetManager {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SnippetManager")
+        f.write_str("SnippetManager")
     }
 }

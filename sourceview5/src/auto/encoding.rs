@@ -25,7 +25,7 @@ impl Encoding {
         unsafe { from_glib_none(ffi::gtk_source_encoding_get_name(self.to_glib_none().0)) }
     }
 
-    fn to_string(&self) -> glib::GString {
+    pub fn to_str(&self) -> glib::GString {
         unsafe { from_glib_full(ffi::gtk_source_encoding_to_string(self.to_glib_none().0)) }
     }
 
@@ -66,6 +66,6 @@ impl Encoding {
 impl fmt::Display for Encoding {
     #[inline]
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str(&self.to_string())
+        f.write_str(&self.to_str())
     }
 }

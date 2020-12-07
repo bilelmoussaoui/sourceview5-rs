@@ -14,7 +14,6 @@ use glib::signal::connect_raw;
 use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
-use glib::Value;
 use std::boxed::Box as Box_;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
@@ -284,7 +283,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn get_property_lines(&self) -> Option<GutterLines> {
         unsafe {
-            let mut value = Value::from_type(<GutterLines as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<GutterLines as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"lines\0".as_ptr() as *const _,
@@ -298,7 +297,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
     fn get_property_xalign(&self) -> f32 {
         unsafe {
-            let mut value = Value::from_type(<f32 as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<f32 as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"xalign\0".as_ptr() as *const _,
@@ -316,14 +315,14 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"xalign\0".as_ptr() as *const _,
-                Value::from(&xalign).to_glib_none().0,
+                glib::Value::from(&xalign).to_glib_none().0,
             );
         }
     }
 
     fn get_property_xpad(&self) -> i32 {
         unsafe {
-            let mut value = Value::from_type(<i32 as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<i32 as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"xpad\0".as_ptr() as *const _,
@@ -341,14 +340,14 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"xpad\0".as_ptr() as *const _,
-                Value::from(&xpad).to_glib_none().0,
+                glib::Value::from(&xpad).to_glib_none().0,
             );
         }
     }
 
     fn get_property_yalign(&self) -> f32 {
         unsafe {
-            let mut value = Value::from_type(<f32 as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<f32 as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"yalign\0".as_ptr() as *const _,
@@ -366,14 +365,14 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"yalign\0".as_ptr() as *const _,
-                Value::from(&yalign).to_glib_none().0,
+                glib::Value::from(&yalign).to_glib_none().0,
             );
         }
     }
 
     fn get_property_ypad(&self) -> i32 {
         unsafe {
-            let mut value = Value::from_type(<i32 as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<i32 as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"ypad\0".as_ptr() as *const _,
@@ -391,7 +390,7 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
             glib::gobject_ffi::g_object_set_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"ypad\0".as_ptr() as *const _,
-                Value::from(&ypad).to_glib_none().0,
+                glib::Value::from(&ypad).to_glib_none().0,
             );
         }
     }
@@ -656,6 +655,6 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
 
 impl fmt::Display for GutterRenderer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "GutterRenderer")
+        f.write_str("GutterRenderer")
     }
 }

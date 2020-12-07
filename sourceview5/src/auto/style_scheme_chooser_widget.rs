@@ -35,6 +35,6 @@ pub const NONE_STYLE_SCHEME_CHOOSER_WIDGET: Option<&StyleSchemeChooserWidget> = 
 
 impl fmt::Display for StyleSchemeChooserWidget {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "StyleSchemeChooserWidget")
+        f.write_str("StyleSchemeChooserWidget")
     }
 }

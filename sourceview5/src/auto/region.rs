@@ -24,6 +24,13 @@ impl Region {
     }
 }
 
+impl fmt::Display for Region {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.write_str(&RegionExt::to_str(self))
+    }
+}
+
 #[derive(Clone, Default)]
 pub struct RegionBuilder {
     buffer: Option<gtk::TextBuffer>,
@@ -75,7 +82,7 @@ pub trait RegionExt: 'static {
 
     fn subtract_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter);
 
-    fn to_string(&self) -> glib::GString;
+    fn to_str(&self) -> glib::GString;
 }
 
 impl<O: IsA<Region>> RegionExt for O {
@@ -173,17 +180,11 @@ impl<O: IsA<Region>> RegionExt for O {
         }
     }
 
-    fn to_string(&self) -> glib::GString {
+    fn to_str(&self) -> glib::GString {
         unsafe {
             from_glib_full(ffi::gtk_source_region_to_string(
                 self.as_ref().to_glib_none().0,
             ))
         }
-    }
-}
-
-impl fmt::Display for Region {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Region")
     }
 }

@@ -46,7 +46,6 @@ generate = [
   "GtkSource.StyleSchemeChooser",
   "GtkSource.StyleSchemeChooserButton",
   "GtkSource.StyleSchemeChooserWidget",
-  "GtkSource.TextBuffer",
   "GtkSource.ViewGutterPosition",
 ]
 

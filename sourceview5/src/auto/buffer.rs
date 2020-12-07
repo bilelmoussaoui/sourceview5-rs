@@ -33,11 +33,11 @@ impl Buffer {
         unsafe { from_glib_full(ffi::gtk_source_buffer_new(table.to_glib_none().0)) }
     }
 
-    pub fn with_language<P: IsA<Language>>(language: &P) -> Buffer {
+    pub fn with_language(language: &Language) -> Buffer {
         skip_assert_initialized!();
         unsafe {
             from_glib_full(ffi::gtk_source_buffer_new_with_language(
-                language.as_ref().to_glib_none().0,
+                language.to_glib_none().0,
             ))
         }
     }
@@ -108,13 +108,13 @@ impl BufferBuilder {
         self
     }
 
-    pub fn language<P: IsA<Language>>(mut self, language: &P) -> Self {
-        self.language = Some(language.clone().upcast());
+    pub fn language(mut self, language: &Language) -> Self {
+        self.language = Some(language.clone());
         self
     }
 
-    pub fn style_scheme<P: IsA<StyleScheme>>(mut self, style_scheme: &P) -> Self {
-        self.style_scheme = Some(style_scheme.clone().upcast());
+    pub fn style_scheme(mut self, style_scheme: &StyleScheme) -> Self {
+        self.style_scheme = Some(style_scheme.clone());
         self
     }
 
@@ -200,9 +200,9 @@ pub trait BufferExt: 'static {
 
     fn set_implicit_trailing_newline(&self, implicit_trailing_newline: bool);
 
-    fn set_language<P: IsA<Language>>(&self, language: Option<&P>);
+    fn set_language(&self, language: Option<&Language>);
 
-    fn set_style_scheme<P: IsA<StyleScheme>>(&self, scheme: Option<&P>);
+    fn set_style_scheme(&self, scheme: Option<&StyleScheme>);
 
     fn sort_lines(
         &self,
@@ -457,20 +457,20 @@ impl<O: IsA<Buffer>> BufferExt for O {
         }
     }
 
-    fn set_language<P: IsA<Language>>(&self, language: Option<&P>) {
+    fn set_language(&self, language: Option<&Language>) {
         unsafe {
             ffi::gtk_source_buffer_set_language(
                 self.as_ref().to_glib_none().0,
-                language.map(|p| p.as_ref()).to_glib_none().0,
+                language.to_glib_none().0,
             );
         }
     }
 
-    fn set_style_scheme<P: IsA<StyleScheme>>(&self, scheme: Option<&P>) {
+    fn set_style_scheme(&self, scheme: Option<&StyleScheme>) {
         unsafe {
             ffi::gtk_source_buffer_set_style_scheme(
                 self.as_ref().to_glib_none().0,
-                scheme.map(|p| p.as_ref()).to_glib_none().0,
+                scheme.to_glib_none().0,
             );
         }
     }
@@ -758,6 +758,6 @@ impl<O: IsA<Buffer>> BufferExt for O {
 
 impl fmt::Display for Buffer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Buffer")
+        f.write_str("Buffer")
     }
 }

@@ -11,7 +11,6 @@ use glib::signal::SignalHandlerId;
 use glib::translate::*;
 use glib::StaticType;
 use glib::ToValue;
-use glib::Value;
 use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem;
@@ -421,7 +420,7 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
 
     fn get_property_markup(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<glib::GString as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"markup\0".as_ptr() as *const _,
@@ -435,7 +434,7 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
 
     fn get_property_text(&self) -> Option<glib::GString> {
         unsafe {
-            let mut value = Value::from_type(<glib::GString as StaticType>::static_type());
+            let mut value = glib::Value::from_type(<glib::GString as StaticType>::static_type());
             glib::gobject_ffi::g_object_get_property(
                 self.to_glib_none().0 as *mut glib::gobject_ffi::GObject,
                 b"text\0".as_ptr() as *const _,
@@ -498,6 +497,6 @@ impl<O: IsA<GutterRendererText>> GutterRendererTextExt for O {
 
 impl fmt::Display for GutterRendererText {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "GutterRendererText")
+        f.write_str("GutterRendererText")
     }
 }

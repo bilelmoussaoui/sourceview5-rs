@@ -25,7 +25,7 @@ pub const NONE_STYLE_SCHEME_CHOOSER: Option<&StyleSchemeChooser> = None;
 pub trait StyleSchemeChooserExt: 'static {
     fn get_style_scheme(&self) -> Option<StyleScheme>;
 
-    fn set_style_scheme<P: IsA<StyleScheme>>(&self, scheme: &P);
+    fn set_style_scheme(&self, scheme: &StyleScheme);
 
     fn connect_property_style_scheme_notify<F: Fn(&Self) + 'static>(&self, f: F)
         -> SignalHandlerId;
@@ -40,11 +40,11 @@ impl<O: IsA<StyleSchemeChooser>> StyleSchemeChooserExt for O {
         }
     }
 
-    fn set_style_scheme<P: IsA<StyleScheme>>(&self, scheme: &P) {
+    fn set_style_scheme(&self, scheme: &StyleScheme) {
         unsafe {
             ffi::gtk_source_style_scheme_chooser_set_style_scheme(
                 self.as_ref().to_glib_none().0,
-                scheme.as_ref().to_glib_none().0,
+                scheme.to_glib_none().0,
             );
         }
     }
@@ -79,6 +79,6 @@ impl<O: IsA<StyleSchemeChooser>> StyleSchemeChooserExt for O {
 
 impl fmt::Display for StyleSchemeChooser {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "StyleSchemeChooser")
+        f.write_str("StyleSchemeChooser")
     }
 }

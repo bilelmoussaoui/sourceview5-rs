@@ -4,8 +4,7 @@
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-use glib::object::Cast;
-use glib::object::IsA;
+use glib::object::ObjectType as ObjectType_;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::signal::connect_raw;
@@ -36,6 +35,105 @@ impl SnippetContext {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_snippet_context_new()) }
     }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn clear_variables(&self) {
+        unsafe {
+            ffi::gtk_source_snippet_context_clear_variables(self.to_glib_none().0);
+        }
+    }
+
+    pub fn expand(&self, input: &str) -> Option<glib::GString> {
+        unsafe {
+            from_glib_full(ffi::gtk_source_snippet_context_expand(
+                self.to_glib_none().0,
+                input.to_glib_none().0,
+            ))
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn get_variable(&self, key: &str) -> Option<glib::GString> {
+        unsafe {
+            from_glib_none(ffi::gtk_source_snippet_context_get_variable(
+                self.to_glib_none().0,
+                key.to_glib_none().0,
+            ))
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn set_constant(&self, key: &str, value: &str) {
+        unsafe {
+            ffi::gtk_source_snippet_context_set_constant(
+                self.to_glib_none().0,
+                key.to_glib_none().0,
+                value.to_glib_none().0,
+            );
+        }
+    }
+
+    pub fn set_line_prefix(&self, line_prefix: &str) {
+        unsafe {
+            ffi::gtk_source_snippet_context_set_line_prefix(
+                self.to_glib_none().0,
+                line_prefix.to_glib_none().0,
+            );
+        }
+    }
+
+    pub fn set_tab_width(&self, tab_width: i32) {
+        unsafe {
+            ffi::gtk_source_snippet_context_set_tab_width(self.to_glib_none().0, tab_width);
+        }
+    }
+
+    pub fn set_use_spaces(&self, use_spaces: bool) {
+        unsafe {
+            ffi::gtk_source_snippet_context_set_use_spaces(
+                self.to_glib_none().0,
+                use_spaces.to_glib(),
+            );
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn set_variable(&self, key: &str, value: &str) {
+        unsafe {
+            ffi::gtk_source_snippet_context_set_variable(
+                self.to_glib_none().0,
+                key.to_glib_none().0,
+                value.to_glib_none().0,
+            );
+        }
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn connect_changed<F: Fn(&SnippetContext) + 'static>(&self, f: F) -> SignalHandlerId {
+        unsafe extern "C" fn changed_trampoline<F: Fn(&SnippetContext) + 'static>(
+            this: *mut ffi::GtkSourceSnippetContext,
+            f: glib::ffi::gpointer,
+        ) {
+            let f: &F = &*(f as *const F);
+            f(&from_glib_borrow(this))
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"changed\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    changed_trampoline::<F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
+    }
 }
 
 #[cfg(any(feature = "v5_0", feature = "dox"))]
@@ -46,146 +144,8 @@ impl Default for SnippetContext {
     }
 }
 
-pub const NONE_SNIPPET_CONTEXT: Option<&SnippetContext> = None;
-
-pub trait SnippetContextExt: 'static {
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn clear_variables(&self);
-
-    fn expand(&self, input: &str) -> Option<glib::GString>;
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_variable(&self, key: &str) -> Option<glib::GString>;
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn set_constant(&self, key: &str, value: &str);
-
-    fn set_line_prefix(&self, line_prefix: &str);
-
-    fn set_tab_width(&self, tab_width: i32);
-
-    fn set_use_spaces(&self, use_spaces: bool);
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn set_variable(&self, key: &str, value: &str);
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn connect_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId;
-}
-
-impl<O: IsA<SnippetContext>> SnippetContextExt for O {
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn clear_variables(&self) {
-        unsafe {
-            ffi::gtk_source_snippet_context_clear_variables(self.as_ref().to_glib_none().0);
-        }
-    }
-
-    fn expand(&self, input: &str) -> Option<glib::GString> {
-        unsafe {
-            from_glib_full(ffi::gtk_source_snippet_context_expand(
-                self.as_ref().to_glib_none().0,
-                input.to_glib_none().0,
-            ))
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn get_variable(&self, key: &str) -> Option<glib::GString> {
-        unsafe {
-            from_glib_none(ffi::gtk_source_snippet_context_get_variable(
-                self.as_ref().to_glib_none().0,
-                key.to_glib_none().0,
-            ))
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn set_constant(&self, key: &str, value: &str) {
-        unsafe {
-            ffi::gtk_source_snippet_context_set_constant(
-                self.as_ref().to_glib_none().0,
-                key.to_glib_none().0,
-                value.to_glib_none().0,
-            );
-        }
-    }
-
-    fn set_line_prefix(&self, line_prefix: &str) {
-        unsafe {
-            ffi::gtk_source_snippet_context_set_line_prefix(
-                self.as_ref().to_glib_none().0,
-                line_prefix.to_glib_none().0,
-            );
-        }
-    }
-
-    fn set_tab_width(&self, tab_width: i32) {
-        unsafe {
-            ffi::gtk_source_snippet_context_set_tab_width(
-                self.as_ref().to_glib_none().0,
-                tab_width,
-            );
-        }
-    }
-
-    fn set_use_spaces(&self, use_spaces: bool) {
-        unsafe {
-            ffi::gtk_source_snippet_context_set_use_spaces(
-                self.as_ref().to_glib_none().0,
-                use_spaces.to_glib(),
-            );
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn set_variable(&self, key: &str, value: &str) {
-        unsafe {
-            ffi::gtk_source_snippet_context_set_variable(
-                self.as_ref().to_glib_none().0,
-                key.to_glib_none().0,
-                value.to_glib_none().0,
-            );
-        }
-    }
-
-    #[cfg(any(feature = "v5_0", feature = "dox"))]
-    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    fn connect_changed<F: Fn(&Self) + 'static>(&self, f: F) -> SignalHandlerId {
-        unsafe extern "C" fn changed_trampoline<P, F: Fn(&P) + 'static>(
-            this: *mut ffi::GtkSourceSnippetContext,
-            f: glib::ffi::gpointer,
-        ) where
-            P: IsA<SnippetContext>,
-        {
-            let f: &F = &*(f as *const F);
-            f(&SnippetContext::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        unsafe {
-            let f: Box_<F> = Box_::new(f);
-            connect_raw(
-                self.as_ptr() as *mut _,
-                b"changed\0".as_ptr() as *const _,
-                Some(transmute::<_, unsafe extern "C" fn()>(
-                    changed_trampoline::<Self, F> as *const (),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-}
-
 impl fmt::Display for SnippetContext {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "SnippetContext")
+        f.write_str("SnippetContext")
     }
 }
