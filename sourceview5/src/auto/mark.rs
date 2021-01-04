@@ -9,7 +9,7 @@ use glib::StaticType;
 use glib::ToValue;
 use std::fmt;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Mark(Object<ffi::GtkSourceMark, ffi::GtkSourceMarkClass>) @extends gtk::TextMark;
 
     match fn {
@@ -18,6 +18,7 @@ glib::glib_wrapper! {
 }
 
 impl Mark {
+    #[doc(alias = "gtk_source_mark_new")]
     pub fn new(name: &str, category: &str) -> Mark {
         assert_initialized_main_thread!();
         unsafe {
@@ -52,10 +53,7 @@ impl MarkBuilder {
         if let Some(ref name) = self.name {
             properties.push(("name", name));
         }
-        let ret = glib::Object::new(Mark::static_type(), &properties)
-            .expect("object new")
-            .downcast::<Mark>()
-            .expect("downcast");
+        let ret = glib::Object::new::<Mark>(&properties).expect("object new");
         ret
     }
 
@@ -78,10 +76,13 @@ impl MarkBuilder {
 pub const NONE_MARK: Option<&Mark> = None;
 
 pub trait MarkExt: 'static {
+    #[doc(alias = "gtk_source_mark_get_category")]
     fn get_category(&self) -> Option<glib::GString>;
 
+    #[doc(alias = "gtk_source_mark_next")]
     fn next(&self, category: Option<&str>) -> Option<Mark>;
 
+    #[doc(alias = "gtk_source_mark_prev")]
     fn prev(&self, category: &str) -> Option<Mark>;
 }
 

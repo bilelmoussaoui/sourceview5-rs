@@ -19,7 +19,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Buffer(Object<ffi::GtkSourceBuffer, ffi::GtkSourceBufferClass>) @extends gtk::TextBuffer;
 
     match fn {
@@ -28,11 +28,13 @@ glib::glib_wrapper! {
 }
 
 impl Buffer {
+    #[doc(alias = "gtk_source_buffer_new")]
     pub fn new(table: Option<&gtk::TextTagTable>) -> Buffer {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_buffer_new(table.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_buffer_new_with_language")]
     pub fn with_language(language: &Language) -> Buffer {
         skip_assert_initialized!();
         unsafe {
@@ -86,10 +88,7 @@ impl BufferBuilder {
         if let Some(ref text) = self.text {
             properties.push(("text", text));
         }
-        let ret = glib::Object::new(Buffer::static_type(), &properties)
-            .expect("object new")
-            .downcast::<Buffer>()
-            .expect("downcast");
+        let ret = glib::Object::new::<Buffer>(&properties).expect("object new");
         ret
     }
 
@@ -137,8 +136,10 @@ impl BufferBuilder {
 pub const NONE_BUFFER: Option<&Buffer> = None;
 
 pub trait BufferExt: 'static {
+    //#[doc(alias = "gtk_source_buffer_backward_iter_to_source_mark")]
     //fn backward_iter_to_source_mark(&self, iter: /*Unimplemented*/gtk::TextIter, category: Option<&str>) -> bool;
 
+    #[doc(alias = "gtk_source_buffer_change_case")]
     fn change_case(
         &self,
         case_type: ChangeCaseType,
@@ -146,6 +147,7 @@ pub trait BufferExt: 'static {
         end: &mut gtk::TextIter,
     );
 
+    #[doc(alias = "gtk_source_buffer_create_source_mark")]
     fn create_source_mark(
         &self,
         name: Option<&str>,
@@ -153,40 +155,56 @@ pub trait BufferExt: 'static {
         where_: &gtk::TextIter,
     ) -> Option<Mark>;
 
+    //#[doc(alias = "gtk_source_buffer_create_source_tag")]
     //fn create_source_tag(&self, tag_name: Option<&str>, first_property_name: Option<&str>, : /*Unknown conversion*//*Unimplemented*/Fundamental: VarArgs) -> Option<gtk::TextTag>;
 
+    #[doc(alias = "gtk_source_buffer_ensure_highlight")]
     fn ensure_highlight(&self, start: &gtk::TextIter, end: &gtk::TextIter);
 
+    //#[doc(alias = "gtk_source_buffer_forward_iter_to_source_mark")]
     //fn forward_iter_to_source_mark(&self, iter: /*Unimplemented*/gtk::TextIter, category: Option<&str>) -> bool;
 
+    #[doc(alias = "gtk_source_buffer_get_context_classes_at_iter")]
     fn get_context_classes_at_iter(&self, iter: &gtk::TextIter) -> Vec<glib::GString>;
 
+    #[doc(alias = "gtk_source_buffer_get_highlight_matching_brackets")]
     fn get_highlight_matching_brackets(&self) -> bool;
 
+    #[doc(alias = "gtk_source_buffer_get_highlight_syntax")]
     fn get_highlight_syntax(&self) -> bool;
 
+    #[doc(alias = "gtk_source_buffer_get_implicit_trailing_newline")]
     fn get_implicit_trailing_newline(&self) -> bool;
 
+    #[doc(alias = "gtk_source_buffer_get_language")]
     fn get_language(&self) -> Option<Language>;
 
+    #[doc(alias = "gtk_source_buffer_get_source_marks_at_iter")]
     fn get_source_marks_at_iter(
         &self,
         iter: &mut gtk::TextIter,
         category: Option<&str>,
     ) -> Vec<Mark>;
 
+    #[doc(alias = "gtk_source_buffer_get_source_marks_at_line")]
     fn get_source_marks_at_line(&self, line: i32, category: Option<&str>) -> Vec<Mark>;
 
+    #[doc(alias = "gtk_source_buffer_get_style_scheme")]
     fn get_style_scheme(&self) -> Option<StyleScheme>;
 
+    //#[doc(alias = "gtk_source_buffer_iter_backward_to_context_class_toggle")]
     //fn iter_backward_to_context_class_toggle(&self, iter: /*Unimplemented*/gtk::TextIter, context_class: &str) -> bool;
 
+    //#[doc(alias = "gtk_source_buffer_iter_forward_to_context_class_toggle")]
     //fn iter_forward_to_context_class_toggle(&self, iter: /*Unimplemented*/gtk::TextIter, context_class: &str) -> bool;
 
+    #[doc(alias = "gtk_source_buffer_iter_has_context_class")]
     fn iter_has_context_class(&self, iter: &gtk::TextIter, context_class: &str) -> bool;
 
+    #[doc(alias = "gtk_source_buffer_join_lines")]
     fn join_lines(&self, start: &mut gtk::TextIter, end: &mut gtk::TextIter);
 
+    #[doc(alias = "gtk_source_buffer_remove_source_marks")]
     fn remove_source_marks(
         &self,
         start: &gtk::TextIter,
@@ -194,16 +212,22 @@ pub trait BufferExt: 'static {
         category: Option<&str>,
     );
 
+    #[doc(alias = "gtk_source_buffer_set_highlight_matching_brackets")]
     fn set_highlight_matching_brackets(&self, highlight: bool);
 
+    #[doc(alias = "gtk_source_buffer_set_highlight_syntax")]
     fn set_highlight_syntax(&self, highlight: bool);
 
+    #[doc(alias = "gtk_source_buffer_set_implicit_trailing_newline")]
     fn set_implicit_trailing_newline(&self, implicit_trailing_newline: bool);
 
+    #[doc(alias = "gtk_source_buffer_set_language")]
     fn set_language(&self, language: Option<&Language>);
 
+    #[doc(alias = "gtk_source_buffer_set_style_scheme")]
     fn set_style_scheme(&self, scheme: Option<&StyleScheme>);
 
+    #[doc(alias = "gtk_source_buffer_sort_lines")]
     fn sort_lines(
         &self,
         start: &mut gtk::TextIter,

@@ -14,8 +14,11 @@ use std::fmt;
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceBackgroundPatternType")]
 pub enum BackgroundPatternType {
+    #[doc(alias = "GTK_SOURCE_BACKGROUND_PATTERN_TYPE_NONE")]
     None,
+    #[doc(alias = "GTK_SOURCE_BACKGROUND_PATTERN_TYPE_GRID")]
     Grid,
     #[doc(hidden)]
     __Unknown(i32),
@@ -50,7 +53,7 @@ impl ToGlib for BackgroundPatternType {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceBackgroundPatternType> for BackgroundPatternType {
-    fn from_glib(value: ffi::GtkSourceBackgroundPatternType) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceBackgroundPatternType) -> Self {
         skip_assert_initialized!();
         match value {
             0 => BackgroundPatternType::None,
@@ -86,10 +89,15 @@ impl SetValue for BackgroundPatternType {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceBracketMatchType")]
 pub enum BracketMatchType {
+    #[doc(alias = "GTK_SOURCE_BRACKET_MATCH_NONE")]
     None,
+    #[doc(alias = "GTK_SOURCE_BRACKET_MATCH_OUT_OF_RANGE")]
     OutOfRange,
+    #[doc(alias = "GTK_SOURCE_BRACKET_MATCH_NOT_FOUND")]
     NotFound,
+    #[doc(alias = "GTK_SOURCE_BRACKET_MATCH_FOUND")]
     Found,
     #[doc(hidden)]
     __Unknown(i32),
@@ -128,7 +136,7 @@ impl ToGlib for BracketMatchType {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceBracketMatchType> for BracketMatchType {
-    fn from_glib(value: ffi::GtkSourceBracketMatchType) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceBracketMatchType) -> Self {
         skip_assert_initialized!();
         match value {
             0 => BracketMatchType::None,
@@ -166,10 +174,15 @@ impl SetValue for BracketMatchType {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceChangeCaseType")]
 pub enum ChangeCaseType {
+    #[doc(alias = "GTK_SOURCE_CHANGE_CASE_LOWER")]
     Lower,
+    #[doc(alias = "GTK_SOURCE_CHANGE_CASE_UPPER")]
     Upper,
+    #[doc(alias = "GTK_SOURCE_CHANGE_CASE_TOGGLE")]
     Toggle,
+    #[doc(alias = "GTK_SOURCE_CHANGE_CASE_TITLE")]
     Title,
     #[doc(hidden)]
     __Unknown(i32),
@@ -208,7 +221,7 @@ impl ToGlib for ChangeCaseType {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceChangeCaseType> for ChangeCaseType {
-    fn from_glib(value: ffi::GtkSourceChangeCaseType) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceChangeCaseType) -> Self {
         skip_assert_initialized!();
         match value {
             0 => ChangeCaseType::Lower,
@@ -246,9 +259,13 @@ impl SetValue for ChangeCaseType {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceCompletionActivation")]
 pub enum CompletionActivation {
+    #[doc(alias = "GTK_SOURCE_COMPLETION_ACTIVATION_NONE")]
     None,
+    #[doc(alias = "GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE")]
     Interactive,
+    #[doc(alias = "GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED")]
     UserRequested,
     #[doc(hidden)]
     __Unknown(i32),
@@ -287,7 +304,7 @@ impl ToGlib for CompletionActivation {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceCompletionActivation> for CompletionActivation {
-    fn from_glib(value: ffi::GtkSourceCompletionActivation) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceCompletionActivation) -> Self {
         skip_assert_initialized!();
         match value {
             0 => CompletionActivation::None,
@@ -324,12 +341,19 @@ impl SetValue for CompletionActivation {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceCompletionColumn")]
 pub enum CompletionColumn {
+    #[doc(alias = "GTK_SOURCE_COMPLETION_COLUMN_ICON")]
     Icon,
+    #[doc(alias = "GTK_SOURCE_COMPLETION_COLUMN_BEFORE")]
     Before,
+    #[doc(alias = "GTK_SOURCE_COMPLETION_COLUMN_TYPED_TEXT")]
     TypedText,
+    #[doc(alias = "GTK_SOURCE_COMPLETION_COLUMN_AFTER")]
     After,
+    #[doc(alias = "GTK_SOURCE_COMPLETION_COLUMN_COMMENT")]
     Comment,
+    #[doc(alias = "GTK_SOURCE_COMPLETION_COLUMN_DETAILS")]
     Details,
     #[doc(hidden)]
     __Unknown(i32),
@@ -372,7 +396,7 @@ impl ToGlib for CompletionColumn {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceCompletionColumn> for CompletionColumn {
-    fn from_glib(value: ffi::GtkSourceCompletionColumn) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceCompletionColumn) -> Self {
         skip_assert_initialized!();
         match value {
             0 => CompletionColumn::Icon,
@@ -412,8 +436,11 @@ impl SetValue for CompletionColumn {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceCompressionType")]
 pub enum CompressionType {
+    #[doc(alias = "GTK_SOURCE_COMPRESSION_TYPE_NONE")]
     None,
+    #[doc(alias = "GTK_SOURCE_COMPRESSION_TYPE_GZIP")]
     Gzip,
     #[doc(hidden)]
     __Unknown(i32),
@@ -448,7 +475,7 @@ impl ToGlib for CompressionType {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceCompressionType> for CompressionType {
-    fn from_glib(value: ffi::GtkSourceCompressionType) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceCompressionType) -> Self {
         skip_assert_initialized!();
         match value {
             0 => CompressionType::None,
@@ -484,9 +511,13 @@ impl SetValue for CompressionType {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceFileLoaderError")]
 pub enum FileLoaderError {
+    #[doc(alias = "GTK_SOURCE_FILE_LOADER_ERROR_TOO_BIG")]
     TooBig,
+    #[doc(alias = "GTK_SOURCE_FILE_LOADER_ERROR_ENCODING_AUTO_DETECTION_FAILED")]
     EncodingAutoDetectionFailed,
+    #[doc(alias = "GTK_SOURCE_FILE_LOADER_ERROR_CONVERSION_FALLBACK")]
     ConversionFallback,
     #[doc(hidden)]
     __Unknown(i32),
@@ -527,7 +558,7 @@ impl ToGlib for FileLoaderError {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceFileLoaderError> for FileLoaderError {
-    fn from_glib(value: ffi::GtkSourceFileLoaderError) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceFileLoaderError) -> Self {
         skip_assert_initialized!();
         match value {
             0 => FileLoaderError::TooBig,
@@ -586,8 +617,11 @@ impl SetValue for FileLoaderError {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceFileSaverError")]
 pub enum FileSaverError {
+    #[doc(alias = "GTK_SOURCE_FILE_SAVER_ERROR_INVALID_CHARS")]
     InvalidChars,
+    #[doc(alias = "GTK_SOURCE_FILE_SAVER_ERROR_EXTERNALLY_MODIFIED")]
     ExternallyModified,
     #[doc(hidden)]
     __Unknown(i32),
@@ -624,7 +658,7 @@ impl ToGlib for FileSaverError {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceFileSaverError> for FileSaverError {
-    fn from_glib(value: ffi::GtkSourceFileSaverError) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceFileSaverError) -> Self {
         skip_assert_initialized!();
         match value {
             0 => FileSaverError::InvalidChars,
@@ -681,9 +715,13 @@ impl SetValue for FileSaverError {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceGutterRendererAlignmentMode")]
 pub enum GutterRendererAlignmentMode {
+    #[doc(alias = "GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_CELL")]
     Cell,
+    #[doc(alias = "GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST")]
     First,
+    #[doc(alias = "GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST")]
     Last,
     #[doc(hidden)]
     __Unknown(i32),
@@ -726,7 +764,7 @@ impl ToGlib for GutterRendererAlignmentMode {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceGutterRendererAlignmentMode> for GutterRendererAlignmentMode {
-    fn from_glib(value: ffi::GtkSourceGutterRendererAlignmentMode) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceGutterRendererAlignmentMode) -> Self {
         skip_assert_initialized!();
         match value {
             0 => GutterRendererAlignmentMode::Cell,
@@ -763,9 +801,13 @@ impl SetValue for GutterRendererAlignmentMode {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceNewlineType")]
 pub enum NewlineType {
+    #[doc(alias = "GTK_SOURCE_NEWLINE_TYPE_LF")]
     Lf,
+    #[doc(alias = "GTK_SOURCE_NEWLINE_TYPE_CR")]
     Cr,
+    #[doc(alias = "GTK_SOURCE_NEWLINE_TYPE_CR_LF")]
     CrLf,
     #[doc(hidden)]
     __Unknown(i32),
@@ -802,7 +844,7 @@ impl ToGlib for NewlineType {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceNewlineType> for NewlineType {
-    fn from_glib(value: ffi::GtkSourceNewlineType) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceNewlineType) -> Self {
         skip_assert_initialized!();
         match value {
             0 => NewlineType::Lf,
@@ -839,10 +881,15 @@ impl SetValue for NewlineType {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceSmartHomeEndType")]
 pub enum SmartHomeEndType {
+    #[doc(alias = "GTK_SOURCE_SMART_HOME_END_DISABLED")]
     Disabled,
+    #[doc(alias = "GTK_SOURCE_SMART_HOME_END_BEFORE")]
     Before,
+    #[doc(alias = "GTK_SOURCE_SMART_HOME_END_AFTER")]
     After,
+    #[doc(alias = "GTK_SOURCE_SMART_HOME_END_ALWAYS")]
     Always,
     #[doc(hidden)]
     __Unknown(i32),
@@ -881,7 +928,7 @@ impl ToGlib for SmartHomeEndType {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceSmartHomeEndType> for SmartHomeEndType {
-    fn from_glib(value: ffi::GtkSourceSmartHomeEndType) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceSmartHomeEndType) -> Self {
         skip_assert_initialized!();
         match value {
             0 => SmartHomeEndType::Disabled,
@@ -919,8 +966,11 @@ impl SetValue for SmartHomeEndType {
 
 #[derive(Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Clone, Copy)]
 #[non_exhaustive]
+#[doc(alias = "GtkSourceViewGutterPosition")]
 pub enum ViewGutterPosition {
+    #[doc(alias = "GTK_SOURCE_VIEW_GUTTER_POSITION_LINES")]
     Lines,
+    #[doc(alias = "GTK_SOURCE_VIEW_GUTTER_POSITION_MARKS")]
     Marks,
     #[doc(hidden)]
     __Unknown(i32),
@@ -955,7 +1005,7 @@ impl ToGlib for ViewGutterPosition {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceViewGutterPosition> for ViewGutterPosition {
-    fn from_glib(value: ffi::GtkSourceViewGutterPosition) -> Self {
+    unsafe fn from_glib(value: ffi::GtkSourceViewGutterPosition) -> Self {
         skip_assert_initialized!();
         match value {
             -30 => ViewGutterPosition::Lines,

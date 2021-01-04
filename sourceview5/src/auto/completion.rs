@@ -31,7 +31,7 @@ use std::fmt;
 use std::mem;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Completion(Object<ffi::GtkSourceCompletion, ffi::GtkSourceCompletionClass>);
 
     match fn {
@@ -42,6 +42,7 @@ glib::glib_wrapper! {
 impl Completion {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_add_provider")]
     pub fn add_provider<P: IsA<CompletionProvider>>(&self, provider: &P) {
         unsafe {
             ffi::gtk_source_completion_add_provider(
@@ -51,6 +52,7 @@ impl Completion {
         }
     }
 
+    #[doc(alias = "gtk_source_completion_block_interactive")]
     pub fn block_interactive(&self) {
         unsafe {
             ffi::gtk_source_completion_block_interactive(self.to_glib_none().0);
@@ -59,22 +61,26 @@ impl Completion {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_get_buffer")]
     pub fn get_buffer(&self) -> Option<Buffer> {
         unsafe { from_glib_none(ffi::gtk_source_completion_get_buffer(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_completion_get_page_size")]
     pub fn get_page_size(&self) -> u32 {
         unsafe { ffi::gtk_source_completion_get_page_size(self.to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_get_view")]
     pub fn get_view(&self) -> Option<View> {
         unsafe { from_glib_none(ffi::gtk_source_completion_get_view(self.to_glib_none().0)) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_hide")]
     pub fn hide(&self) {
         unsafe {
             ffi::gtk_source_completion_hide(self.to_glib_none().0);
@@ -83,6 +89,7 @@ impl Completion {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_remove_provider")]
     pub fn remove_provider<P: IsA<CompletionProvider>>(&self, provider: &P) {
         unsafe {
             ffi::gtk_source_completion_remove_provider(
@@ -92,6 +99,7 @@ impl Completion {
         }
     }
 
+    #[doc(alias = "gtk_source_completion_set_page_size")]
     pub fn set_page_size(&self, page_size: u32) {
         unsafe {
             ffi::gtk_source_completion_set_page_size(self.to_glib_none().0, page_size);
@@ -100,12 +108,14 @@ impl Completion {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_show")]
     pub fn show(&self) {
         unsafe {
             ffi::gtk_source_completion_show(self.to_glib_none().0);
         }
     }
 
+    #[doc(alias = "gtk_source_completion_unblock_interactive")]
     pub fn unblock_interactive(&self) {
         unsafe {
             ffi::gtk_source_completion_unblock_interactive(self.to_glib_none().0);
@@ -191,12 +201,14 @@ impl Completion {
 
     //#[cfg(any(feature = "v5_0", feature = "dox"))]
     //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    //#[doc(alias = "gtk_source_completion_fuzzy_highlight")]
     //pub fn fuzzy_highlight(haystack: &str, casefold_query: &str) -> /*Ignored*/Option<pango::AttrList> {
     //    unsafe { TODO: call ffi:gtk_source_completion_fuzzy_highlight() }
     //}
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_fuzzy_match")]
     pub fn fuzzy_match(haystack: Option<&str>, casefold_needle: &str) -> Option<u32> {
         assert_initialized_main_thread!();
         unsafe {
@@ -508,10 +520,7 @@ impl CompletionBuilder {
         if let Some(ref view) = self.view {
             properties.push(("view", view));
         }
-        let ret = glib::Object::new(Completion::static_type(), &properties)
-            .expect("object new")
-            .downcast::<Completion>()
-            .expect("downcast");
+        let ret = glib::Object::new::<Completion>(&properties).expect("object new");
         ret
     }
 

@@ -6,7 +6,7 @@ use std::env::args;
 fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
 
-    window.set_title("SourceView5 + Rust");
+    window.set_title(Some("SourceView5 + Rust"));
     window.set_default_size(500, 500);
 
     let buffer = sourceview5::Buffer::new(None);

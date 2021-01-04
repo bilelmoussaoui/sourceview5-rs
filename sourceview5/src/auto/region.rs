@@ -9,7 +9,7 @@ use glib::StaticType;
 use glib::ToValue;
 use std::fmt;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Region(Object<ffi::GtkSourceRegion, ffi::GtkSourceRegionClass>);
 
     match fn {
@@ -18,6 +18,7 @@ glib::glib_wrapper! {
 }
 
 impl Region {
+    #[doc(alias = "gtk_source_region_new")]
     pub fn new<P: IsA<gtk::TextBuffer>>(buffer: &P) -> Region {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_region_new(buffer.as_ref().to_glib_none().0)) }
@@ -46,10 +47,7 @@ impl RegionBuilder {
         if let Some(ref buffer) = self.buffer {
             properties.push(("buffer", buffer));
         }
-        let ret = glib::Object::new(Region::static_type(), &properties)
-            .expect("object new")
-            .downcast::<Region>()
-            .expect("downcast");
+        let ret = glib::Object::new::<Region>(&properties).expect("object new");
         ret
     }
 
@@ -62,26 +60,37 @@ impl RegionBuilder {
 pub const NONE_REGION: Option<&Region> = None;
 
 pub trait RegionExt: 'static {
+    #[doc(alias = "gtk_source_region_add_region")]
     fn add_region<P: IsA<Region>>(&self, region_to_add: Option<&P>);
 
+    #[doc(alias = "gtk_source_region_add_subregion")]
     fn add_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter);
 
+    #[doc(alias = "gtk_source_region_get_bounds")]
     fn get_bounds(&self) -> Option<(gtk::TextIter, gtk::TextIter)>;
 
+    #[doc(alias = "gtk_source_region_get_buffer")]
     fn get_buffer(&self) -> Option<gtk::TextBuffer>;
 
+    //#[doc(alias = "gtk_source_region_get_start_region_iter")]
     //fn get_start_region_iter(&self, iter: /*Ignored*/RegionIter);
 
+    #[doc(alias = "gtk_source_region_intersect_region")]
     fn intersect_region<P: IsA<Region>>(&self, region2: Option<&P>) -> Option<Region>;
 
+    #[doc(alias = "gtk_source_region_intersect_subregion")]
     fn intersect_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter) -> Option<Region>;
 
+    #[doc(alias = "gtk_source_region_is_empty")]
     fn is_empty(&self) -> bool;
 
+    #[doc(alias = "gtk_source_region_subtract_region")]
     fn subtract_region<P: IsA<Region>>(&self, region_to_subtract: Option<&P>);
 
+    #[doc(alias = "gtk_source_region_subtract_subregion")]
     fn subtract_subregion(&self, _start: &gtk::TextIter, _end: &gtk::TextIter);
 
+    #[doc(alias = "gtk_source_region_to_string")]
     fn to_str(&self) -> glib::GString;
 }
 

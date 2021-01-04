@@ -20,7 +20,7 @@ use std::fmt;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct SnippetContext(Object<ffi::GtkSourceSnippetContext, ffi::GtkSourceSnippetContextClass>);
 
     match fn {
@@ -31,6 +31,7 @@ glib::glib_wrapper! {
 impl SnippetContext {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_context_new")]
     pub fn new() -> SnippetContext {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_snippet_context_new()) }
@@ -38,12 +39,14 @@ impl SnippetContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_context_clear_variables")]
     pub fn clear_variables(&self) {
         unsafe {
             ffi::gtk_source_snippet_context_clear_variables(self.to_glib_none().0);
         }
     }
 
+    #[doc(alias = "gtk_source_snippet_context_expand")]
     pub fn expand(&self, input: &str) -> Option<glib::GString> {
         unsafe {
             from_glib_full(ffi::gtk_source_snippet_context_expand(
@@ -55,6 +58,7 @@ impl SnippetContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_context_get_variable")]
     pub fn get_variable(&self, key: &str) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_snippet_context_get_variable(
@@ -66,6 +70,7 @@ impl SnippetContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_context_set_constant")]
     pub fn set_constant(&self, key: &str, value: &str) {
         unsafe {
             ffi::gtk_source_snippet_context_set_constant(
@@ -76,6 +81,7 @@ impl SnippetContext {
         }
     }
 
+    #[doc(alias = "gtk_source_snippet_context_set_line_prefix")]
     pub fn set_line_prefix(&self, line_prefix: &str) {
         unsafe {
             ffi::gtk_source_snippet_context_set_line_prefix(
@@ -85,12 +91,14 @@ impl SnippetContext {
         }
     }
 
+    #[doc(alias = "gtk_source_snippet_context_set_tab_width")]
     pub fn set_tab_width(&self, tab_width: i32) {
         unsafe {
             ffi::gtk_source_snippet_context_set_tab_width(self.to_glib_none().0, tab_width);
         }
     }
 
+    #[doc(alias = "gtk_source_snippet_context_set_use_spaces")]
     pub fn set_use_spaces(&self, use_spaces: bool) {
         unsafe {
             ffi::gtk_source_snippet_context_set_use_spaces(
@@ -102,6 +110,7 @@ impl SnippetContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_context_set_variable")]
     pub fn set_variable(&self, key: &str, value: &str) {
         unsafe {
             ffi::gtk_source_snippet_context_set_variable(

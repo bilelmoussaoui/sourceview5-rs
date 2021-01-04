@@ -15,7 +15,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct MarkAttributes(Object<ffi::GtkSourceMarkAttributes, ffi::GtkSourceMarkAttributesClass>);
 
     match fn {
@@ -24,11 +24,13 @@ glib::glib_wrapper! {
 }
 
 impl MarkAttributes {
+    #[doc(alias = "gtk_source_mark_attributes_new")]
     pub fn new() -> MarkAttributes {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_mark_attributes_new()) }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_get_background")]
     pub fn get_background(&self) -> Option<gdk::RGBA> {
         unsafe {
             let mut background = gdk::RGBA::uninitialized();
@@ -44,6 +46,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_get_gicon")]
     pub fn get_gicon(&self) -> Option<gio::Icon> {
         unsafe {
             from_glib_none(ffi::gtk_source_mark_attributes_get_gicon(
@@ -52,6 +55,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_get_icon_name")]
     pub fn get_icon_name(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_mark_attributes_get_icon_name(
@@ -60,6 +64,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_get_pixbuf")]
     pub fn get_pixbuf(&self) -> Option<gdk_pixbuf::Pixbuf> {
         unsafe {
             from_glib_none(ffi::gtk_source_mark_attributes_get_pixbuf(
@@ -68,6 +73,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_get_tooltip_markup")]
     pub fn get_tooltip_markup<P: IsA<Mark>>(&self, mark: &P) -> Option<glib::GString> {
         unsafe {
             from_glib_full(ffi::gtk_source_mark_attributes_get_tooltip_markup(
@@ -77,6 +83,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_get_tooltip_text")]
     pub fn get_tooltip_text<P: IsA<Mark>>(&self, mark: &P) -> Option<glib::GString> {
         unsafe {
             from_glib_full(ffi::gtk_source_mark_attributes_get_tooltip_text(
@@ -86,6 +93,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_render_icon")]
     pub fn render_icon<P: IsA<gtk::Widget>>(
         &self,
         widget: &P,
@@ -100,6 +108,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_set_background")]
     pub fn set_background(&self, background: &gdk::RGBA) {
         unsafe {
             ffi::gtk_source_mark_attributes_set_background(
@@ -109,6 +118,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_set_gicon")]
     pub fn set_gicon<P: IsA<gio::Icon>>(&self, gicon: &P) {
         unsafe {
             ffi::gtk_source_mark_attributes_set_gicon(
@@ -118,6 +128,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_set_icon_name")]
     pub fn set_icon_name(&self, icon_name: &str) {
         unsafe {
             ffi::gtk_source_mark_attributes_set_icon_name(
@@ -127,6 +138,7 @@ impl MarkAttributes {
         }
     }
 
+    #[doc(alias = "gtk_source_mark_attributes_set_pixbuf")]
     pub fn set_pixbuf(&self, pixbuf: &gdk_pixbuf::Pixbuf) {
         unsafe {
             ffi::gtk_source_mark_attributes_set_pixbuf(
@@ -324,10 +336,7 @@ impl MarkAttributesBuilder {
         if let Some(ref pixbuf) = self.pixbuf {
             properties.push(("pixbuf", pixbuf));
         }
-        let ret = glib::Object::new(MarkAttributes::static_type(), &properties)
-            .expect("object new")
-            .downcast::<MarkAttributes>()
-            .expect("downcast");
+        let ret = glib::Object::new::<MarkAttributes>(&properties).expect("object new");
         ret
     }
 

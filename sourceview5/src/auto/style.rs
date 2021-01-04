@@ -10,7 +10,7 @@ use glib::StaticType;
 use glib::ToValue;
 use std::fmt;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Style(Object<ffi::GtkSourceStyle, ffi::GtkSourceStyleClass>);
 
     match fn {
@@ -19,12 +19,14 @@ glib::glib_wrapper! {
 }
 
 impl Style {
+    #[doc(alias = "gtk_source_style_apply")]
     pub fn apply<P: IsA<gtk::TextTag>>(&self, tag: &P) {
         unsafe {
             ffi::gtk_source_style_apply(self.to_glib_none().0, tag.as_ref().to_glib_none().0);
         }
     }
 
+    #[doc(alias = "gtk_source_style_copy")]
     pub fn copy(&self) -> Option<Style> {
         unsafe { from_glib_full(ffi::gtk_source_style_copy(self.to_glib_none().0)) }
     }
@@ -378,10 +380,7 @@ impl StyleBuilder {
         if let Some(ref underline_set) = self.underline_set {
             properties.push(("underline-set", underline_set));
         }
-        let ret = glib::Object::new(Style::static_type(), &properties)
-            .expect("object new")
-            .downcast::<Style>()
-            .expect("downcast");
+        let ret = glib::Object::new::<Style>(&properties).expect("object new");
         ret
     }
 

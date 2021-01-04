@@ -14,7 +14,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct StyleScheme(Object<ffi::GtkSourceStyleScheme, ffi::GtkSourceStyleSchemeClass>);
 
     match fn {
@@ -23,6 +23,7 @@ glib::glib_wrapper! {
 }
 
 impl StyleScheme {
+    #[doc(alias = "gtk_source_style_scheme_get_authors")]
     pub fn get_authors(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_none(ffi::gtk_source_style_scheme_get_authors(
@@ -31,6 +32,7 @@ impl StyleScheme {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_get_description")]
     pub fn get_description(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_style_scheme_get_description(
@@ -39,6 +41,7 @@ impl StyleScheme {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_get_filename")]
     pub fn get_filename(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_style_scheme_get_filename(
@@ -47,14 +50,17 @@ impl StyleScheme {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_get_id")]
     pub fn get_id(&self) -> Option<glib::GString> {
         unsafe { from_glib_none(ffi::gtk_source_style_scheme_get_id(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_get_name")]
     pub fn get_name(&self) -> Option<glib::GString> {
         unsafe { from_glib_none(ffi::gtk_source_style_scheme_get_name(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_get_style")]
     pub fn get_style(&self, style_id: &str) -> Option<Style> {
         unsafe {
             from_glib_none(ffi::gtk_source_style_scheme_get_style(
@@ -155,10 +161,7 @@ impl StyleSchemeBuilder {
         if let Some(ref id) = self.id {
             properties.push(("id", id));
         }
-        let ret = glib::Object::new(StyleScheme::static_type(), &properties)
-            .expect("object new")
-            .downcast::<StyleScheme>()
-            .expect("downcast");
+        let ret = glib::Object::new::<StyleScheme>(&properties).expect("object new");
         ret
     }
 

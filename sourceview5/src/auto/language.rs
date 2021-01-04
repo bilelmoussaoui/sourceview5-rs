@@ -10,7 +10,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Language(Object<ffi::GtkSourceLanguage, ffi::GtkSourceLanguageClass>);
 
     match fn {
@@ -19,6 +19,7 @@ glib::glib_wrapper! {
 }
 
 impl Language {
+    #[doc(alias = "gtk_source_language_get_globs")]
     pub fn get_globs(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_globs(
@@ -27,14 +28,17 @@ impl Language {
         }
     }
 
+    #[doc(alias = "gtk_source_language_get_hidden")]
     pub fn get_hidden(&self) -> bool {
         unsafe { from_glib(ffi::gtk_source_language_get_hidden(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_language_get_id")]
     pub fn get_id(&self) -> Option<glib::GString> {
         unsafe { from_glib_none(ffi::gtk_source_language_get_id(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_language_get_metadata")]
     pub fn get_metadata(&self, name: &str) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_language_get_metadata(
@@ -44,6 +48,7 @@ impl Language {
         }
     }
 
+    #[doc(alias = "gtk_source_language_get_mime_types")]
     pub fn get_mime_types(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_mime_types(
@@ -52,14 +57,17 @@ impl Language {
         }
     }
 
+    #[doc(alias = "gtk_source_language_get_name")]
     pub fn get_name(&self) -> Option<glib::GString> {
         unsafe { from_glib_none(ffi::gtk_source_language_get_name(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_language_get_section")]
     pub fn get_section(&self) -> Option<glib::GString> {
         unsafe { from_glib_none(ffi::gtk_source_language_get_section(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_language_get_style_fallback")]
     pub fn get_style_fallback(&self, style_id: &str) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_language_get_style_fallback(
@@ -69,6 +77,7 @@ impl Language {
         }
     }
 
+    #[doc(alias = "gtk_source_language_get_style_ids")]
     pub fn get_style_ids(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_full(ffi::gtk_source_language_get_style_ids(
@@ -77,6 +86,7 @@ impl Language {
         }
     }
 
+    #[doc(alias = "gtk_source_language_get_style_name")]
     pub fn get_style_name(&self, style_id: &str) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_language_get_style_name(

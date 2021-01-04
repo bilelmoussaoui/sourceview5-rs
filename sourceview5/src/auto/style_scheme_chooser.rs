@@ -12,7 +12,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct StyleSchemeChooser(Interface<ffi::GtkSourceStyleSchemeChooser>);
 
     match fn {
@@ -23,8 +23,10 @@ glib::glib_wrapper! {
 pub const NONE_STYLE_SCHEME_CHOOSER: Option<&StyleSchemeChooser> = None;
 
 pub trait StyleSchemeChooserExt: 'static {
+    #[doc(alias = "gtk_source_style_scheme_chooser_get_style_scheme")]
     fn get_style_scheme(&self) -> Option<StyleScheme>;
 
+    #[doc(alias = "gtk_source_style_scheme_chooser_set_style_scheme")]
     fn set_style_scheme(&self, scheme: &StyleScheme);
 
     fn connect_property_style_scheme_notify<F: Fn(&Self) + 'static>(&self, f: F)

@@ -20,7 +20,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct FileSaver(Object<ffi::GtkSourceFileSaver, ffi::GtkSourceFileSaverClass>);
 
     match fn {
@@ -29,6 +29,7 @@ glib::glib_wrapper! {
 }
 
 impl FileSaver {
+    #[doc(alias = "gtk_source_file_saver_new")]
     pub fn new<P: IsA<Buffer>, Q: IsA<File>>(buffer: &P, file: &Q) -> FileSaver {
         skip_assert_initialized!();
         unsafe {
@@ -39,6 +40,7 @@ impl FileSaver {
         }
     }
 
+    #[doc(alias = "gtk_source_file_saver_new_with_target")]
     pub fn with_target<P: IsA<Buffer>, Q: IsA<File>, R: IsA<gio::File>>(
         buffer: &P,
         file: &Q,
@@ -54,10 +56,12 @@ impl FileSaver {
         }
     }
 
+    #[doc(alias = "gtk_source_file_saver_get_buffer")]
     pub fn get_buffer(&self) -> Option<Buffer> {
         unsafe { from_glib_none(ffi::gtk_source_file_saver_get_buffer(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_file_saver_get_compression_type")]
     pub fn get_compression_type(&self) -> CompressionType {
         unsafe {
             from_glib(ffi::gtk_source_file_saver_get_compression_type(
@@ -66,6 +70,7 @@ impl FileSaver {
         }
     }
 
+    #[doc(alias = "gtk_source_file_saver_get_encoding")]
     pub fn get_encoding(&self) -> Option<Encoding> {
         unsafe {
             from_glib_none(ffi::gtk_source_file_saver_get_encoding(
@@ -74,14 +79,17 @@ impl FileSaver {
         }
     }
 
+    #[doc(alias = "gtk_source_file_saver_get_file")]
     pub fn get_file(&self) -> Option<File> {
         unsafe { from_glib_none(ffi::gtk_source_file_saver_get_file(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_file_saver_get_flags")]
     pub fn get_flags(&self) -> FileSaverFlags {
         unsafe { from_glib(ffi::gtk_source_file_saver_get_flags(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_file_saver_get_location")]
     pub fn get_location(&self) -> Option<gio::File> {
         unsafe {
             from_glib_none(ffi::gtk_source_file_saver_get_location(
@@ -90,6 +98,7 @@ impl FileSaver {
         }
     }
 
+    #[doc(alias = "gtk_source_file_saver_get_newline_type")]
     pub fn get_newline_type(&self) -> NewlineType {
         unsafe {
             from_glib(ffi::gtk_source_file_saver_get_newline_type(
@@ -98,6 +107,7 @@ impl FileSaver {
         }
     }
 
+    //#[doc(alias = "gtk_source_file_saver_save_async")]
     //pub fn save_async<P: IsA<gio::Cancellable>, Q: FnOnce(Result<(), glib::Error>) + Send + 'static, R: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, io_priority: glib::Priority, cancellable: Option<&P>, progress_callback: Q, progress_callback_notify: Fn() + 'static, callback: R) {
     //    unsafe { TODO: call ffi:gtk_source_file_saver_save_async() }
     //}
@@ -123,6 +133,7 @@ impl FileSaver {
     //}))
     //}
 
+    #[doc(alias = "gtk_source_file_saver_set_compression_type")]
     pub fn set_compression_type(&self, compression_type: CompressionType) {
         unsafe {
             ffi::gtk_source_file_saver_set_compression_type(
@@ -132,6 +143,7 @@ impl FileSaver {
         }
     }
 
+    #[doc(alias = "gtk_source_file_saver_set_encoding")]
     pub fn set_encoding(&self, encoding: Option<&Encoding>) {
         unsafe {
             ffi::gtk_source_file_saver_set_encoding(
@@ -141,12 +153,14 @@ impl FileSaver {
         }
     }
 
+    #[doc(alias = "gtk_source_file_saver_set_flags")]
     pub fn set_flags(&self, flags: FileSaverFlags) {
         unsafe {
             ffi::gtk_source_file_saver_set_flags(self.to_glib_none().0, flags.to_glib());
         }
     }
 
+    #[doc(alias = "gtk_source_file_saver_set_newline_type")]
     pub fn set_newline_type(&self, newline_type: NewlineType) {
         unsafe {
             ffi::gtk_source_file_saver_set_newline_type(
@@ -296,10 +310,7 @@ impl FileSaverBuilder {
         if let Some(ref newline_type) = self.newline_type {
             properties.push(("newline-type", newline_type));
         }
-        let ret = glib::Object::new(FileSaver::static_type(), &properties)
-            .expect("object new")
-            .downcast::<FileSaver>()
-            .expect("downcast");
+        let ret = glib::Object::new::<FileSaver>(&properties).expect("object new");
         ret
     }
 

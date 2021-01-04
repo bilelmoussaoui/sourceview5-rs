@@ -14,7 +14,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct LanguageManager(Object<ffi::GtkSourceLanguageManager, ffi::GtkSourceLanguageManagerClass>);
 
     match fn {
@@ -23,11 +23,13 @@ glib::glib_wrapper! {
 }
 
 impl LanguageManager {
+    #[doc(alias = "gtk_source_language_manager_new")]
     pub fn new() -> LanguageManager {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_language_manager_new()) }
     }
 
+    #[doc(alias = "gtk_source_language_manager_get_language")]
     pub fn get_language(&self, id: &str) -> Option<Language> {
         unsafe {
             from_glib_none(ffi::gtk_source_language_manager_get_language(
@@ -37,6 +39,7 @@ impl LanguageManager {
         }
     }
 
+    #[doc(alias = "gtk_source_language_manager_get_language_ids")]
     pub fn get_language_ids(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_none(ffi::gtk_source_language_manager_get_language_ids(
@@ -45,6 +48,7 @@ impl LanguageManager {
         }
     }
 
+    #[doc(alias = "gtk_source_language_manager_get_search_path")]
     pub fn get_search_path(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_none(ffi::gtk_source_language_manager_get_search_path(
@@ -53,6 +57,7 @@ impl LanguageManager {
         }
     }
 
+    #[doc(alias = "gtk_source_language_manager_guess_language")]
     pub fn guess_language(
         &self,
         filename: Option<&str>,
@@ -67,6 +72,7 @@ impl LanguageManager {
         }
     }
 
+    #[doc(alias = "gtk_source_language_manager_set_search_path")]
     pub fn set_search_path(&self, dirs: &[&str]) {
         unsafe {
             ffi::gtk_source_language_manager_set_search_path(
@@ -76,6 +82,7 @@ impl LanguageManager {
         }
     }
 
+    #[doc(alias = "gtk_source_language_manager_get_default")]
     pub fn get_default() -> Option<LanguageManager> {
         assert_initialized_main_thread!();
         unsafe { from_glib_none(ffi::gtk_source_language_manager_get_default()) }
@@ -153,10 +160,7 @@ impl LanguageManagerBuilder {
         if let Some(ref search_path) = self.search_path {
             properties.push(("search-path", search_path));
         }
-        let ret = glib::Object::new(LanguageManager::static_type(), &properties)
-            .expect("object new")
-            .downcast::<LanguageManager>()
-            .expect("downcast");
+        let ret = glib::Object::new::<LanguageManager>(&properties).expect("object new");
         ret
     }
 

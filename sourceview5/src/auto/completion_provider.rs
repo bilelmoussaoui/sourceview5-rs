@@ -12,7 +12,7 @@ use std::fmt;
 use std::pin::Pin;
 use std::ptr;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct CompletionProvider(Interface<ffi::GtkSourceCompletionProvider>);
 
     match fn {
@@ -23,8 +23,10 @@ glib::glib_wrapper! {
 pub const NONE_COMPLETION_PROVIDER: Option<&CompletionProvider> = None;
 
 pub trait CompletionProviderExt: 'static {
+    #[doc(alias = "gtk_source_completion_provider_activate")]
     fn activate<P: IsA<CompletionProposal>>(&self, context: &CompletionContext, proposal: &P);
 
+    #[doc(alias = "gtk_source_completion_provider_display")]
     fn display<P: IsA<CompletionProposal>>(
         &self,
         context: &CompletionContext,
@@ -32,12 +34,16 @@ pub trait CompletionProviderExt: 'static {
         cell: &CompletionCell,
     );
 
+    #[doc(alias = "gtk_source_completion_provider_get_priority")]
     fn get_priority(&self, context: &CompletionContext) -> i32;
 
+    #[doc(alias = "gtk_source_completion_provider_get_title")]
     fn get_title(&self) -> Option<glib::GString>;
 
+    #[doc(alias = "gtk_source_completion_provider_is_trigger")]
     fn is_trigger(&self, iter: &gtk::TextIter, ch: char) -> bool;
 
+    #[doc(alias = "gtk_source_completion_provider_key_activates")]
     fn key_activates<P: IsA<CompletionProposal>>(
         &self,
         context: &CompletionContext,
@@ -48,12 +54,14 @@ pub trait CompletionProviderExt: 'static {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_provider_list_alternates")]
     fn list_alternates<P: IsA<CompletionProposal>>(
         &self,
         context: &CompletionContext,
         proposal: &P,
     ) -> Vec<CompletionProposal>;
 
+    #[doc(alias = "gtk_source_completion_provider_populate_async")]
     fn populate_async<
         P: IsA<gio::Cancellable>,
         Q: FnOnce(Result<gio::ListModel, glib::Error>) + Send + 'static,
@@ -69,6 +77,7 @@ pub trait CompletionProviderExt: 'static {
         context: &CompletionContext,
     ) -> Pin<Box_<dyn std::future::Future<Output = Result<gio::ListModel, glib::Error>> + 'static>>;
 
+    #[doc(alias = "gtk_source_completion_provider_refilter")]
     fn refilter<P: IsA<gio::ListModel>>(&self, context: &CompletionContext, model: &P);
 }
 

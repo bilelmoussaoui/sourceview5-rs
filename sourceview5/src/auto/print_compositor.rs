@@ -15,7 +15,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct PrintCompositor(Object<ffi::GtkSourcePrintCompositor, ffi::GtkSourcePrintCompositorClass>);
 
     match fn {
@@ -24,6 +24,7 @@ glib::glib_wrapper! {
 }
 
 impl PrintCompositor {
+    #[doc(alias = "gtk_source_print_compositor_new")]
     pub fn new<P: IsA<Buffer>>(buffer: &P) -> PrintCompositor {
         skip_assert_initialized!();
         unsafe {
@@ -33,6 +34,7 @@ impl PrintCompositor {
         }
     }
 
+    #[doc(alias = "gtk_source_print_compositor_new_from_view")]
     pub fn from_view<P: IsA<View>>(view: &P) -> PrintCompositor {
         skip_assert_initialized!();
         unsafe {
@@ -98,10 +100,7 @@ impl PrintCompositorBuilder {
         if let Some(ref wrap_mode) = self.wrap_mode {
             properties.push(("wrap-mode", wrap_mode));
         }
-        let ret = glib::Object::new(PrintCompositor::static_type(), &properties)
-            .expect("object new")
-            .downcast::<PrintCompositor>()
-            .expect("downcast");
+        let ret = glib::Object::new::<PrintCompositor>(&properties).expect("object new");
         ret
     }
 
@@ -164,50 +163,73 @@ impl PrintCompositorBuilder {
 pub const NONE_PRINT_COMPOSITOR: Option<&PrintCompositor> = None;
 
 pub trait PrintCompositorExt: 'static {
+    #[doc(alias = "gtk_source_print_compositor_draw_page")]
     fn draw_page(&self, context: &gtk::PrintContext, page_nr: i32);
 
+    #[doc(alias = "gtk_source_print_compositor_get_body_font_name")]
     fn get_body_font_name(&self) -> Option<glib::GString>;
 
+    //#[doc(alias = "gtk_source_print_compositor_get_bottom_margin")]
     //fn get_bottom_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64;
 
+    #[doc(alias = "gtk_source_print_compositor_get_buffer")]
     fn get_buffer(&self) -> Option<Buffer>;
 
+    #[doc(alias = "gtk_source_print_compositor_get_footer_font_name")]
     fn get_footer_font_name(&self) -> Option<glib::GString>;
 
+    #[doc(alias = "gtk_source_print_compositor_get_header_font_name")]
     fn get_header_font_name(&self) -> Option<glib::GString>;
 
+    #[doc(alias = "gtk_source_print_compositor_get_highlight_syntax")]
     fn get_highlight_syntax(&self) -> bool;
 
+    //#[doc(alias = "gtk_source_print_compositor_get_left_margin")]
     //fn get_left_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64;
 
+    #[doc(alias = "gtk_source_print_compositor_get_line_numbers_font_name")]
     fn get_line_numbers_font_name(&self) -> Option<glib::GString>;
 
+    #[doc(alias = "gtk_source_print_compositor_get_n_pages")]
     fn get_n_pages(&self) -> i32;
 
+    #[doc(alias = "gtk_source_print_compositor_get_pagination_progress")]
     fn get_pagination_progress(&self) -> f64;
 
+    #[doc(alias = "gtk_source_print_compositor_get_print_footer")]
     fn get_print_footer(&self) -> bool;
 
+    #[doc(alias = "gtk_source_print_compositor_get_print_header")]
     fn get_print_header(&self) -> bool;
 
+    #[doc(alias = "gtk_source_print_compositor_get_print_line_numbers")]
     fn get_print_line_numbers(&self) -> u32;
 
+    //#[doc(alias = "gtk_source_print_compositor_get_right_margin")]
     //fn get_right_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64;
 
+    #[doc(alias = "gtk_source_print_compositor_get_tab_width")]
     fn get_tab_width(&self) -> u32;
 
+    //#[doc(alias = "gtk_source_print_compositor_get_top_margin")]
     //fn get_top_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64;
 
+    #[doc(alias = "gtk_source_print_compositor_get_wrap_mode")]
     fn get_wrap_mode(&self) -> gtk::WrapMode;
 
+    #[doc(alias = "gtk_source_print_compositor_paginate")]
     fn paginate(&self, context: &gtk::PrintContext) -> bool;
 
+    #[doc(alias = "gtk_source_print_compositor_set_body_font_name")]
     fn set_body_font_name(&self, font_name: &str);
 
+    //#[doc(alias = "gtk_source_print_compositor_set_bottom_margin")]
     //fn set_bottom_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit);
 
+    #[doc(alias = "gtk_source_print_compositor_set_footer_font_name")]
     fn set_footer_font_name(&self, font_name: Option<&str>);
 
+    #[doc(alias = "gtk_source_print_compositor_set_footer_format")]
     fn set_footer_format(
         &self,
         separator: bool,
@@ -216,8 +238,10 @@ pub trait PrintCompositorExt: 'static {
         right: Option<&str>,
     );
 
+    #[doc(alias = "gtk_source_print_compositor_set_header_font_name")]
     fn set_header_font_name(&self, font_name: Option<&str>);
 
+    #[doc(alias = "gtk_source_print_compositor_set_header_format")]
     fn set_header_format(
         &self,
         separator: bool,
@@ -226,24 +250,34 @@ pub trait PrintCompositorExt: 'static {
         right: Option<&str>,
     );
 
+    #[doc(alias = "gtk_source_print_compositor_set_highlight_syntax")]
     fn set_highlight_syntax(&self, highlight: bool);
 
+    //#[doc(alias = "gtk_source_print_compositor_set_left_margin")]
     //fn set_left_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit);
 
+    #[doc(alias = "gtk_source_print_compositor_set_line_numbers_font_name")]
     fn set_line_numbers_font_name(&self, font_name: Option<&str>);
 
+    #[doc(alias = "gtk_source_print_compositor_set_print_footer")]
     fn set_print_footer(&self, print: bool);
 
+    #[doc(alias = "gtk_source_print_compositor_set_print_header")]
     fn set_print_header(&self, print: bool);
 
+    #[doc(alias = "gtk_source_print_compositor_set_print_line_numbers")]
     fn set_print_line_numbers(&self, interval: u32);
 
+    //#[doc(alias = "gtk_source_print_compositor_set_right_margin")]
     //fn set_right_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit);
 
+    #[doc(alias = "gtk_source_print_compositor_set_tab_width")]
     fn set_tab_width(&self, width: u32);
 
+    //#[doc(alias = "gtk_source_print_compositor_set_top_margin")]
     //fn set_top_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit);
 
+    #[doc(alias = "gtk_source_print_compositor_set_wrap_mode")]
     fn set_wrap_mode(&self, wrap_mode: gtk::WrapMode);
 
     fn connect_property_body_font_name_notify<F: Fn(&Self) + 'static>(

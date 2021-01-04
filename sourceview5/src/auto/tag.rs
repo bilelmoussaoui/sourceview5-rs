@@ -13,7 +13,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Tag(Object<ffi::GtkSourceTag, ffi::GtkSourceTagClass>) @extends gtk::TextTag;
 
     match fn {
@@ -22,6 +22,7 @@ glib::glib_wrapper! {
 }
 
 impl Tag {
+    #[doc(alias = "gtk_source_tag_new")]
     pub fn new(name: Option<&str>) -> Tag {
         assert_initialized_main_thread!();
         unsafe {
@@ -350,10 +351,7 @@ impl TagBuilder {
         if let Some(ref wrap_mode_set) = self.wrap_mode_set {
             properties.push(("wrap-mode-set", wrap_mode_set));
         }
-        let ret = glib::Object::new(Tag::static_type(), &properties)
-            .expect("object new")
-            .downcast::<Tag>()
-            .expect("downcast");
+        let ret = glib::Object::new::<Tag>(&properties).expect("object new");
         ret
     }
 

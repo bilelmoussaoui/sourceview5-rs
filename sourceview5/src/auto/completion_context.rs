@@ -44,7 +44,7 @@ use std::fmt;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct CompletionContext(Object<ffi::GtkSourceCompletionContext, ffi::GtkSourceCompletionContextClass>) @implements gio::ListModel;
 
     match fn {
@@ -55,6 +55,7 @@ glib::glib_wrapper! {
 impl CompletionContext {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_activation")]
     pub fn get_activation(&self) -> CompletionActivation {
         unsafe {
             from_glib(ffi::gtk_source_completion_context_get_activation(
@@ -65,6 +66,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_bounds")]
     pub fn get_bounds(&self) -> Option<(gtk::TextIter, gtk::TextIter)> {
         unsafe {
             let mut begin = gtk::TextIter::uninitialized();
@@ -84,6 +86,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_buffer")]
     pub fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
             from_glib_none(ffi::gtk_source_completion_context_get_buffer(
@@ -94,6 +97,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_busy")]
     pub fn get_busy(&self) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_completion_context_get_busy(
@@ -104,6 +108,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_completion")]
     pub fn get_completion(&self) -> Option<Completion> {
         unsafe {
             from_glib_none(ffi::gtk_source_completion_context_get_completion(
@@ -114,6 +119,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_empty")]
     pub fn get_empty(&self) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_completion_context_get_empty(
@@ -124,6 +130,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_language")]
     pub fn get_language(&self) -> Option<Language> {
         unsafe {
             from_glib_none(ffi::gtk_source_completion_context_get_language(
@@ -132,6 +139,7 @@ impl CompletionContext {
         }
     }
 
+    #[doc(alias = "gtk_source_completion_context_get_start_iter")]
     pub fn get_start_iter(&self, iter: &mut gtk::TextIter) {
         unsafe {
             ffi::gtk_source_completion_context_get_start_iter(
@@ -143,6 +151,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_view")]
     pub fn get_view(&self) -> Option<View> {
         unsafe {
             from_glib_none(ffi::gtk_source_completion_context_get_view(
@@ -153,6 +162,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_get_word")]
     pub fn get_word(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_full(ffi::gtk_source_completion_context_get_word(
@@ -163,6 +173,7 @@ impl CompletionContext {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_context_set_proposals_for_provider")]
     pub fn set_proposals_for_provider<P: IsA<CompletionProvider>, Q: IsA<gio::ListModel>>(
         &self,
         provider: &P,
@@ -250,10 +261,7 @@ impl CompletionContextBuilder {
         if let Some(ref completion) = self.completion {
             properties.push(("completion", completion));
         }
-        let ret = glib::Object::new(CompletionContext::static_type(), &properties)
-            .expect("object new")
-            .downcast::<CompletionContext>()
-            .expect("downcast");
+        let ret = glib::Object::new::<CompletionContext>(&properties).expect("object new");
         ret
     }
 

@@ -37,7 +37,7 @@ impl ToGlib for FileSaverFlags {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceFileSaverFlags> for FileSaverFlags {
-    fn from_glib(value: ffi::GtkSourceFileSaverFlags) -> FileSaverFlags {
+    unsafe fn from_glib(value: ffi::GtkSourceFileSaverFlags) -> FileSaverFlags {
         skip_assert_initialized!();
         FileSaverFlags::from_bits_truncate(value)
     }
@@ -93,7 +93,7 @@ impl ToGlib for SortFlags {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceSortFlags> for SortFlags {
-    fn from_glib(value: ffi::GtkSourceSortFlags) -> SortFlags {
+    unsafe fn from_glib(value: ffi::GtkSourceSortFlags) -> SortFlags {
         skip_assert_initialized!();
         SortFlags::from_bits_truncate(value)
     }
@@ -150,7 +150,7 @@ impl ToGlib for SpaceLocationFlags {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceSpaceLocationFlags> for SpaceLocationFlags {
-    fn from_glib(value: ffi::GtkSourceSpaceLocationFlags) -> SpaceLocationFlags {
+    unsafe fn from_glib(value: ffi::GtkSourceSpaceLocationFlags) -> SpaceLocationFlags {
         skip_assert_initialized!();
         SpaceLocationFlags::from_bits_truncate(value)
     }
@@ -208,7 +208,7 @@ impl ToGlib for SpaceTypeFlags {
 
 #[doc(hidden)]
 impl FromGlib<ffi::GtkSourceSpaceTypeFlags> for SpaceTypeFlags {
-    fn from_glib(value: ffi::GtkSourceSpaceTypeFlags) -> SpaceTypeFlags {
+    unsafe fn from_glib(value: ffi::GtkSourceSpaceTypeFlags) -> SpaceTypeFlags {
         skip_assert_initialized!();
         SpaceTypeFlags::from_bits_truncate(value)
     }

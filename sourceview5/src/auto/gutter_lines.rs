@@ -11,7 +11,7 @@ use std::fmt;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct GutterLines(Object<ffi::GtkSourceGutterLines, ffi::GtkSourceGutterLinesClass>);
 
     match fn {
@@ -22,6 +22,7 @@ glib::glib_wrapper! {
 impl GutterLines {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_add_class")]
     pub fn add_class(&self, line: u32, name: &str) {
         unsafe {
             ffi::gtk_source_gutter_lines_add_class(
@@ -34,6 +35,7 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_add_qclass")]
     pub fn add_qclass(&self, line: u32, qname: glib::Quark) {
         unsafe {
             ffi::gtk_source_gutter_lines_add_qclass(self.to_glib_none().0, line, qname.to_glib());
@@ -42,6 +44,7 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_get_buffer")]
     pub fn get_buffer(&self) -> Option<gtk::TextBuffer> {
         unsafe {
             from_glib_none(ffi::gtk_source_gutter_lines_get_buffer(
@@ -52,12 +55,14 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_get_first")]
     pub fn get_first(&self) -> u32 {
         unsafe { ffi::gtk_source_gutter_lines_get_first(self.to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_get_iter_at_line")]
     pub fn get_iter_at_line(&self, line: u32) -> gtk::TextIter {
         unsafe {
             let mut iter = gtk::TextIter::uninitialized();
@@ -72,12 +77,14 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_get_last")]
     pub fn get_last(&self) -> u32 {
         unsafe { ffi::gtk_source_gutter_lines_get_last(self.to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_get_line_yrange")]
     pub fn get_line_yrange(&self, line: u32, mode: GutterRendererAlignmentMode) -> (i32, i32) {
         unsafe {
             let mut y = mem::MaybeUninit::uninit();
@@ -97,12 +104,14 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_get_view")]
     pub fn get_view(&self) -> Option<gtk::TextView> {
         unsafe { from_glib_none(ffi::gtk_source_gutter_lines_get_view(self.to_glib_none().0)) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_has_class")]
     pub fn has_class(&self, line: u32, name: &str) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_gutter_lines_has_class(
@@ -115,6 +124,7 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_has_qclass")]
     pub fn has_qclass(&self, line: u32, qname: glib::Quark) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_gutter_lines_has_qclass(
@@ -127,6 +137,7 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_is_cursor")]
     pub fn is_cursor(&self, line: u32) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_gutter_lines_is_cursor(
@@ -138,6 +149,7 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_is_prelit")]
     pub fn is_prelit(&self, line: u32) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_gutter_lines_is_prelit(
@@ -149,6 +161,7 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_is_selected")]
     pub fn is_selected(&self, line: u32) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_gutter_lines_is_selected(
@@ -160,6 +173,7 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_remove_class")]
     pub fn remove_class(&self, line: u32, name: &str) {
         unsafe {
             ffi::gtk_source_gutter_lines_remove_class(
@@ -172,6 +186,7 @@ impl GutterLines {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_lines_remove_qclass")]
     pub fn remove_qclass(&self, line: u32, qname: glib::Quark) {
         unsafe {
             ffi::gtk_source_gutter_lines_remove_qclass(

@@ -16,7 +16,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct File(Object<ffi::GtkSourceFile, ffi::GtkSourceFileClass>);
 
     match fn {
@@ -25,6 +25,7 @@ glib::glib_wrapper! {
 }
 
 impl File {
+    #[doc(alias = "gtk_source_file_new")]
     pub fn new() -> File {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_file_new()) }
@@ -52,10 +53,7 @@ impl FileBuilder {
         if let Some(ref location) = self.location {
             properties.push(("location", location));
         }
-        let ret = glib::Object::new(File::static_type(), &properties)
-            .expect("object new")
-            .downcast::<File>()
-            .expect("downcast");
+        let ret = glib::Object::new::<File>(&properties).expect("object new");
         ret
     }
 
@@ -68,26 +66,37 @@ impl FileBuilder {
 pub const NONE_FILE: Option<&File> = None;
 
 pub trait FileExt: 'static {
+    #[doc(alias = "gtk_source_file_check_file_on_disk")]
     fn check_file_on_disk(&self);
 
+    #[doc(alias = "gtk_source_file_get_compression_type")]
     fn get_compression_type(&self) -> CompressionType;
 
+    #[doc(alias = "gtk_source_file_get_encoding")]
     fn get_encoding(&self) -> Option<Encoding>;
 
+    #[doc(alias = "gtk_source_file_get_location")]
     fn get_location(&self) -> Option<gio::File>;
 
+    #[doc(alias = "gtk_source_file_get_newline_type")]
     fn get_newline_type(&self) -> NewlineType;
 
+    #[doc(alias = "gtk_source_file_is_deleted")]
     fn is_deleted(&self) -> bool;
 
+    #[doc(alias = "gtk_source_file_is_externally_modified")]
     fn is_externally_modified(&self) -> bool;
 
+    #[doc(alias = "gtk_source_file_is_local")]
     fn is_local(&self) -> bool;
 
+    #[doc(alias = "gtk_source_file_is_readonly")]
     fn is_readonly(&self) -> bool;
 
+    #[doc(alias = "gtk_source_file_set_location")]
     fn set_location<P: IsA<gio::File>>(&self, location: Option<&P>);
 
+    //#[doc(alias = "gtk_source_file_set_mount_operation_factory")]
     //fn set_mount_operation_factory(&self, callback: /*Unimplemented*/Fn(&File, /*Unimplemented*/Option<Fundamental: Pointer>) -> gio::MountOperation, user_data: /*Unimplemented*/Option<Fundamental: Pointer>);
 
     fn get_property_read_only(&self) -> bool;

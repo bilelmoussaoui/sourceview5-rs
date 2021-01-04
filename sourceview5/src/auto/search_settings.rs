@@ -13,7 +13,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct SearchSettings(Object<ffi::GtkSourceSearchSettings, ffi::GtkSourceSearchSettingsClass>);
 
     match fn {
@@ -22,6 +22,7 @@ glib::glib_wrapper! {
 }
 
 impl SearchSettings {
+    #[doc(alias = "gtk_source_search_settings_new")]
     pub fn new() -> SearchSettings {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_search_settings_new()) }
@@ -65,10 +66,7 @@ impl SearchSettingsBuilder {
         if let Some(ref wrap_around) = self.wrap_around {
             properties.push(("wrap-around", wrap_around));
         }
-        let ret = glib::Object::new(SearchSettings::static_type(), &properties)
-            .expect("object new")
-            .downcast::<SearchSettings>()
-            .expect("downcast");
+        let ret = glib::Object::new::<SearchSettings>(&properties).expect("object new");
         ret
     }
 
@@ -101,24 +99,34 @@ impl SearchSettingsBuilder {
 pub const NONE_SEARCH_SETTINGS: Option<&SearchSettings> = None;
 
 pub trait SearchSettingsExt: 'static {
+    #[doc(alias = "gtk_source_search_settings_get_at_word_boundaries")]
     fn get_at_word_boundaries(&self) -> bool;
 
+    #[doc(alias = "gtk_source_search_settings_get_case_sensitive")]
     fn get_case_sensitive(&self) -> bool;
 
+    #[doc(alias = "gtk_source_search_settings_get_regex_enabled")]
     fn get_regex_enabled(&self) -> bool;
 
+    #[doc(alias = "gtk_source_search_settings_get_search_text")]
     fn get_search_text(&self) -> Option<glib::GString>;
 
+    #[doc(alias = "gtk_source_search_settings_get_wrap_around")]
     fn get_wrap_around(&self) -> bool;
 
+    #[doc(alias = "gtk_source_search_settings_set_at_word_boundaries")]
     fn set_at_word_boundaries(&self, at_word_boundaries: bool);
 
+    #[doc(alias = "gtk_source_search_settings_set_case_sensitive")]
     fn set_case_sensitive(&self, case_sensitive: bool);
 
+    #[doc(alias = "gtk_source_search_settings_set_regex_enabled")]
     fn set_regex_enabled(&self, regex_enabled: bool);
 
+    #[doc(alias = "gtk_source_search_settings_set_search_text")]
     fn set_search_text(&self, search_text: Option<&str>);
 
+    #[doc(alias = "gtk_source_search_settings_set_wrap_around")]
     fn set_wrap_around(&self, wrap_around: bool);
 
     fn connect_property_at_word_boundaries_notify<F: Fn(&Self) + 'static>(

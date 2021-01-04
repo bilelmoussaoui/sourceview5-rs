@@ -15,7 +15,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct GutterRendererPixbuf(Object<ffi::GtkSourceGutterRendererPixbuf, ffi::GtkSourceGutterRendererPixbufClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
@@ -24,6 +24,7 @@ glib::glib_wrapper! {
 }
 
 impl GutterRendererPixbuf {
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_new")]
     pub fn new() -> GutterRendererPixbuf {
         assert_initialized_main_thread!();
         unsafe {
@@ -188,10 +189,7 @@ impl GutterRendererPixbufBuilder {
         if let Some(ref width_request) = self.width_request {
             properties.push(("width-request", width_request));
         }
-        let ret = glib::Object::new(GutterRendererPixbuf::static_type(), &properties)
-            .expect("object new")
-            .downcast::<GutterRendererPixbuf>()
-            .expect("downcast");
+        let ret = glib::Object::new::<GutterRendererPixbuf>(&properties).expect("object new");
         ret
     }
 
@@ -364,26 +362,35 @@ impl GutterRendererPixbufBuilder {
 pub const NONE_GUTTER_RENDERER_PIXBUF: Option<&GutterRendererPixbuf> = None;
 
 pub trait GutterRendererPixbufExt: 'static {
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_get_gicon")]
     fn get_gicon(&self) -> Option<gio::Icon>;
 
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_get_icon_name")]
     fn get_icon_name(&self) -> Option<glib::GString>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_get_paintable")]
     fn get_paintable(&self) -> Option<gdk::Paintable>;
 
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_get_pixbuf")]
     fn get_pixbuf(&self) -> Option<gdk_pixbuf::Pixbuf>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_overlay_paintable")]
     fn overlay_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P);
 
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_set_gicon")]
     fn set_gicon<P: IsA<gio::Icon>>(&self, icon: Option<&P>);
 
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_set_icon_name")]
     fn set_icon_name(&self, icon_name: Option<&str>);
 
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_set_paintable")]
     fn set_paintable<P: IsA<gdk::Paintable>>(&self, paintable: Option<&P>);
 
+    #[doc(alias = "gtk_source_gutter_renderer_pixbuf_set_pixbuf")]
     fn set_pixbuf(&self, pixbuf: Option<&gdk_pixbuf::Pixbuf>);
 
     fn get_property_paintable(&self) -> Option<gdk::Paintable>;

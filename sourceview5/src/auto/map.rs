@@ -16,7 +16,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Map(Object<ffi::GtkSourceMap, ffi::GtkSourceMapClass>) @extends View, gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
 
     match fn {
@@ -25,6 +25,7 @@ glib::glib_wrapper! {
 }
 
 impl Map {
+    #[doc(alias = "gtk_source_map_new")]
     pub fn new() -> Map {
         assert_initialized_main_thread!();
         unsafe { gtk::Widget::from_glib_none(ffi::gtk_source_map_new()).unsafe_cast() }
@@ -293,10 +294,7 @@ impl MapBuilder {
         if let Some(ref width_request) = self.width_request {
             properties.push(("width-request", width_request));
         }
-        let ret = glib::Object::new(Map::static_type(), &properties)
-            .expect("object new")
-            .downcast::<Map>()
-            .expect("downcast");
+        let ret = glib::Object::new::<Map>(&properties).expect("object new");
         ret
     }
 
@@ -586,8 +584,10 @@ impl MapBuilder {
 pub const NONE_MAP: Option<&Map> = None;
 
 pub trait MapExt: 'static {
+    #[doc(alias = "gtk_source_map_get_view")]
     fn get_view(&self) -> Option<View>;
 
+    #[doc(alias = "gtk_source_map_set_view")]
     fn set_view<P: IsA<View>>(&self, view: &P);
 
     fn get_property_font_desc(&self) -> Option<pango::FontDescription>;

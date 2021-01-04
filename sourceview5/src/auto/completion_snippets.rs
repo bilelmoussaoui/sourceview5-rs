@@ -14,7 +14,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct CompletionSnippets(Object<ffi::GtkSourceCompletionSnippets, ffi::GtkSourceCompletionSnippetsClass>) @implements CompletionProvider;
 
     match fn {
@@ -23,6 +23,7 @@ glib::glib_wrapper! {
 }
 
 impl CompletionSnippets {
+    #[doc(alias = "gtk_source_completion_snippets_new")]
     pub fn new() -> CompletionSnippets {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_completion_snippets_new()) }
@@ -54,10 +55,7 @@ impl CompletionSnippetsBuilder {
         if let Some(ref title) = self.title {
             properties.push(("title", title));
         }
-        let ret = glib::Object::new(CompletionSnippets::static_type(), &properties)
-            .expect("object new")
-            .downcast::<CompletionSnippets>()
-            .expect("downcast");
+        let ret = glib::Object::new::<CompletionSnippets>(&properties).expect("object new");
         ret
     }
 

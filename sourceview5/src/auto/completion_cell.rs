@@ -15,7 +15,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct CompletionCell(Object<ffi::GtkSourceCompletionCell, ffi::GtkSourceCompletionCellClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
@@ -24,6 +24,7 @@ glib::glib_wrapper! {
 }
 
 impl CompletionCell {
+    #[doc(alias = "gtk_source_completion_cell_get_column")]
     pub fn get_column(&self) -> CompletionColumn {
         unsafe {
             from_glib(ffi::gtk_source_completion_cell_get_column(
@@ -34,6 +35,7 @@ impl CompletionCell {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_cell_get_widget")]
     pub fn get_widget(&self) -> Option<gtk::Widget> {
         unsafe {
             from_glib_none(ffi::gtk_source_completion_cell_get_widget(
@@ -42,6 +44,7 @@ impl CompletionCell {
         }
     }
 
+    #[doc(alias = "gtk_source_completion_cell_set_gicon")]
     pub fn set_gicon<P: IsA<gio::Icon>>(&self, gicon: &P) {
         unsafe {
             ffi::gtk_source_completion_cell_set_gicon(
@@ -51,6 +54,7 @@ impl CompletionCell {
         }
     }
 
+    #[doc(alias = "gtk_source_completion_cell_set_icon_name")]
     pub fn set_icon_name(&self, icon_name: &str) {
         unsafe {
             ffi::gtk_source_completion_cell_set_icon_name(
@@ -60,6 +64,7 @@ impl CompletionCell {
         }
     }
 
+    #[doc(alias = "gtk_source_completion_cell_set_markup")]
     pub fn set_markup(&self, markup: &str) {
         unsafe {
             ffi::gtk_source_completion_cell_set_markup(
@@ -69,6 +74,7 @@ impl CompletionCell {
         }
     }
 
+    #[doc(alias = "gtk_source_completion_cell_set_paintable")]
     pub fn set_paintable<P: IsA<gdk::Paintable>>(&self, paintable: &P) {
         unsafe {
             ffi::gtk_source_completion_cell_set_paintable(
@@ -78,16 +84,19 @@ impl CompletionCell {
         }
     }
 
+    #[doc(alias = "gtk_source_completion_cell_set_text")]
     pub fn set_text(&self, text: &str) {
         unsafe {
             ffi::gtk_source_completion_cell_set_text(self.to_glib_none().0, text.to_glib_none().0);
         }
     }
 
+    //#[doc(alias = "gtk_source_completion_cell_set_text_with_attributes")]
     //pub fn set_text_with_attributes(&self, text: &str, attrs: /*Ignored*/&pango::AttrList) {
     //    unsafe { TODO: call ffi:gtk_source_completion_cell_set_text_with_attributes() }
     //}
 
+    #[doc(alias = "gtk_source_completion_cell_set_widget")]
     pub fn set_widget<P: IsA<gtk::Widget>>(&self, child: &P) {
         unsafe {
             ffi::gtk_source_completion_cell_set_widget(
@@ -387,10 +396,7 @@ impl CompletionCellBuilder {
         if let Some(ref width_request) = self.width_request {
             properties.push(("width-request", width_request));
         }
-        let ret = glib::Object::new(CompletionCell::static_type(), &properties)
-            .expect("object new")
-            .downcast::<CompletionCell>()
-            .expect("downcast");
+        let ret = glib::Object::new::<CompletionCell>(&properties).expect("object new");
         ret
     }
 
