@@ -5,6 +5,7 @@ name = "sourceview5"
 version = "0.1.0"
 documentation = "https://bilelmoussaoui.github.io/sourceview5-rs/sourceview5/"
 repository = "https://github.com/bilelmoussaoui/sourceview5-rs/"
+license = "MIT"
 
 [dependencies]
 bitflags = "1.2"
