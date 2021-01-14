@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `sourceview5/src/auto/enums.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>enums.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../sourceview5/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../sourceview5/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1037,6 +1037,56 @@
 <span id="1034">1034</span>
 <span id="1035">1035</span>
 <span id="1036">1036</span>
+<span id="1037">1037</span>
+<span id="1038">1038</span>
+<span id="1039">1039</span>
+<span id="1040">1040</span>
+<span id="1041">1041</span>
+<span id="1042">1042</span>
+<span id="1043">1043</span>
+<span id="1044">1044</span>
+<span id="1045">1045</span>
+<span id="1046">1046</span>
+<span id="1047">1047</span>
+<span id="1048">1048</span>
+<span id="1049">1049</span>
+<span id="1050">1050</span>
+<span id="1051">1051</span>
+<span id="1052">1052</span>
+<span id="1053">1053</span>
+<span id="1054">1054</span>
+<span id="1055">1055</span>
+<span id="1056">1056</span>
+<span id="1057">1057</span>
+<span id="1058">1058</span>
+<span id="1059">1059</span>
+<span id="1060">1060</span>
+<span id="1061">1061</span>
+<span id="1062">1062</span>
+<span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
+<span id="1069">1069</span>
+<span id="1070">1070</span>
+<span id="1071">1071</span>
+<span id="1072">1072</span>
+<span id="1073">1073</span>
+<span id="1074">1074</span>
+<span id="1075">1075</span>
+<span id="1076">1076</span>
+<span id="1077">1077</span>
+<span id="1078">1078</span>
+<span id="1079">1079</span>
+<span id="1080">1080</span>
+<span id="1081">1081</span>
+<span id="1082">1082</span>
+<span id="1083">1083</span>
+<span id="1084">1084</span>
+<span id="1085">1085</span>
+<span id="1086">1086</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)</span>
 <span class="comment">// from gir-files (https://github.com/gtk-rs/gir-files)</span>
@@ -1054,10 +1104,13 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceBackgroundPatternType&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">BackgroundPatternType</span> {
     <span class="doccomment">/// no pattern</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_BACKGROUND_PATTERN_TYPE_NONE&quot;</span>)]</span>
     <span class="prelude-val">None</span>,
     <span class="doccomment">/// grid pattern</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_BACKGROUND_PATTERN_TYPE_GRID&quot;</span>)]</span>
     <span class="ident">Grid</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1092,7 +1145,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceBackgroundPatternType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BackgroundPatternType</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceBackgroundPatternType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceBackgroundPatternType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">BackgroundPatternType</span>::<span class="prelude-val">None</span>,
@@ -1128,15 +1181,20 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceBracketMatchType&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">BracketMatchType</span> {
     <span class="doccomment">/// there is no bracket to match.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_BRACKET_MATCH_NONE&quot;</span>)]</span>
     <span class="prelude-val">None</span>,
     <span class="doccomment">/// matching a bracket</span>
     <span class="doccomment">///  failed because the maximum range was reached.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_BRACKET_MATCH_OUT_OF_RANGE&quot;</span>)]</span>
     <span class="ident">OutOfRange</span>,
     <span class="doccomment">/// a matching bracket was not found.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_BRACKET_MATCH_NOT_FOUND&quot;</span>)]</span>
     <span class="ident">NotFound</span>,
     <span class="doccomment">/// a matching bracket was found.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_BRACKET_MATCH_FOUND&quot;</span>)]</span>
     <span class="ident">Found</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1175,7 +1233,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceBracketMatchType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BracketMatchType</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceBracketMatchType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceBracketMatchType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">BracketMatchType</span>::<span class="prelude-val">None</span>,
@@ -1213,14 +1271,19 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceChangeCaseType&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ChangeCaseType</span> {
     <span class="doccomment">/// change case to lowercase.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_CHANGE_CASE_LOWER&quot;</span>)]</span>
     <span class="ident">Lower</span>,
     <span class="doccomment">/// change case to uppercase.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_CHANGE_CASE_UPPER&quot;</span>)]</span>
     <span class="ident">Upper</span>,
     <span class="doccomment">/// toggle case of each character.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_CHANGE_CASE_TOGGLE&quot;</span>)]</span>
     <span class="ident">Toggle</span>,
     <span class="doccomment">/// capitalize each word.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_CHANGE_CASE_TITLE&quot;</span>)]</span>
     <span class="ident">Title</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1259,7 +1322,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceChangeCaseType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ChangeCaseType</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceChangeCaseType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceChangeCaseType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ChangeCaseType</span>::<span class="ident">Lower</span>,
@@ -1297,9 +1360,13 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceCompletionActivation&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">CompletionActivation</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_ACTIVATION_NONE&quot;</span>)]</span>
     <span class="prelude-val">None</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_ACTIVATION_INTERACTIVE&quot;</span>)]</span>
     <span class="ident">Interactive</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_ACTIVATION_USER_REQUESTED&quot;</span>)]</span>
     <span class="ident">UserRequested</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1338,7 +1405,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceCompletionActivation</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CompletionActivation</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceCompletionActivation</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceCompletionActivation</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">CompletionActivation</span>::<span class="prelude-val">None</span>,
@@ -1375,12 +1442,19 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceCompletionColumn&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">CompletionColumn</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_COLUMN_ICON&quot;</span>)]</span>
     <span class="ident">Icon</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_COLUMN_BEFORE&quot;</span>)]</span>
     <span class="ident">Before</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_COLUMN_TYPED_TEXT&quot;</span>)]</span>
     <span class="ident">TypedText</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_COLUMN_AFTER&quot;</span>)]</span>
     <span class="ident">After</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_COLUMN_COMMENT&quot;</span>)]</span>
     <span class="ident">Comment</span>,
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPLETION_COLUMN_DETAILS&quot;</span>)]</span>
     <span class="ident">Details</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1423,7 +1497,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceCompletionColumn</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CompletionColumn</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceCompletionColumn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceCompletionColumn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">CompletionColumn</span>::<span class="ident">Icon</span>,
@@ -1463,10 +1537,13 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceCompressionType&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">CompressionType</span> {
     <span class="doccomment">/// plain text.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPRESSION_TYPE_NONE&quot;</span>)]</span>
     <span class="prelude-val">None</span>,
     <span class="doccomment">/// gzip compression.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_COMPRESSION_TYPE_GZIP&quot;</span>)]</span>
     <span class="ident">Gzip</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1501,7 +1578,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceCompressionType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CompressionType</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceCompressionType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceCompressionType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">CompressionType</span>::<span class="prelude-val">None</span>,
@@ -1538,14 +1615,18 @@
 <span class="doccomment">/// An error code used with the `GTK_SOURCE_FILE_LOADER_ERROR` domain.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceFileLoaderError&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">FileLoaderError</span> {
     <span class="doccomment">/// The file is too big.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_FILE_LOADER_ERROR_TOO_BIG&quot;</span>)]</span>
     <span class="ident">TooBig</span>,
     <span class="doccomment">/// It is not</span>
     <span class="doccomment">/// possible to detect the encoding automatically.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_FILE_LOADER_ERROR_ENCODING_AUTO_DETECTION_FAILED&quot;</span>)]</span>
     <span class="ident">EncodingAutoDetectionFailed</span>,
     <span class="doccomment">/// There was an encoding</span>
     <span class="doccomment">/// conversion error and it was needed to use a fallback character.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_FILE_LOADER_ERROR_CONVERSION_FALLBACK&quot;</span>)]</span>
     <span class="ident">ConversionFallback</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1586,7 +1667,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceFileLoaderError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">FileLoaderError</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceFileLoaderError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceFileLoaderError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">FileLoaderError</span>::<span class="ident">TooBig</span>,
@@ -1646,12 +1727,15 @@
 <span class="doccomment">/// An error code used with the `GTK_SOURCE_FILE_SAVER_ERROR` domain.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceFileSaverError&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">FileSaverError</span> {
     <span class="doccomment">/// The buffer contains invalid</span>
     <span class="doccomment">///  characters.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_FILE_SAVER_ERROR_INVALID_CHARS&quot;</span>)]</span>
     <span class="ident">InvalidChars</span>,
     <span class="doccomment">/// The file is externally</span>
     <span class="doccomment">///  modified.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_FILE_SAVER_ERROR_EXTERNALLY_MODIFIED&quot;</span>)]</span>
     <span class="ident">ExternallyModified</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1688,7 +1772,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceFileSaverError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">FileSaverError</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceFileSaverError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceFileSaverError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">FileSaverError</span>::<span class="ident">InvalidChars</span>,
@@ -1747,12 +1831,16 @@
 <span class="doccomment">/// text wrapping).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceGutterRendererAlignmentMode&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">GutterRendererAlignmentMode</span> {
     <span class="doccomment">/// The full cell.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_CELL&quot;</span>)]</span>
     <span class="ident">Cell</span>,
     <span class="doccomment">/// The first line.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_FIRST&quot;</span>)]</span>
     <span class="ident">First</span>,
     <span class="doccomment">/// The last line.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_GUTTER_RENDERER_ALIGNMENT_MODE_LAST&quot;</span>)]</span>
     <span class="ident">Last</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1795,7 +1883,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceGutterRendererAlignmentMode</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">GutterRendererAlignmentMode</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceGutterRendererAlignmentMode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceGutterRendererAlignmentMode</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">GutterRendererAlignmentMode</span>::<span class="ident">Cell</span>,
@@ -1832,13 +1920,17 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceNewlineType&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">NewlineType</span> {
     <span class="doccomment">/// line feed, used on UNIX.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_NEWLINE_TYPE_LF&quot;</span>)]</span>
     <span class="ident">Lf</span>,
     <span class="doccomment">/// carriage return, used on Mac.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_NEWLINE_TYPE_CR&quot;</span>)]</span>
     <span class="ident">Cr</span>,
     <span class="doccomment">/// carriage return followed by a line feed, used</span>
     <span class="doccomment">///  on Windows.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_NEWLINE_TYPE_CR_LF&quot;</span>)]</span>
     <span class="ident">CrLf</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1875,7 +1967,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceNewlineType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NewlineType</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceNewlineType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceNewlineType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">NewlineType</span>::<span class="ident">Lf</span>,
@@ -1912,19 +2004,24 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceSmartHomeEndType&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">SmartHomeEndType</span> {
     <span class="doccomment">/// smart-home-end disabled.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_SMART_HOME_END_DISABLED&quot;</span>)]</span>
     <span class="ident">Disabled</span>,
     <span class="doccomment">/// move to the first/last</span>
     <span class="doccomment">/// non-whitespace character on the first press of the HOME/END keys and</span>
     <span class="doccomment">/// to the beginning/end of the line on the second press.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_SMART_HOME_END_BEFORE&quot;</span>)]</span>
     <span class="ident">Before</span>,
     <span class="doccomment">/// move to the beginning/end of the</span>
     <span class="doccomment">/// line on the first press of the HOME/END keys and to the first/last</span>
     <span class="doccomment">/// non-whitespace character on the second press.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_SMART_HOME_END_AFTER&quot;</span>)]</span>
     <span class="ident">After</span>,
     <span class="doccomment">/// always move to the first/last</span>
     <span class="doccomment">/// non-whitespace character when the HOME/END keys are pressed.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_SMART_HOME_END_ALWAYS&quot;</span>)]</span>
     <span class="ident">Always</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -1963,7 +2060,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceSmartHomeEndType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SmartHomeEndType</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceSmartHomeEndType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceSmartHomeEndType</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SmartHomeEndType</span>::<span class="ident">Disabled</span>,
@@ -2001,12 +2098,15 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Ord</span>, <span class="ident">PartialOrd</span>, <span class="ident">Hash</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GtkSourceViewGutterPosition&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ViewGutterPosition</span> {
     <span class="doccomment">/// the gutter position of the lines</span>
     <span class="doccomment">/// renderer</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_VIEW_GUTTER_POSITION_LINES&quot;</span>)]</span>
     <span class="ident">Lines</span>,
     <span class="doccomment">/// the gutter position of the marks</span>
     <span class="doccomment">/// renderer</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;GTK_SOURCE_VIEW_GUTTER_POSITION_MARKS&quot;</span>)]</span>
     <span class="ident">Marks</span>,
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="ident">__Unknown</span>(<span class="ident">i32</span>),
@@ -2041,7 +2141,7 @@
 
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">impl</span> <span class="ident">FromGlib</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">GtkSourceViewGutterPosition</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ViewGutterPosition</span> {
-    <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceViewGutterPosition</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_glib</span>(<span class="ident">value</span>: <span class="ident">ffi</span>::<span class="ident">GtkSourceViewGutterPosition</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">skip_assert_initialized</span><span class="macro">!</span>();
         <span class="kw">match</span> <span class="ident">value</span> {
             <span class="op">-</span><span class="number">30</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ViewGutterPosition</span>::<span class="ident">Lines</span>,
