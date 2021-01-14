@@ -14,7 +14,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct CompletionWords(Object<ffi::GtkSourceCompletionWords, ffi::GtkSourceCompletionWordsClass>) @implements CompletionProvider;
 
     match fn {
@@ -23,6 +23,7 @@ glib::glib_wrapper! {
 }
 
 impl CompletionWords {
+    #[doc(alias = "gtk_source_completion_words_new")]
     pub fn new(title: Option<&str>) -> CompletionWords {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_completion_words_new(title.to_glib_none().0)) }
@@ -60,10 +61,7 @@ impl CompletionWordsBuilder {
         if let Some(ref title) = self.title {
             properties.push(("title", title));
         }
-        let ret = glib::Object::new(CompletionWords::static_type(), &properties)
-            .expect("object new")
-            .downcast::<CompletionWords>()
-            .expect("downcast");
+        let ret = glib::Object::new::<CompletionWords>(&properties).expect("object new");
         ret
     }
 
@@ -96,8 +94,10 @@ impl CompletionWordsBuilder {
 pub const NONE_COMPLETION_WORDS: Option<&CompletionWords> = None;
 
 pub trait CompletionWordsExt: 'static {
+    #[doc(alias = "gtk_source_completion_words_register")]
     fn register<P: IsA<gtk::TextBuffer>>(&self, buffer: &P);
 
+    #[doc(alias = "gtk_source_completion_words_unregister")]
     fn unregister<P: IsA<gtk::TextBuffer>>(&self, buffer: &P);
 
     fn get_property_minimum_word_size(&self) -> u32;

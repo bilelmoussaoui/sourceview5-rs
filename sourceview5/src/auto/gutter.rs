@@ -12,7 +12,7 @@ use glib::StaticType;
 use glib::ToValue;
 use std::fmt;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct Gutter(Object<ffi::GtkSourceGutter, ffi::GtkSourceGutterClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
@@ -21,10 +21,12 @@ glib::glib_wrapper! {
 }
 
 impl Gutter {
+    #[doc(alias = "gtk_source_gutter_get_view")]
     pub fn get_view(&self) -> Option<View> {
         unsafe { from_glib_none(ffi::gtk_source_gutter_get_view(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_gutter_insert")]
     pub fn insert<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_gutter_insert(
@@ -35,6 +37,7 @@ impl Gutter {
         }
     }
 
+    #[doc(alias = "gtk_source_gutter_remove")]
     pub fn remove<P: IsA<GutterRenderer>>(&self, renderer: &P) {
         unsafe {
             ffi::gtk_source_gutter_remove(
@@ -44,6 +47,7 @@ impl Gutter {
         }
     }
 
+    #[doc(alias = "gtk_source_gutter_reorder")]
     pub fn reorder<P: IsA<GutterRenderer>>(&self, renderer: &P, position: i32) {
         unsafe {
             ffi::gtk_source_gutter_reorder(
@@ -192,10 +196,7 @@ impl GutterBuilder {
         if let Some(ref width_request) = self.width_request {
             properties.push(("width-request", width_request));
         }
-        let ret = glib::Object::new(Gutter::static_type(), &properties)
-            .expect("object new")
-            .downcast::<Gutter>()
-            .expect("downcast");
+        let ret = glib::Object::new::<Gutter>(&properties).expect("object new");
         ret
     }
 

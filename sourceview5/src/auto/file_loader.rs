@@ -14,7 +14,7 @@ use glib::StaticType;
 use glib::ToValue;
 use std::fmt;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct FileLoader(Object<ffi::GtkSourceFileLoader, ffi::GtkSourceFileLoaderClass>);
 
     match fn {
@@ -23,6 +23,7 @@ glib::glib_wrapper! {
 }
 
 impl FileLoader {
+    #[doc(alias = "gtk_source_file_loader_new")]
     pub fn new<P: IsA<Buffer>, Q: IsA<File>>(buffer: &P, file: &Q) -> FileLoader {
         skip_assert_initialized!();
         unsafe {
@@ -33,6 +34,7 @@ impl FileLoader {
         }
     }
 
+    #[doc(alias = "gtk_source_file_loader_new_from_stream")]
     pub fn from_stream<P: IsA<Buffer>, Q: IsA<File>, R: IsA<gio::InputStream>>(
         buffer: &P,
         file: &Q,
@@ -48,6 +50,7 @@ impl FileLoader {
         }
     }
 
+    #[doc(alias = "gtk_source_file_loader_get_buffer")]
     pub fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
             from_glib_none(ffi::gtk_source_file_loader_get_buffer(
@@ -56,6 +59,7 @@ impl FileLoader {
         }
     }
 
+    #[doc(alias = "gtk_source_file_loader_get_compression_type")]
     pub fn get_compression_type(&self) -> CompressionType {
         unsafe {
             from_glib(ffi::gtk_source_file_loader_get_compression_type(
@@ -64,6 +68,7 @@ impl FileLoader {
         }
     }
 
+    #[doc(alias = "gtk_source_file_loader_get_encoding")]
     pub fn get_encoding(&self) -> Option<Encoding> {
         unsafe {
             from_glib_none(ffi::gtk_source_file_loader_get_encoding(
@@ -72,10 +77,12 @@ impl FileLoader {
         }
     }
 
+    #[doc(alias = "gtk_source_file_loader_get_file")]
     pub fn get_file(&self) -> Option<File> {
         unsafe { from_glib_none(ffi::gtk_source_file_loader_get_file(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_file_loader_get_input_stream")]
     pub fn get_input_stream(&self) -> Option<gio::InputStream> {
         unsafe {
             from_glib_none(ffi::gtk_source_file_loader_get_input_stream(
@@ -84,6 +91,7 @@ impl FileLoader {
         }
     }
 
+    #[doc(alias = "gtk_source_file_loader_get_location")]
     pub fn get_location(&self) -> Option<gio::File> {
         unsafe {
             from_glib_none(ffi::gtk_source_file_loader_get_location(
@@ -92,6 +100,7 @@ impl FileLoader {
         }
     }
 
+    #[doc(alias = "gtk_source_file_loader_get_newline_type")]
     pub fn get_newline_type(&self) -> NewlineType {
         unsafe {
             from_glib(ffi::gtk_source_file_loader_get_newline_type(
@@ -100,6 +109,7 @@ impl FileLoader {
         }
     }
 
+    //#[doc(alias = "gtk_source_file_loader_load_async")]
     //pub fn load_async<P: IsA<gio::Cancellable>, Q: FnOnce(Result<(), glib::Error>) + Send + 'static, R: FnOnce(Result<(), glib::Error>) + Send + 'static>(&self, io_priority: glib::Priority, cancellable: Option<&P>, progress_callback: Q, progress_callback_notify: Fn() + 'static, callback: R) {
     //    unsafe { TODO: call ffi:gtk_source_file_loader_load_async() }
     //}
@@ -153,10 +163,7 @@ impl FileLoaderBuilder {
         if let Some(ref location) = self.location {
             properties.push(("location", location));
         }
-        let ret = glib::Object::new(FileLoader::static_type(), &properties)
-            .expect("object new")
-            .downcast::<FileLoader>()
-            .expect("downcast");
+        let ret = glib::Object::new::<FileLoader>(&properties).expect("object new");
         ret
     }
 

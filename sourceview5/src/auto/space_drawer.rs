@@ -16,7 +16,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct SpaceDrawer(Object<ffi::GtkSourceSpaceDrawer, ffi::GtkSourceSpaceDrawerClass>);
 
     match fn {
@@ -25,11 +25,13 @@ glib::glib_wrapper! {
 }
 
 impl SpaceDrawer {
+    #[doc(alias = "gtk_source_space_drawer_new")]
     pub fn new() -> SpaceDrawer {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_space_drawer_new()) }
     }
 
+    #[doc(alias = "gtk_source_space_drawer_bind_matrix_setting")]
     pub fn bind_matrix_setting<P: IsA<gio::Settings>>(
         &self,
         settings: &P,
@@ -46,6 +48,7 @@ impl SpaceDrawer {
         }
     }
 
+    #[doc(alias = "gtk_source_space_drawer_get_enable_matrix")]
     pub fn get_enable_matrix(&self) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_space_drawer_get_enable_matrix(
@@ -54,6 +57,7 @@ impl SpaceDrawer {
         }
     }
 
+    #[doc(alias = "gtk_source_space_drawer_get_matrix")]
     pub fn get_matrix(&self) -> Option<glib::Variant> {
         unsafe {
             from_glib_full(ffi::gtk_source_space_drawer_get_matrix(
@@ -62,6 +66,7 @@ impl SpaceDrawer {
         }
     }
 
+    #[doc(alias = "gtk_source_space_drawer_get_types_for_locations")]
     pub fn get_types_for_locations(&self, locations: SpaceLocationFlags) -> SpaceTypeFlags {
         unsafe {
             from_glib(ffi::gtk_source_space_drawer_get_types_for_locations(
@@ -71,6 +76,7 @@ impl SpaceDrawer {
         }
     }
 
+    #[doc(alias = "gtk_source_space_drawer_set_enable_matrix")]
     pub fn set_enable_matrix(&self, enable_matrix: bool) {
         unsafe {
             ffi::gtk_source_space_drawer_set_enable_matrix(
@@ -80,12 +86,14 @@ impl SpaceDrawer {
         }
     }
 
+    #[doc(alias = "gtk_source_space_drawer_set_matrix")]
     pub fn set_matrix(&self, matrix: Option<&glib::Variant>) {
         unsafe {
             ffi::gtk_source_space_drawer_set_matrix(self.to_glib_none().0, matrix.to_glib_none().0);
         }
     }
 
+    #[doc(alias = "gtk_source_space_drawer_set_types_for_locations")]
     pub fn set_types_for_locations(&self, locations: SpaceLocationFlags, types: SpaceTypeFlags) {
         unsafe {
             ffi::gtk_source_space_drawer_set_types_for_locations(
@@ -172,10 +180,7 @@ impl SpaceDrawerBuilder {
         if let Some(ref matrix) = self.matrix {
             properties.push(("matrix", matrix));
         }
-        let ret = glib::Object::new(SpaceDrawer::static_type(), &properties)
-            .expect("object new")
-            .downcast::<SpaceDrawer>()
-            .expect("downcast");
+        let ret = glib::Object::new::<SpaceDrawer>(&properties).expect("object new");
         ret
     }
 

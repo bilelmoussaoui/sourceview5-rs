@@ -20,7 +20,7 @@ use std::mem::transmute;
 use std::pin::Pin;
 use std::ptr;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct SearchContext(Object<ffi::GtkSourceSearchContext, ffi::GtkSourceSearchContextClass>);
 
     match fn {
@@ -29,6 +29,7 @@ glib::glib_wrapper! {
 }
 
 impl SearchContext {
+    #[doc(alias = "gtk_source_search_context_new")]
     pub fn new<P: IsA<Buffer>, Q: IsA<SearchSettings>>(
         buffer: &P,
         settings: Option<&Q>,
@@ -42,6 +43,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_backward")]
     pub fn backward(&self, iter: &gtk::TextIter) -> Option<(gtk::TextIter, gtk::TextIter, bool)> {
         unsafe {
             let mut match_start = gtk::TextIter::uninitialized();
@@ -63,6 +65,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_backward_async")]
     pub fn backward_async<
         P: IsA<gio::Cancellable>,
         Q: FnOnce(Result<(gtk::TextIter, gtk::TextIter, bool), glib::Error>) + Send + 'static,
@@ -134,6 +137,7 @@ impl SearchContext {
         }))
     }
 
+    #[doc(alias = "gtk_source_search_context_forward")]
     pub fn forward(&self, iter: &gtk::TextIter) -> Option<(gtk::TextIter, gtk::TextIter, bool)> {
         unsafe {
             let mut match_start = gtk::TextIter::uninitialized();
@@ -155,6 +159,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_forward_async")]
     pub fn forward_async<
         P: IsA<gio::Cancellable>,
         Q: FnOnce(Result<(gtk::TextIter, gtk::TextIter, bool), glib::Error>) + Send + 'static,
@@ -226,6 +231,7 @@ impl SearchContext {
         }))
     }
 
+    #[doc(alias = "gtk_source_search_context_get_buffer")]
     pub fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
             from_glib_none(ffi::gtk_source_search_context_get_buffer(
@@ -234,6 +240,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_get_highlight")]
     pub fn get_highlight(&self) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_search_context_get_highlight(
@@ -242,6 +249,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_get_match_style")]
     pub fn get_match_style(&self) -> Option<Style> {
         unsafe {
             from_glib_none(ffi::gtk_source_search_context_get_match_style(
@@ -250,6 +258,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_get_occurrence_position")]
     pub fn get_occurrence_position(
         &self,
         match_start: &gtk::TextIter,
@@ -264,10 +273,12 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_get_occurrences_count")]
     pub fn get_occurrences_count(&self) -> i32 {
         unsafe { ffi::gtk_source_search_context_get_occurrences_count(self.to_glib_none().0) }
     }
 
+    #[doc(alias = "gtk_source_search_context_get_regex_error")]
     pub fn get_regex_error(&self) -> Option<glib::Error> {
         unsafe {
             from_glib_full(ffi::gtk_source_search_context_get_regex_error(
@@ -276,6 +287,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_get_settings")]
     pub fn get_settings(&self) -> Option<SearchSettings> {
         unsafe {
             from_glib_none(ffi::gtk_source_search_context_get_settings(
@@ -284,6 +296,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_replace")]
     pub fn replace(
         &self,
         match_start: &mut gtk::TextIter,
@@ -309,6 +322,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_replace_all")]
     pub fn replace_all(&self, replace: &str) -> Result<(), glib::Error> {
         let replace_length = replace.len() as i32;
         unsafe {
@@ -327,6 +341,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_set_highlight")]
     pub fn set_highlight(&self, highlight: bool) {
         unsafe {
             ffi::gtk_source_search_context_set_highlight(
@@ -336,6 +351,7 @@ impl SearchContext {
         }
     }
 
+    #[doc(alias = "gtk_source_search_context_set_match_style")]
     pub fn set_match_style(&self, match_style: Option<&Style>) {
         unsafe {
             ffi::gtk_source_search_context_set_match_style(
@@ -475,10 +491,7 @@ impl SearchContextBuilder {
         if let Some(ref settings) = self.settings {
             properties.push(("settings", settings));
         }
-        let ret = glib::Object::new(SearchContext::static_type(), &properties)
-            .expect("object new")
-            .downcast::<SearchContext>()
-            .expect("downcast");
+        let ret = glib::Object::new::<SearchContext>(&properties).expect("object new");
         ret
     }
 

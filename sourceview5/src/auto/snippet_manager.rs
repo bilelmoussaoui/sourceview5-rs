@@ -26,7 +26,7 @@ use std::fmt;
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct SnippetManager(Object<ffi::GtkSourceSnippetManager, ffi::GtkSourceSnippetManagerClass>);
 
     match fn {
@@ -37,6 +37,7 @@ glib::glib_wrapper! {
 impl SnippetManager {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_manager_get_search_path")]
     pub fn get_search_path(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_none(ffi::gtk_source_snippet_manager_get_search_path(
@@ -47,6 +48,7 @@ impl SnippetManager {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_manager_get_snippet")]
     pub fn get_snippet(
         &self,
         group: Option<&str>,
@@ -65,6 +67,7 @@ impl SnippetManager {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_manager_list_groups")]
     pub fn list_groups(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_container(ffi::gtk_source_snippet_manager_list_groups(
@@ -75,6 +78,7 @@ impl SnippetManager {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_manager_list_matching")]
     pub fn list_matching(
         &self,
         group: Option<&str>,
@@ -93,6 +97,7 @@ impl SnippetManager {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_manager_set_search_path")]
     pub fn set_search_path(&self, dirs: &[&str]) {
         unsafe {
             ffi::gtk_source_snippet_manager_set_search_path(
@@ -104,6 +109,7 @@ impl SnippetManager {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_manager_get_default")]
     pub fn get_default() -> Option<SnippetManager> {
         assert_initialized_main_thread!();
         unsafe { from_glib_none(ffi::gtk_source_snippet_manager_get_default()) }
@@ -155,10 +161,7 @@ impl SnippetManagerBuilder {
         if let Some(ref search_path) = self.search_path {
             properties.push(("search-path", search_path));
         }
-        let ret = glib::Object::new(SnippetManager::static_type(), &properties)
-            .expect("object new")
-            .downcast::<SnippetManager>()
-            .expect("downcast");
+        let ret = glib::Object::new::<SnippetManager>(&properties).expect("object new");
         ret
     }
 

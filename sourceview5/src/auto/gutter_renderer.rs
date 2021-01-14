@@ -21,7 +21,7 @@ use std::fmt;
 use std::mem;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct GutterRenderer(Object<ffi::GtkSourceGutterRenderer, ffi::GtkSourceGutterRendererClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
@@ -32,6 +32,7 @@ glib::glib_wrapper! {
 pub const NONE_GUTTER_RENDERER: Option<&GutterRenderer> = None;
 
 pub trait GutterRendererExt: 'static {
+    #[doc(alias = "gtk_source_gutter_renderer_activate")]
     fn activate(
         &self,
         iter: &gtk::TextIter,
@@ -43,50 +44,64 @@ pub trait GutterRendererExt: 'static {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_align_cell")]
     fn align_cell(&self, line: u32, width: f32, height: f32) -> (f32, f32);
 
+    #[doc(alias = "gtk_source_gutter_renderer_get_alignment_mode")]
     fn get_alignment_mode(&self) -> GutterRendererAlignmentMode;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_get_buffer")]
     fn get_buffer(&self) -> Option<Buffer>;
 
+    #[doc(alias = "gtk_source_gutter_renderer_get_view")]
     fn get_view(&self) -> Option<View>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_get_xalign")]
     fn get_xalign(&self) -> f32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_get_xpad")]
     fn get_xpad(&self) -> i32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_get_yalign")]
     fn get_yalign(&self) -> f32;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_get_ypad")]
     fn get_ypad(&self) -> i32;
 
+    #[doc(alias = "gtk_source_gutter_renderer_query_activatable")]
     fn query_activatable(&self, iter: &gtk::TextIter, area: &gdk::Rectangle) -> bool;
 
+    #[doc(alias = "gtk_source_gutter_renderer_set_alignment_mode")]
     fn set_alignment_mode(&self, mode: GutterRendererAlignmentMode);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_set_xalign")]
     fn set_xalign(&self, xalign: f32);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_set_xpad")]
     fn set_xpad(&self, xpad: i32);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_set_yalign")]
     fn set_yalign(&self, yalign: f32);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_gutter_renderer_set_ypad")]
     fn set_ypad(&self, ypad: i32);
 
     fn get_property_lines(&self) -> Option<GutterLines>;

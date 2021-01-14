@@ -1,3 +1,5 @@
+// Take a look at the license at the top of the repository in the LICENSE file.
+
 extern crate bitflags;
 extern crate gdk;
 extern crate gdk_pixbuf;

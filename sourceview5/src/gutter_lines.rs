@@ -1,3 +1,5 @@
+// Take a look at the license at the top of the repository in the LICENSE file.
+
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 use crate::GutterLines;
 #[cfg(any(feature = "v5_0", feature = "dox"))]

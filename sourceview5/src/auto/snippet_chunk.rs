@@ -14,7 +14,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct SnippetChunk(Object<ffi::GtkSourceSnippetChunk, ffi::GtkSourceSnippetChunkClass>);
 
     match fn {
@@ -25,6 +25,7 @@ glib::glib_wrapper! {
 impl SnippetChunk {
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_new")]
     pub fn new() -> SnippetChunk {
         assert_initialized_main_thread!();
         unsafe { from_glib_none(ffi::gtk_source_snippet_chunk_new()) }
@@ -32,12 +33,14 @@ impl SnippetChunk {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_copy")]
     pub fn copy(&self) -> Option<SnippetChunk> {
         unsafe { from_glib_full(ffi::gtk_source_snippet_chunk_copy(self.to_glib_none().0)) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_get_context")]
     pub fn get_context(&self) -> Option<SnippetContext> {
         unsafe {
             from_glib_none(ffi::gtk_source_snippet_chunk_get_context(
@@ -48,12 +51,14 @@ impl SnippetChunk {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_get_focus_position")]
     pub fn get_focus_position(&self) -> i32 {
         unsafe { ffi::gtk_source_snippet_chunk_get_focus_position(self.to_glib_none().0) }
     }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_get_spec")]
     pub fn get_spec(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_snippet_chunk_get_spec(
@@ -64,6 +69,7 @@ impl SnippetChunk {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_get_text")]
     pub fn get_text(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_snippet_chunk_get_text(
@@ -74,6 +80,7 @@ impl SnippetChunk {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_get_text_set")]
     pub fn get_text_set(&self) -> bool {
         unsafe {
             from_glib(ffi::gtk_source_snippet_chunk_get_text_set(
@@ -82,6 +89,7 @@ impl SnippetChunk {
         }
     }
 
+    #[doc(alias = "gtk_source_snippet_chunk_get_tooltip_text")]
     pub fn get_tooltip_text(&self) -> Option<glib::GString> {
         unsafe {
             from_glib_none(ffi::gtk_source_snippet_chunk_get_tooltip_text(
@@ -90,6 +98,7 @@ impl SnippetChunk {
         }
     }
 
+    #[doc(alias = "gtk_source_snippet_chunk_set_context")]
     pub fn set_context(&self, context: &SnippetContext) {
         unsafe {
             ffi::gtk_source_snippet_chunk_set_context(
@@ -101,6 +110,7 @@ impl SnippetChunk {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_set_focus_position")]
     pub fn set_focus_position(&self, focus_position: i32) {
         unsafe {
             ffi::gtk_source_snippet_chunk_set_focus_position(self.to_glib_none().0, focus_position);
@@ -109,6 +119,7 @@ impl SnippetChunk {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_set_spec")]
     pub fn set_spec(&self, spec: &str) {
         unsafe {
             ffi::gtk_source_snippet_chunk_set_spec(self.to_glib_none().0, spec.to_glib_none().0);
@@ -117,6 +128,7 @@ impl SnippetChunk {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_set_text")]
     pub fn set_text(&self, text: &str) {
         unsafe {
             ffi::gtk_source_snippet_chunk_set_text(self.to_glib_none().0, text.to_glib_none().0);
@@ -125,12 +137,14 @@ impl SnippetChunk {
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_snippet_chunk_set_text_set")]
     pub fn set_text_set(&self, text_set: bool) {
         unsafe {
             ffi::gtk_source_snippet_chunk_set_text_set(self.to_glib_none().0, text_set.to_glib());
         }
     }
 
+    #[doc(alias = "gtk_source_snippet_chunk_set_tooltip_text")]
     pub fn set_tooltip_text(&self, tooltip_text: &str) {
         unsafe {
             ffi::gtk_source_snippet_chunk_set_tooltip_text(
@@ -446,10 +460,7 @@ impl SnippetChunkBuilder {
         if let Some(ref tooltip_text) = self.tooltip_text {
             properties.push(("tooltip-text", tooltip_text));
         }
-        let ret = glib::Object::new(SnippetChunk::static_type(), &properties)
-            .expect("object new")
-            .downcast::<SnippetChunk>()
-            .expect("downcast");
+        let ret = glib::Object::new::<SnippetChunk>(&properties).expect("object new");
         ret
     }
 

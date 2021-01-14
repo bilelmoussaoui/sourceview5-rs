@@ -5,7 +5,7 @@
 use glib::translate::*;
 use std::fmt;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct Encoding(Boxed<ffi::GtkSourceEncoding>);
 
@@ -17,28 +17,34 @@ glib::glib_wrapper! {
 }
 
 impl Encoding {
+    #[doc(alias = "gtk_source_encoding_get_charset")]
     pub fn get_charset(&self) -> Option<glib::GString> {
         unsafe { from_glib_none(ffi::gtk_source_encoding_get_charset(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_encoding_get_name")]
     pub fn get_name(&self) -> Option<glib::GString> {
         unsafe { from_glib_none(ffi::gtk_source_encoding_get_name(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_encoding_to_string")]
     pub fn to_str(&self) -> glib::GString {
         unsafe { from_glib_full(ffi::gtk_source_encoding_to_string(self.to_glib_none().0)) }
     }
 
+    #[doc(alias = "gtk_source_encoding_get_all")]
     pub fn get_all() -> Vec<Encoding> {
         assert_initialized_main_thread!();
         unsafe { FromGlibPtrContainer::from_glib_container(ffi::gtk_source_encoding_get_all()) }
     }
 
+    #[doc(alias = "gtk_source_encoding_get_current")]
     pub fn get_current() -> Option<Encoding> {
         assert_initialized_main_thread!();
         unsafe { from_glib_none(ffi::gtk_source_encoding_get_current()) }
     }
 
+    #[doc(alias = "gtk_source_encoding_get_default_candidates")]
     pub fn get_default_candidates() -> Vec<Encoding> {
         assert_initialized_main_thread!();
         unsafe {
@@ -48,6 +54,7 @@ impl Encoding {
         }
     }
 
+    #[doc(alias = "gtk_source_encoding_get_from_charset")]
     pub fn get_from_charset(charset: &str) -> Option<Encoding> {
         assert_initialized_main_thread!();
         unsafe {
@@ -57,6 +64,7 @@ impl Encoding {
         }
     }
 
+    #[doc(alias = "gtk_source_encoding_get_utf8")]
     pub fn get_utf8() -> Option<Encoding> {
         assert_initialized_main_thread!();
         unsafe { from_glib_none(ffi::gtk_source_encoding_get_utf8()) }

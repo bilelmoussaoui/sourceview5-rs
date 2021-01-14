@@ -16,7 +16,7 @@ use std::fmt;
 use std::mem;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct GutterRendererText(Object<ffi::GtkSourceGutterRendererText, ffi::GtkSourceGutterRendererTextClass>) @extends GutterRenderer, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
@@ -25,6 +25,7 @@ glib::glib_wrapper! {
 }
 
 impl GutterRendererText {
+    #[doc(alias = "gtk_source_gutter_renderer_text_new")]
     pub fn new() -> GutterRendererText {
         assert_initialized_main_thread!();
         unsafe {
@@ -180,10 +181,7 @@ impl GutterRendererTextBuilder {
         if let Some(ref width_request) = self.width_request {
             properties.push(("width-request", width_request));
         }
-        let ret = glib::Object::new(GutterRendererText::static_type(), &properties)
-            .expect("object new")
-            .downcast::<GutterRendererText>()
-            .expect("downcast");
+        let ret = glib::Object::new::<GutterRendererText>(&properties).expect("object new");
         ret
     }
 
@@ -346,12 +344,16 @@ impl GutterRendererTextBuilder {
 pub const NONE_GUTTER_RENDERER_TEXT: Option<&GutterRendererText> = None;
 
 pub trait GutterRendererTextExt: 'static {
+    #[doc(alias = "gtk_source_gutter_renderer_text_measure")]
     fn measure(&self, text: &str) -> (i32, i32);
 
+    #[doc(alias = "gtk_source_gutter_renderer_text_measure_markup")]
     fn measure_markup(&self, markup: &str) -> (i32, i32);
 
+    #[doc(alias = "gtk_source_gutter_renderer_text_set_markup")]
     fn set_markup(&self, markup: &str);
 
+    #[doc(alias = "gtk_source_gutter_renderer_text_set_text")]
     fn set_text(&self, text: &str);
 
     fn get_property_markup(&self) -> Option<glib::GString>;

@@ -7,7 +7,7 @@ use glib::object::Cast;
 use glib::translate::*;
 use std::fmt;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct StyleSchemeChooserButton(Object<ffi::GtkSourceStyleSchemeChooserButton, ffi::GtkSourceStyleSchemeChooserButtonClass>) @extends gtk::Button, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Actionable, StyleSchemeChooser;
 
     match fn {
@@ -16,6 +16,7 @@ glib::glib_wrapper! {
 }
 
 impl StyleSchemeChooserButton {
+    #[doc(alias = "gtk_source_style_scheme_chooser_button_new")]
     pub fn new() -> StyleSchemeChooserButton {
         assert_initialized_main_thread!();
         unsafe {

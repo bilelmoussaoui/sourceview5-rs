@@ -22,7 +22,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct View(Object<ffi::GtkSourceView, ffi::GtkSourceViewClass>) @extends gtk::TextView, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Scrollable;
 
     match fn {
@@ -31,11 +31,13 @@ glib::glib_wrapper! {
 }
 
 impl View {
+    #[doc(alias = "gtk_source_view_new")]
     pub fn new() -> View {
         assert_initialized_main_thread!();
         unsafe { gtk::Widget::from_glib_none(ffi::gtk_source_view_new()).unsafe_cast() }
     }
 
+    #[doc(alias = "gtk_source_view_new_with_buffer")]
     pub fn with_buffer<P: IsA<Buffer>>(buffer: &P) -> View {
         skip_assert_initialized!();
         unsafe {
@@ -301,10 +303,7 @@ impl ViewBuilder {
         if let Some(ref width_request) = self.width_request {
             properties.push(("width-request", width_request));
         }
-        let ret = glib::Object::new(View::static_type(), &properties)
-            .expect("object new")
-            .downcast::<View>()
-            .expect("downcast");
+        let ret = glib::Object::new::<View>(&properties).expect("object new");
         ret
     }
 
@@ -584,78 +583,113 @@ impl ViewBuilder {
 pub const NONE_VIEW: Option<&View> = None;
 
 pub trait ViewExt: 'static {
+    #[doc(alias = "gtk_source_view_get_auto_indent")]
     fn get_auto_indent(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_background_pattern")]
     fn get_background_pattern(&self) -> BackgroundPatternType;
 
+    #[doc(alias = "gtk_source_view_get_completion")]
     fn get_completion(&self) -> Option<Completion>;
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_view_get_enable_snippets")]
     fn get_enable_snippets(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_gutter")]
     fn get_gutter(&self, window_type: gtk::TextWindowType) -> Option<Gutter>;
 
+    #[doc(alias = "gtk_source_view_get_highlight_current_line")]
     fn get_highlight_current_line(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_indent_on_tab")]
     fn get_indent_on_tab(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_indent_width")]
     fn get_indent_width(&self) -> i32;
 
+    #[doc(alias = "gtk_source_view_get_insert_spaces_instead_of_tabs")]
     fn get_insert_spaces_instead_of_tabs(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_right_margin_position")]
     fn get_right_margin_position(&self) -> u32;
 
+    #[doc(alias = "gtk_source_view_get_show_line_marks")]
     fn get_show_line_marks(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_show_line_numbers")]
     fn get_show_line_numbers(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_show_right_margin")]
     fn get_show_right_margin(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_smart_backspace")]
     fn get_smart_backspace(&self) -> bool;
 
+    #[doc(alias = "gtk_source_view_get_smart_home_end")]
     fn get_smart_home_end(&self) -> SmartHomeEndType;
 
+    #[doc(alias = "gtk_source_view_get_space_drawer")]
     fn get_space_drawer(&self) -> Option<SpaceDrawer>;
 
+    #[doc(alias = "gtk_source_view_get_tab_width")]
     fn get_tab_width(&self) -> u32;
 
+    #[doc(alias = "gtk_source_view_get_visual_column")]
     fn get_visual_column(&self, iter: &gtk::TextIter) -> u32;
 
+    #[doc(alias = "gtk_source_view_indent_lines")]
     fn indent_lines(&self, start: &mut gtk::TextIter, end: &mut gtk::TextIter);
 
+    #[doc(alias = "gtk_source_view_set_auto_indent")]
     fn set_auto_indent(&self, enable: bool);
 
+    #[doc(alias = "gtk_source_view_set_background_pattern")]
     fn set_background_pattern(&self, background_pattern: BackgroundPatternType);
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_view_set_enable_snippets")]
     fn set_enable_snippets(&self, enable_snippets: bool);
 
+    #[doc(alias = "gtk_source_view_set_highlight_current_line")]
     fn set_highlight_current_line(&self, highlight: bool);
 
+    #[doc(alias = "gtk_source_view_set_indent_on_tab")]
     fn set_indent_on_tab(&self, enable: bool);
 
+    #[doc(alias = "gtk_source_view_set_indent_width")]
     fn set_indent_width(&self, width: i32);
 
+    #[doc(alias = "gtk_source_view_set_insert_spaces_instead_of_tabs")]
     fn set_insert_spaces_instead_of_tabs(&self, enable: bool);
 
+    #[doc(alias = "gtk_source_view_set_mark_attributes")]
     fn set_mark_attributes(&self, category: &str, attributes: &MarkAttributes, priority: i32);
 
+    #[doc(alias = "gtk_source_view_set_right_margin_position")]
     fn set_right_margin_position(&self, pos: u32);
 
+    #[doc(alias = "gtk_source_view_set_show_line_marks")]
     fn set_show_line_marks(&self, show: bool);
 
+    #[doc(alias = "gtk_source_view_set_show_line_numbers")]
     fn set_show_line_numbers(&self, show: bool);
 
+    #[doc(alias = "gtk_source_view_set_show_right_margin")]
     fn set_show_right_margin(&self, show: bool);
 
+    #[doc(alias = "gtk_source_view_set_smart_backspace")]
     fn set_smart_backspace(&self, smart_backspace: bool);
 
+    #[doc(alias = "gtk_source_view_set_smart_home_end")]
     fn set_smart_home_end(&self, smart_home_end: SmartHomeEndType);
 
+    #[doc(alias = "gtk_source_view_set_tab_width")]
     fn set_tab_width(&self, width: u32);
 
+    #[doc(alias = "gtk_source_view_unindent_lines")]
     fn unindent_lines(&self, start: &mut gtk::TextIter, end: &mut gtk::TextIter);
 
     fn connect_change_case<F: Fn(&Self, ChangeCaseType) + 'static>(&self, f: F) -> SignalHandlerId;

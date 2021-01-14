@@ -14,7 +14,7 @@ use std::boxed::Box as Box_;
 use std::fmt;
 use std::mem::transmute;
 
-glib::glib_wrapper! {
+glib::wrapper! {
     pub struct StyleSchemeManager(Object<ffi::GtkSourceStyleSchemeManager, ffi::GtkSourceStyleSchemeManagerClass>);
 
     match fn {
@@ -23,11 +23,13 @@ glib::glib_wrapper! {
 }
 
 impl StyleSchemeManager {
+    #[doc(alias = "gtk_source_style_scheme_manager_new")]
     pub fn new() -> StyleSchemeManager {
         assert_initialized_main_thread!();
         unsafe { from_glib_full(ffi::gtk_source_style_scheme_manager_new()) }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_manager_append_search_path")]
     pub fn append_search_path(&self, path: &str) {
         unsafe {
             ffi::gtk_source_style_scheme_manager_append_search_path(
@@ -37,12 +39,14 @@ impl StyleSchemeManager {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_manager_force_rescan")]
     pub fn force_rescan(&self) {
         unsafe {
             ffi::gtk_source_style_scheme_manager_force_rescan(self.to_glib_none().0);
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_manager_get_scheme")]
     pub fn get_scheme(&self, scheme_id: &str) -> Option<StyleScheme> {
         unsafe {
             from_glib_none(ffi::gtk_source_style_scheme_manager_get_scheme(
@@ -52,6 +56,7 @@ impl StyleSchemeManager {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_manager_get_scheme_ids")]
     pub fn get_scheme_ids(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_none(
@@ -60,6 +65,7 @@ impl StyleSchemeManager {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_manager_get_search_path")]
     pub fn get_search_path(&self) -> Vec<glib::GString> {
         unsafe {
             FromGlibPtrContainer::from_glib_none(
@@ -68,6 +74,7 @@ impl StyleSchemeManager {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_manager_prepend_search_path")]
     pub fn prepend_search_path(&self, path: &str) {
         unsafe {
             ffi::gtk_source_style_scheme_manager_prepend_search_path(
@@ -77,6 +84,7 @@ impl StyleSchemeManager {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_manager_set_search_path")]
     pub fn set_search_path(&self, path: &[&str]) {
         unsafe {
             ffi::gtk_source_style_scheme_manager_set_search_path(
@@ -86,6 +94,7 @@ impl StyleSchemeManager {
         }
     }
 
+    #[doc(alias = "gtk_source_style_scheme_manager_get_default")]
     pub fn get_default() -> Option<StyleSchemeManager> {
         assert_initialized_main_thread!();
         unsafe { from_glib_none(ffi::gtk_source_style_scheme_manager_get_default()) }
@@ -163,10 +172,7 @@ impl StyleSchemeManagerBuilder {
         if let Some(ref search_path) = self.search_path {
             properties.push(("search-path", search_path));
         }
-        let ret = glib::Object::new(StyleSchemeManager::static_type(), &properties)
-            .expect("object new")
-            .downcast::<StyleSchemeManager>()
-            .expect("downcast");
+        let ret = glib::Object::new::<StyleSchemeManager>(&properties).expect("object new");
         ret
     }
 
