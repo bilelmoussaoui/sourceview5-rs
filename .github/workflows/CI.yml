@@ -61,21 +61,21 @@ jobs:
           command: clippy
           args: --all-features --all-targets -- -D warnings
   
-  checker:
-    name: gtk-rs checker
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/checkout@v2
-        with:
-          repository: gtk-rs/checker
-          ref: master
-          path: checker
-      - working-directory: checker
-        run: cargo build --release
-      - run: cargo run -- ../sourceview5
-        working-directory: checker
-      - run: cargo run -- ../sourceview5/sys
-        working-directory: checker
-      - run: ./check_init_asserts ../sourceview5
-        working-directory: checker
+  # checker:
+  #   name: gtk-rs checker
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         repository: gtk-rs/checker
+  #         ref: master
+  #         path: checker
+  #     - working-directory: checker
+  #       run: cargo build --release
+  #     - run: cargo run -- ../sourceview5
+  #       working-directory: checker
+  #     - run: cargo run -- ../sourceview5/sys
+  #       working-directory: checker
+  #     - run: ./check_init_asserts ../sourceview5
+  #       working-directory: checker
