@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["sourceview5"] = [{"text":"impl ErrorDomain for FileLoaderError","synthetic":false,"types":[]},{"text":"impl ErrorDomain for FileSaverError","synthetic":false,"types":[]}];
+implementors["sourceview5"] = [{"text":"impl ErrorDomain for <a class=\"enum\" href=\"sourceview5/enum.FileLoaderError.html\" title=\"enum sourceview5::FileLoaderError\">FileLoaderError</a>","synthetic":false,"types":["sourceview5::auto::enums::FileLoaderError"]},{"text":"impl ErrorDomain for <a class=\"enum\" href=\"sourceview5/enum.FileSaverError.html\" title=\"enum sourceview5::FileSaverError\">FileSaverError</a>","synthetic":false,"types":["sourceview5::auto::enums::FileSaverError"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
