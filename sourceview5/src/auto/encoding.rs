@@ -10,7 +10,7 @@ glib::wrapper! {
     pub struct Encoding(Boxed<ffi::GtkSourceEncoding>);
 
     match fn {
-        copy => |ptr| ffi::gtk_source_encoding_copy(mut_override(ptr)),
+        copy => |ptr| ffi::gtk_source_encoding_copy(ptr),
         free => |ptr| ffi::gtk_source_encoding_free(ptr),
         get_type => || ffi::gtk_source_encoding_get_type(),
     }

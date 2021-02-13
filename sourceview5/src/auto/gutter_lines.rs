@@ -5,6 +5,8 @@
 #[cfg(any(feature = "v5_0", feature = "dox"))]
 #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use crate::GutterRendererAlignmentMode;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
 use glib::translate::*;
 use std::fmt;
 #[cfg(any(feature = "v5_0", feature = "dox"))]
