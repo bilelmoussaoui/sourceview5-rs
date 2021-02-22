@@ -1123,7 +1123,7 @@ impl<O: IsA<View>> ViewExt for O {
     fn emit_change_case(&self, case_type: ChangeCaseType) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("change-case", &[&case_type])
+                .emit_by_name("change-case", &[&case_type])
                 .unwrap()
         };
     }
@@ -1155,7 +1155,7 @@ impl<O: IsA<View>> ViewExt for O {
     fn emit_change_number(&self, count: i32) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("change-number", &[&count])
+                .emit_by_name("change-number", &[&count])
                 .unwrap()
         };
     }
@@ -1186,7 +1186,7 @@ impl<O: IsA<View>> ViewExt for O {
     fn emit_join_lines(&self) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("join-lines", &[])
+                .emit_by_name("join-lines", &[])
                 .unwrap()
         };
     }
@@ -1262,7 +1262,7 @@ impl<O: IsA<View>> ViewExt for O {
     fn emit_move_lines(&self, down: bool) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("move-lines", &[&down])
+                .emit_by_name("move-lines", &[&down])
                 .unwrap()
         };
     }
@@ -1300,7 +1300,7 @@ impl<O: IsA<View>> ViewExt for O {
     fn emit_move_to_matching_bracket(&self, extend_selection: bool) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("move-to-matching-bracket", &[&extend_selection])
+                .emit_by_name("move-to-matching-bracket", &[&extend_selection])
                 .unwrap()
         };
     }
@@ -1332,7 +1332,7 @@ impl<O: IsA<View>> ViewExt for O {
     fn emit_move_words(&self, count: i32) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("move-words", &[&count])
+                .emit_by_name("move-words", &[&count])
                 .unwrap()
         };
     }
@@ -1369,7 +1369,7 @@ impl<O: IsA<View>> ViewExt for O {
     fn emit_show_completion(&self) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("show-completion", &[])
+                .emit_by_name("show-completion", &[])
                 .unwrap()
         };
     }

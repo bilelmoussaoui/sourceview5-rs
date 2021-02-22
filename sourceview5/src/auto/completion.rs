@@ -255,7 +255,7 @@ impl Completion {
     pub fn emit_hide(&self) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("hide", &[])
+                .emit_by_name("hide", &[])
                 .unwrap()
         };
     }
@@ -346,7 +346,7 @@ impl Completion {
     pub fn emit_show(&self) {
         let _ = unsafe {
             glib::Object::from_glib_borrow(self.as_ptr() as *mut glib::gobject_ffi::GObject)
-                .emit("show", &[])
+                .emit_by_name("show", &[])
                 .unwrap()
         };
     }
