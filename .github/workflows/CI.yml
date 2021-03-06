@@ -10,7 +10,7 @@ jobs:
     name: build/test
     runs-on: ubuntu-20.04
     container:
-      image: docker.io/bilelmoussaoui/gtk4
+      image: docker.pkg.github.com/bilelmoussaoui/sourceview5-rs/sourceview5
     strategy:
       matrix:
         rust:
@@ -37,17 +37,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          submodules: 'recursive'
+          submodules: "recursive"
       - run: cp ./GtkSource-5.gir ./gir-files
       - run: python3 generator.py
-      - run: rm -rf ./gir-files/GtkSource-5.gir 
+      - run: rm -rf ./gir-files/GtkSource-5.gir
       - run: git diff -R --exit-code
-  
+
   clippy:
     name: clippy
     runs-on: ubuntu-20.04
     container:
-      image: docker.io/bilelmoussaoui/gtk4
+      image: docker.pkg.github.com/bilelmoussaoui/sourceview5-rs/sourceview5
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
@@ -60,7 +60,6 @@ jobs:
         with:
           command: clippy
           args: --all-features --all-targets -- -D warnings
-  
   # checker:
   #   name: gtk-rs checker
   #   runs-on: ubuntu-20.04
