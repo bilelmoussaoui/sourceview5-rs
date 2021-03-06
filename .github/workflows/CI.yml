@@ -10,7 +10,7 @@ jobs:
     name: build/test
     runs-on: ubuntu-20.04
     container:
-      image: docker.pkg.github.com/bilelmoussaoui/sourceview5-rs/sourceview5
+      image: ghcr.io/bilelmoussaoui/sourceview5-rs/sourceview5:latest
     strategy:
       matrix:
         rust:
@@ -47,7 +47,7 @@ jobs:
     name: clippy
     runs-on: ubuntu-20.04
     container:
-      image: docker.pkg.github.com/bilelmoussaoui/sourceview5-rs/sourceview5
+      image: ghcr.io/bilelmoussaoui/sourceview5-rs/sourceview5:latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1

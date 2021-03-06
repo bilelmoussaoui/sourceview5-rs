@@ -1,26 +1,8 @@
 FROM fedora:latest
 
 RUN dnf update -y
-RUN dnf install -y glib-devel \
-    git \
-    meson \
-    gcc \
-    gobject-introspection-devel \
-    wget \
-    graphene-devel \
-    gtk4-devel \
-    xz \
-    gcc-c++ \
-    gtk-doc \
-    vulkan-loader-devel \
-    cups-devel \
-    gstreamer1-devel \
-    gstreamer1-plugins-base-devel \
-    gstreamer1-plugins-bad-free-devel \
-    diffutils \
-    librsvg2-devel \
-    xorg-x11-server-Xvfb \
-    procps-ng
+RUN dnf install gtk-update-icon-cache git 'dnf-command(builddep)' -y
+RUN dnf builddep gtk4 -y
 
 # build gtk4 from the latest release
 ADD https://download.gnome.org/sources/gtk/4.1/gtk-4.1.1.tar.xz /tmp/gtk-4.1.1.tar.xz
