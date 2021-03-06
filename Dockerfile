@@ -1,7 +1,6 @@
 FROM fedora:latest
 
 RUN dnf update -y
-
 RUN dnf install -y glib-devel \
     git \
     meson \
@@ -31,7 +30,6 @@ RUN meson _build --prefix=/usr
 RUN ninja -C _build
 RUN ninja -C _build install
 WORKDIR /
-
 
 # Build gtksourceview5 from the latest release
 ADD https://download.gnome.org/sources/gtksourceview/4.99/gtksourceview-4.99.0.tar.xz /tmp/gtksourceview-4.99.0.tar.xz
