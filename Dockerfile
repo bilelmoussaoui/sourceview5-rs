@@ -24,9 +24,9 @@ RUN dnf install -y glib-devel \
     procps-ng
 
 # build gtk4 from the latest release
-ADD https://download.gnome.org/sources/gtk/4.0/gtk-4.0.3.tar.xz /tmp/gtk-4.0.3.tar.xz
-RUN tar -xf /tmp/gtk-4.0.3.tar.xz --directory /tmp
-WORKDIR /tmp/gtk-4.0.3
+ADD https://download.gnome.org/sources/gtk/4.1/gtk-4.1.1.tar.xz /tmp/gtk-4.1.1.tar.xz
+RUN tar -xf /tmp/gtk-4.1.1.tar.xz --directory /tmp
+WORKDIR /tmp/gtk-4.1.1
 RUN meson _build --prefix=/usr
 RUN ninja -C _build
 RUN ninja -C _build install
