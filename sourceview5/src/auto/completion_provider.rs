@@ -13,7 +13,7 @@ use std::pin::Pin;
 use std::ptr;
 
 glib::wrapper! {
-    pub struct CompletionProvider(Interface<ffi::GtkSourceCompletionProvider>);
+    pub struct CompletionProvider(Interface<ffi::GtkSourceCompletionProvider, ffi::GtkSourceCompletionProviderInterface>);
 
     match fn {
         get_type => || ffi::gtk_source_completion_provider_get_type(),

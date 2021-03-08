@@ -13,7 +13,7 @@ use std::fmt;
 use std::mem::transmute;
 
 glib::wrapper! {
-    pub struct StyleSchemeChooser(Interface<ffi::GtkSourceStyleSchemeChooser>);
+    pub struct StyleSchemeChooser(Interface<ffi::GtkSourceStyleSchemeChooser, ffi::GtkSourceStyleSchemeChooserInterface>);
 
     match fn {
         get_type => || ffi::gtk_source_style_scheme_chooser_get_type(),

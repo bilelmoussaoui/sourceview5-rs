@@ -6,7 +6,7 @@ use glib::object::IsA;
 use std::fmt;
 
 glib::wrapper! {
-    pub struct CompletionProposal(Interface<ffi::GtkSourceCompletionProposal>);
+    pub struct CompletionProposal(Interface<ffi::GtkSourceCompletionProposal, ffi::GtkSourceCompletionProposalInterface>);
 
     match fn {
         get_type => || ffi::gtk_source_completion_proposal_get_type(),
