@@ -199,12 +199,18 @@ impl Completion {
         }
     }
 
-    //#[cfg(any(feature = "v5_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    //#[doc(alias = "gtk_source_completion_fuzzy_highlight")]
-    //pub fn fuzzy_highlight(haystack: &str, casefold_query: &str) -> /*Ignored*/Option<pango::AttrList> {
-    //    unsafe { TODO: call ffi:gtk_source_completion_fuzzy_highlight() }
-    //}
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_completion_fuzzy_highlight")]
+    pub fn fuzzy_highlight(haystack: &str, casefold_query: &str) -> Option<pango::AttrList> {
+        assert_initialized_main_thread!();
+        unsafe {
+            from_glib_full(ffi::gtk_source_completion_fuzzy_highlight(
+                haystack.to_glib_none().0,
+                casefold_query.to_glib_none().0,
+            ))
+        }
+    }
 
     #[cfg(any(feature = "v5_0", feature = "dox"))]
     #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]

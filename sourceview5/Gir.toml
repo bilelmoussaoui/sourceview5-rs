@@ -85,6 +85,7 @@ manual = [
     "Gtk.Unit",
     "Gtk.Widget",
     "Gtk.WrapMode",
+    "Pango.AttrList",
     "Pango.FontDescription",
     "Pango.Underline",
 ]

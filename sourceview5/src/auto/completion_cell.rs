@@ -91,10 +91,16 @@ impl CompletionCell {
         }
     }
 
-    //#[doc(alias = "gtk_source_completion_cell_set_text_with_attributes")]
-    //pub fn set_text_with_attributes(&self, text: &str, attrs: /*Ignored*/&pango::AttrList) {
-    //    unsafe { TODO: call ffi:gtk_source_completion_cell_set_text_with_attributes() }
-    //}
+    #[doc(alias = "gtk_source_completion_cell_set_text_with_attributes")]
+    pub fn set_text_with_attributes(&self, text: &str, attrs: &pango::AttrList) {
+        unsafe {
+            ffi::gtk_source_completion_cell_set_text_with_attributes(
+                self.to_glib_none().0,
+                text.to_glib_none().0,
+                attrs.to_glib_none().0,
+            );
+        }
+    }
 
     #[doc(alias = "gtk_source_completion_cell_set_widget")]
     pub fn set_widget<P: IsA<gtk::Widget>>(&self, child: &P) {
