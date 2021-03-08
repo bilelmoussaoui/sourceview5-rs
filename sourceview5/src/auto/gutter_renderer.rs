@@ -134,7 +134,10 @@ pub trait GutterRendererExt: 'static {
         f: F,
     ) -> SignalHandlerId;
 
-    //fn connect_query_data<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId;
+    fn connect_query_data<F: Fn(&Self, &glib::Object, u32) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId;
 
     fn connect_property_alignment_mode_notify<F: Fn(&Self) + 'static>(
         &self,
@@ -492,9 +495,37 @@ impl<O: IsA<GutterRenderer>> GutterRendererExt for O {
         }
     }
 
-    //fn connect_query_data<Unsupported or ignored types>(&self, f: F) -> SignalHandlerId {
-    //    Ignored object: GObject.Object
-    //}
+    fn connect_query_data<F: Fn(&Self, &glib::Object, u32) + 'static>(
+        &self,
+        f: F,
+    ) -> SignalHandlerId {
+        unsafe extern "C" fn query_data_trampoline<P, F: Fn(&P, &glib::Object, u32) + 'static>(
+            this: *mut ffi::GtkSourceGutterRenderer,
+            object: *mut glib::gobject_ffi::GObject,
+            p0: libc::c_uint,
+            f: glib::ffi::gpointer,
+        ) where
+            P: IsA<GutterRenderer>,
+        {
+            let f: &F = &*(f as *const F);
+            f(
+                &GutterRenderer::from_glib_borrow(this).unsafe_cast_ref(),
+                &from_glib_borrow(object),
+                p0,
+            )
+        }
+        unsafe {
+            let f: Box_<F> = Box_::new(f);
+            connect_raw(
+                self.as_ptr() as *mut _,
+                b"query-data\0".as_ptr() as *const _,
+                Some(transmute::<_, unsafe extern "C" fn()>(
+                    query_data_trampoline::<Self, F> as *const (),
+                )),
+                Box_::into_raw(f),
+            )
+        }
+    }
 
     fn connect_property_alignment_mode_notify<F: Fn(&Self) + 'static>(
         &self,

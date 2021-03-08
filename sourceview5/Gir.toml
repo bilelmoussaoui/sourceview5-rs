@@ -51,6 +51,7 @@ generate = [
 
 manual = [
     "GLib.Error",
+    "GObject.Object",
     "GLib.Priority",
     "GLib.Quark",
     "GLib.Variant",
