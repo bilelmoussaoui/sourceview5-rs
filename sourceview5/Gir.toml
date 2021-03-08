@@ -81,6 +81,7 @@ manual = [
     "Gtk.TextTagTable",
     "Gtk.TextView",
     "Gtk.TextWindowType",
+    "Gtk.Unit",
     "Gtk.Widget",
     "Gtk.WrapMode",
     "Pango.FontDescription",

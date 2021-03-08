@@ -169,8 +169,8 @@ pub trait PrintCompositorExt: 'static {
     #[doc(alias = "gtk_source_print_compositor_get_body_font_name")]
     fn get_body_font_name(&self) -> Option<glib::GString>;
 
-    //#[doc(alias = "gtk_source_print_compositor_get_bottom_margin")]
-    //fn get_bottom_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64;
+    #[doc(alias = "gtk_source_print_compositor_get_bottom_margin")]
+    fn get_bottom_margin(&self, unit: gtk::Unit) -> f64;
 
     #[doc(alias = "gtk_source_print_compositor_get_buffer")]
     fn get_buffer(&self) -> Option<Buffer>;
@@ -184,8 +184,8 @@ pub trait PrintCompositorExt: 'static {
     #[doc(alias = "gtk_source_print_compositor_get_highlight_syntax")]
     fn get_highlight_syntax(&self) -> bool;
 
-    //#[doc(alias = "gtk_source_print_compositor_get_left_margin")]
-    //fn get_left_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64;
+    #[doc(alias = "gtk_source_print_compositor_get_left_margin")]
+    fn get_left_margin(&self, unit: gtk::Unit) -> f64;
 
     #[doc(alias = "gtk_source_print_compositor_get_line_numbers_font_name")]
     fn get_line_numbers_font_name(&self) -> Option<glib::GString>;
@@ -205,14 +205,14 @@ pub trait PrintCompositorExt: 'static {
     #[doc(alias = "gtk_source_print_compositor_get_print_line_numbers")]
     fn get_print_line_numbers(&self) -> u32;
 
-    //#[doc(alias = "gtk_source_print_compositor_get_right_margin")]
-    //fn get_right_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64;
+    #[doc(alias = "gtk_source_print_compositor_get_right_margin")]
+    fn get_right_margin(&self, unit: gtk::Unit) -> f64;
 
     #[doc(alias = "gtk_source_print_compositor_get_tab_width")]
     fn get_tab_width(&self) -> u32;
 
-    //#[doc(alias = "gtk_source_print_compositor_get_top_margin")]
-    //fn get_top_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64;
+    #[doc(alias = "gtk_source_print_compositor_get_top_margin")]
+    fn get_top_margin(&self, unit: gtk::Unit) -> f64;
 
     #[doc(alias = "gtk_source_print_compositor_get_wrap_mode")]
     fn get_wrap_mode(&self) -> gtk::WrapMode;
@@ -223,8 +223,8 @@ pub trait PrintCompositorExt: 'static {
     #[doc(alias = "gtk_source_print_compositor_set_body_font_name")]
     fn set_body_font_name(&self, font_name: &str);
 
-    //#[doc(alias = "gtk_source_print_compositor_set_bottom_margin")]
-    //fn set_bottom_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit);
+    #[doc(alias = "gtk_source_print_compositor_set_bottom_margin")]
+    fn set_bottom_margin(&self, margin: f64, unit: gtk::Unit);
 
     #[doc(alias = "gtk_source_print_compositor_set_footer_font_name")]
     fn set_footer_font_name(&self, font_name: Option<&str>);
@@ -253,8 +253,8 @@ pub trait PrintCompositorExt: 'static {
     #[doc(alias = "gtk_source_print_compositor_set_highlight_syntax")]
     fn set_highlight_syntax(&self, highlight: bool);
 
-    //#[doc(alias = "gtk_source_print_compositor_set_left_margin")]
-    //fn set_left_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit);
+    #[doc(alias = "gtk_source_print_compositor_set_left_margin")]
+    fn set_left_margin(&self, margin: f64, unit: gtk::Unit);
 
     #[doc(alias = "gtk_source_print_compositor_set_line_numbers_font_name")]
     fn set_line_numbers_font_name(&self, font_name: Option<&str>);
@@ -268,14 +268,14 @@ pub trait PrintCompositorExt: 'static {
     #[doc(alias = "gtk_source_print_compositor_set_print_line_numbers")]
     fn set_print_line_numbers(&self, interval: u32);
 
-    //#[doc(alias = "gtk_source_print_compositor_set_right_margin")]
-    //fn set_right_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit);
+    #[doc(alias = "gtk_source_print_compositor_set_right_margin")]
+    fn set_right_margin(&self, margin: f64, unit: gtk::Unit);
 
     #[doc(alias = "gtk_source_print_compositor_set_tab_width")]
     fn set_tab_width(&self, width: u32);
 
-    //#[doc(alias = "gtk_source_print_compositor_set_top_margin")]
-    //fn set_top_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit);
+    #[doc(alias = "gtk_source_print_compositor_set_top_margin")]
+    fn set_top_margin(&self, margin: f64, unit: gtk::Unit);
 
     #[doc(alias = "gtk_source_print_compositor_set_wrap_mode")]
     fn set_wrap_mode(&self, wrap_mode: gtk::WrapMode);
@@ -342,9 +342,14 @@ impl<O: IsA<PrintCompositor>> PrintCompositorExt for O {
         }
     }
 
-    //fn get_bottom_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64 {
-    //    unsafe { TODO: call ffi:gtk_source_print_compositor_get_bottom_margin() }
-    //}
+    fn get_bottom_margin(&self, unit: gtk::Unit) -> f64 {
+        unsafe {
+            ffi::gtk_source_print_compositor_get_bottom_margin(
+                self.as_ref().to_glib_none().0,
+                unit.to_glib(),
+            )
+        }
+    }
 
     fn get_buffer(&self) -> Option<Buffer> {
         unsafe {
@@ -378,9 +383,14 @@ impl<O: IsA<PrintCompositor>> PrintCompositorExt for O {
         }
     }
 
-    //fn get_left_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64 {
-    //    unsafe { TODO: call ffi:gtk_source_print_compositor_get_left_margin() }
-    //}
+    fn get_left_margin(&self, unit: gtk::Unit) -> f64 {
+        unsafe {
+            ffi::gtk_source_print_compositor_get_left_margin(
+                self.as_ref().to_glib_none().0,
+                unit.to_glib(),
+            )
+        }
+    }
 
     fn get_line_numbers_font_name(&self) -> Option<glib::GString> {
         unsafe {
@@ -422,17 +432,27 @@ impl<O: IsA<PrintCompositor>> PrintCompositorExt for O {
         }
     }
 
-    //fn get_right_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64 {
-    //    unsafe { TODO: call ffi:gtk_source_print_compositor_get_right_margin() }
-    //}
+    fn get_right_margin(&self, unit: gtk::Unit) -> f64 {
+        unsafe {
+            ffi::gtk_source_print_compositor_get_right_margin(
+                self.as_ref().to_glib_none().0,
+                unit.to_glib(),
+            )
+        }
+    }
 
     fn get_tab_width(&self) -> u32 {
         unsafe { ffi::gtk_source_print_compositor_get_tab_width(self.as_ref().to_glib_none().0) }
     }
 
-    //fn get_top_margin(&self, unit: /*Ignored*/gtk::Unit) -> f64 {
-    //    unsafe { TODO: call ffi:gtk_source_print_compositor_get_top_margin() }
-    //}
+    fn get_top_margin(&self, unit: gtk::Unit) -> f64 {
+        unsafe {
+            ffi::gtk_source_print_compositor_get_top_margin(
+                self.as_ref().to_glib_none().0,
+                unit.to_glib(),
+            )
+        }
+    }
 
     fn get_wrap_mode(&self) -> gtk::WrapMode {
         unsafe {
@@ -460,9 +480,15 @@ impl<O: IsA<PrintCompositor>> PrintCompositorExt for O {
         }
     }
 
-    //fn set_bottom_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit) {
-    //    unsafe { TODO: call ffi:gtk_source_print_compositor_set_bottom_margin() }
-    //}
+    fn set_bottom_margin(&self, margin: f64, unit: gtk::Unit) {
+        unsafe {
+            ffi::gtk_source_print_compositor_set_bottom_margin(
+                self.as_ref().to_glib_none().0,
+                margin,
+                unit.to_glib(),
+            );
+        }
+    }
 
     fn set_footer_font_name(&self, font_name: Option<&str>) {
         unsafe {
@@ -527,9 +553,15 @@ impl<O: IsA<PrintCompositor>> PrintCompositorExt for O {
         }
     }
 
-    //fn set_left_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit) {
-    //    unsafe { TODO: call ffi:gtk_source_print_compositor_set_left_margin() }
-    //}
+    fn set_left_margin(&self, margin: f64, unit: gtk::Unit) {
+        unsafe {
+            ffi::gtk_source_print_compositor_set_left_margin(
+                self.as_ref().to_glib_none().0,
+                margin,
+                unit.to_glib(),
+            );
+        }
+    }
 
     fn set_line_numbers_font_name(&self, font_name: Option<&str>) {
         unsafe {
@@ -567,9 +599,15 @@ impl<O: IsA<PrintCompositor>> PrintCompositorExt for O {
         }
     }
 
-    //fn set_right_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit) {
-    //    unsafe { TODO: call ffi:gtk_source_print_compositor_set_right_margin() }
-    //}
+    fn set_right_margin(&self, margin: f64, unit: gtk::Unit) {
+        unsafe {
+            ffi::gtk_source_print_compositor_set_right_margin(
+                self.as_ref().to_glib_none().0,
+                margin,
+                unit.to_glib(),
+            );
+        }
+    }
 
     fn set_tab_width(&self, width: u32) {
         unsafe {
@@ -577,9 +615,15 @@ impl<O: IsA<PrintCompositor>> PrintCompositorExt for O {
         }
     }
 
-    //fn set_top_margin(&self, margin: f64, unit: /*Ignored*/gtk::Unit) {
-    //    unsafe { TODO: call ffi:gtk_source_print_compositor_set_top_margin() }
-    //}
+    fn set_top_margin(&self, margin: f64, unit: gtk::Unit) {
+        unsafe {
+            ffi::gtk_source_print_compositor_set_top_margin(
+                self.as_ref().to_glib_none().0,
+                margin,
+                unit.to_glib(),
+            );
+        }
+    }
 
     fn set_wrap_mode(&self, wrap_mode: gtk::WrapMode) {
         unsafe {
