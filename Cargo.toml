@@ -2,9 +2,9 @@
 exclude = [
   "checker",
   "gir",
+  "demo",
 ]
 members = [
-  "demo",
   "sourceview5",
   "sourceview5/sys",
 ]
