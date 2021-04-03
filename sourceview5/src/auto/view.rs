@@ -7,6 +7,10 @@ use crate::Buffer;
 use crate::ChangeCaseType;
 use crate::Completion;
 use crate::Gutter;
+use crate::Hover;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+use crate::Indenter;
 use crate::MarkAttributes;
 use crate::SmartHomeEndType;
 use crate::SpaceDrawer;
@@ -65,7 +69,9 @@ pub struct ViewBuilder {
     highlight_current_line: Option<bool>,
     indent_on_tab: Option<bool>,
     indent_width: Option<i32>,
-    //indenter: /*Unknown type*/,
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    indenter: Option<Indenter>,
     insert_spaces_instead_of_tabs: Option<bool>,
     right_margin_position: Option<u32>,
     show_line_marks: Option<bool>,
@@ -156,6 +162,10 @@ impl ViewBuilder {
         }
         if let Some(ref indent_width) = self.indent_width {
             properties.push(("indent-width", indent_width));
+        }
+        #[cfg(any(feature = "v5_0", feature = "dox"))]
+        if let Some(ref indenter) = self.indenter {
+            properties.push(("indenter", indenter));
         }
         if let Some(ref insert_spaces_instead_of_tabs) = self.insert_spaces_instead_of_tabs {
             properties.push((
@@ -337,6 +347,13 @@ impl ViewBuilder {
 
     pub fn indent_width(mut self, indent_width: i32) -> Self {
         self.indent_width = Some(indent_width);
+        self
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn indenter<P: IsA<Indenter>>(mut self, indenter: &P) -> Self {
+        self.indenter = Some(indenter.clone().upcast());
         self
     }
 
@@ -604,8 +621,8 @@ pub trait ViewExt: 'static {
     #[doc(alias = "gtk_source_view_get_highlight_current_line")]
     fn get_highlight_current_line(&self) -> bool;
 
-    //#[doc(alias = "gtk_source_view_get_hover")]
-    //fn get_hover(&self) -> /*Ignored*/Option<Hover>;
+    #[doc(alias = "gtk_source_view_get_hover")]
+    fn get_hover(&self) -> Option<Hover>;
 
     #[doc(alias = "gtk_source_view_get_indent_on_tab")]
     fn get_indent_on_tab(&self) -> bool;
@@ -613,10 +630,10 @@ pub trait ViewExt: 'static {
     #[doc(alias = "gtk_source_view_get_indent_width")]
     fn get_indent_width(&self) -> i32;
 
-    //#[cfg(any(feature = "v5_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    //#[doc(alias = "gtk_source_view_get_indenter")]
-    //fn get_indenter(&self) -> /*Ignored*/Option<Indenter>;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_view_get_indenter")]
+    fn get_indenter(&self) -> Option<Indenter>;
 
     #[doc(alias = "gtk_source_view_get_insert_spaces_instead_of_tabs")]
     fn get_insert_spaces_instead_of_tabs(&self) -> bool;
@@ -671,10 +688,10 @@ pub trait ViewExt: 'static {
     #[doc(alias = "gtk_source_view_set_indent_width")]
     fn set_indent_width(&self, width: i32);
 
-    //#[cfg(any(feature = "v5_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    //#[doc(alias = "gtk_source_view_set_indenter")]
-    //fn set_indenter(&self, indenter: /*Ignored*/Option<&Indenter>);
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    #[doc(alias = "gtk_source_view_set_indenter")]
+    fn set_indenter<P: IsA<Indenter>>(&self, indenter: Option<&P>);
 
     #[doc(alias = "gtk_source_view_set_insert_spaces_instead_of_tabs")]
     fn set_insert_spaces_instead_of_tabs(&self, enable: bool);
@@ -879,9 +896,13 @@ impl<O: IsA<View>> ViewExt for O {
         }
     }
 
-    //fn get_hover(&self) -> /*Ignored*/Option<Hover> {
-    //    unsafe { TODO: call ffi:gtk_source_view_get_hover() }
-    //}
+    fn get_hover(&self) -> Option<Hover> {
+        unsafe {
+            from_glib_none(ffi::gtk_source_view_get_hover(
+                self.as_ref().to_glib_none().0,
+            ))
+        }
+    }
 
     fn get_indent_on_tab(&self) -> bool {
         unsafe {
@@ -895,11 +916,15 @@ impl<O: IsA<View>> ViewExt for O {
         unsafe { ffi::gtk_source_view_get_indent_width(self.as_ref().to_glib_none().0) }
     }
 
-    //#[cfg(any(feature = "v5_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    //fn get_indenter(&self) -> /*Ignored*/Option<Indenter> {
-    //    unsafe { TODO: call ffi:gtk_source_view_get_indenter() }
-    //}
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    fn get_indenter(&self) -> Option<Indenter> {
+        unsafe {
+            from_glib_none(ffi::gtk_source_view_get_indenter(
+                self.as_ref().to_glib_none().0,
+            ))
+        }
+    }
 
     fn get_insert_spaces_instead_of_tabs(&self) -> bool {
         unsafe {
@@ -1034,11 +1059,16 @@ impl<O: IsA<View>> ViewExt for O {
         }
     }
 
-    //#[cfg(any(feature = "v5_0", feature = "dox"))]
-    //#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
-    //fn set_indenter(&self, indenter: /*Ignored*/Option<&Indenter>) {
-    //    unsafe { TODO: call ffi:gtk_source_view_set_indenter() }
-    //}
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    fn set_indenter<P: IsA<Indenter>>(&self, indenter: Option<&P>) {
+        unsafe {
+            ffi::gtk_source_view_set_indenter(
+                self.as_ref().to_glib_none().0,
+                indenter.map(|p| p.as_ref()).to_glib_none().0,
+            );
+        }
+    }
 
     fn set_insert_spaces_instead_of_tabs(&self, enable: bool) {
         unsafe {

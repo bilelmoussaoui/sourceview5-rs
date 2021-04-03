@@ -8,6 +8,7 @@ single_version_file = true
 target_path = "."
 version = "5"
 work_mode = "normal"
+generate_builder = true
 
 external_libraries = [
     "GLib",
@@ -23,30 +24,62 @@ generate = [
     # "GtkSource.RegionIter",
     "GtkSource.BackgroundPatternType",
     "GtkSource.BracketMatchType",
+    "GtkSource.Buffer",
     "GtkSource.ChangeCaseType",
+    "GtkSource.Completion",
     "GtkSource.CompletionActivation",
+    "GtkSource.CompletionCell",
     "GtkSource.CompletionColumn",
+    "GtkSource.CompletionContext",
     "GtkSource.CompletionProposal",
     "GtkSource.CompletionProvider",
+    "GtkSource.CompletionSnippets",
+    "GtkSource.CompletionWords",
     "GtkSource.CompressionType",
     "GtkSource.Encoding",
+    "GtkSource.File",
     "GtkSource.FileLoaderError",
+    "GtkSource.FileSaver",
     "GtkSource.FileSaverError",
     "GtkSource.FileSaverFlags",
+    "GtkSource.Gutter",
     "GtkSource.GutterRenderer",
     "GtkSource.GutterRendererAlignmentMode",
+    "GtkSource.GutterRendererPixbuf",
+    "GtkSource.GutterRendererText",
+    "GtkSource.Hover",
+    "GtkSource.HoverContext",
+    "GtkSource.HoverDisplay",
+    "GtkSource.HoverProvider",
+    "GtkSource.Indenter",
     "GtkSource.Language",
+    "GtkSource.LanguageManager",
+    "GtkSource.Map",
+    "GtkSource.Mark",
+    "GtkSource.MarkAttributes",
     "GtkSource.MountOperationFactory",
     "GtkSource.NewlineType",
+    "GtkSource.PrintCompositor",
+    "GtkSource.Region",
+    "GtkSource.SearchContext",
+    "GtkSource.SearchSettings",
     "GtkSource.SmartHomeEndType",
+    "GtkSource.Snippet",
+    "GtkSource.SnippetChunk",
     "GtkSource.SnippetContext",
+    "GtkSource.SnippetManager",
     "GtkSource.SortFlags",
+    "GtkSource.SpaceDrawer",
     "GtkSource.SpaceLocationFlags",
     "GtkSource.SpaceTypeFlags",
+    "GtkSource.Style",
+    "GtkSource.StyleScheme",
     "GtkSource.StyleSchemeChooser",
     "GtkSource.StyleSchemeChooserButton",
     "GtkSource.StyleSchemeChooserWidget",
-    "GtkSource.ViewGutterPosition",
+    "GtkSource.StyleSchemeManager",
+    "GtkSource.Tag",
+    "GtkSource.ViewGutterPosition"
 ]
 
 manual = [
@@ -92,56 +125,11 @@ manual = [
 
 [[object]]
 generate_builder = true
-name = "GtkSource.Buffer"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.Completion"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.CompletionCell"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.CompletionContext"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.CompletionSnippets"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.CompletionWords"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.File"
-status = "generate"
-
-[[object]]
-generate_builder = true
 name = "GtkSource.FileLoader"
 status = "generate"
     [[object.function]]
     name = "set_candidate_encodings"
     ignore = true # manual
-
-[[object]]
-generate_builder = true
-name = "GtkSource.FileSaver"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.Gutter"
-status = "generate"
 
 [[object]]
 name = "GtkSource.GutterLines"
@@ -151,97 +139,6 @@ status = "generate"
     ignore = true # manual
 
 [[object]]
-generate_builder = true
-name = "GtkSource.GutterRendererPixbuf"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.GutterRendererText"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.LanguageManager"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.Map"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.MarkAttributes"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.Mark"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.PrintCompositor"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.Region"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.SearchContext"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.SearchSettings"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.Snippet"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.SnippetChunk"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.SnippetManager"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.SpaceDrawer"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.Style"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.StyleScheme"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.StyleSchemeManager"
-status = "generate"
-
-[[object]]
-generate_builder = true
-name = "GtkSource.Tag"
-status = "generate"
-
-[[object]]
-generate_builder = true
 name = "GtkSource.View"
 status = "generate"
     [[object.function]]

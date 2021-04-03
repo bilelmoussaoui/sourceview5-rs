@@ -81,6 +81,31 @@ pub use self::gutter_renderer_text::GutterRendererTextBuilder;
 pub use self::gutter_renderer_text::GutterRendererTextExt;
 pub use self::gutter_renderer_text::{GutterRendererText, NONE_GUTTER_RENDERER_TEXT};
 
+mod hover;
+pub use self::hover::Hover;
+pub use self::hover::HoverBuilder;
+
+mod hover_context;
+pub use self::hover_context::HoverContext;
+
+mod hover_display;
+pub use self::hover_display::HoverDisplay;
+pub use self::hover_display::HoverDisplayBuilder;
+
+mod hover_provider;
+pub use self::hover_provider::HoverProviderExt;
+pub use self::hover_provider::{HoverProvider, NONE_HOVER_PROVIDER};
+
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+mod indenter;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+pub use self::indenter::IndenterExt;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+pub use self::indenter::{Indenter, NONE_INDENTER};
+
 mod language;
 pub use self::language::Language;
 
@@ -165,11 +190,13 @@ pub use self::style_scheme_chooser::StyleSchemeChooserExt;
 pub use self::style_scheme_chooser::{StyleSchemeChooser, NONE_STYLE_SCHEME_CHOOSER};
 
 mod style_scheme_chooser_button;
+pub use self::style_scheme_chooser_button::StyleSchemeChooserButtonBuilder;
 pub use self::style_scheme_chooser_button::{
     StyleSchemeChooserButton, NONE_STYLE_SCHEME_CHOOSER_BUTTON,
 };
 
 mod style_scheme_chooser_widget;
+pub use self::style_scheme_chooser_widget::StyleSchemeChooserWidgetBuilder;
 pub use self::style_scheme_chooser_widget::{
     StyleSchemeChooserWidget, NONE_STYLE_SCHEME_CHOOSER_WIDGET,
 };
@@ -224,6 +251,10 @@ pub mod traits {
     pub use super::GutterRendererExt;
     pub use super::GutterRendererPixbufExt;
     pub use super::GutterRendererTextExt;
+    pub use super::HoverProviderExt;
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub use super::IndenterExt;
     pub use super::MapExt;
     pub use super::MarkExt;
     pub use super::PrintCompositorExt;

@@ -3,6 +3,9 @@
 // DO NOT EDIT
 
 use crate::BackgroundPatternType;
+#[cfg(any(feature = "v5_0", feature = "dox"))]
+#[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+use crate::Indenter;
 use crate::SmartHomeEndType;
 use crate::View;
 use glib::object::Cast;
@@ -50,7 +53,9 @@ pub struct MapBuilder {
     highlight_current_line: Option<bool>,
     indent_on_tab: Option<bool>,
     indent_width: Option<i32>,
-    //indenter: /*Unknown type*/,
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    indenter: Option<Indenter>,
     insert_spaces_instead_of_tabs: Option<bool>,
     right_margin_position: Option<u32>,
     show_line_marks: Option<bool>,
@@ -147,6 +152,10 @@ impl MapBuilder {
         }
         if let Some(ref indent_width) = self.indent_width {
             properties.push(("indent-width", indent_width));
+        }
+        #[cfg(any(feature = "v5_0", feature = "dox"))]
+        if let Some(ref indenter) = self.indenter {
+            properties.push(("indenter", indenter));
         }
         if let Some(ref insert_spaces_instead_of_tabs) = self.insert_spaces_instead_of_tabs {
             properties.push((
@@ -338,6 +347,13 @@ impl MapBuilder {
 
     pub fn indent_width(mut self, indent_width: i32) -> Self {
         self.indent_width = Some(indent_width);
+        self
+    }
+
+    #[cfg(any(feature = "v5_0", feature = "dox"))]
+    #[cfg_attr(feature = "dox", doc(cfg(feature = "v5_0")))]
+    pub fn indenter<P: IsA<Indenter>>(mut self, indenter: &P) -> Self {
+        self.indenter = Some(indenter.clone().upcast());
         self
     }
 

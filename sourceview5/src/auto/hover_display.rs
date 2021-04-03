@@ -2,8 +2,6 @@
 // from gir-files (https://github.com/gtk-rs/gir-files.git)
 // DO NOT EDIT
 
-use crate::StyleScheme;
-use crate::StyleSchemeChooser;
 use glib::object::Cast;
 use glib::object::IsA;
 use glib::translate::*;
@@ -12,37 +10,58 @@ use glib::ToValue;
 use std::fmt;
 
 glib::wrapper! {
-    pub struct StyleSchemeChooserButton(Object<ffi::GtkSourceStyleSchemeChooserButton, ffi::GtkSourceStyleSchemeChooserButtonClass>) @extends gtk::Button, gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Actionable, StyleSchemeChooser;
+    pub struct HoverDisplay(Object<ffi::GtkSourceHoverDisplay, ffi::GtkSourceHoverDisplayClass>) @extends gtk::Widget, @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 
     match fn {
-        get_type => || ffi::gtk_source_style_scheme_chooser_button_get_type(),
+        get_type => || ffi::gtk_source_hover_display_get_type(),
     }
 }
 
-impl StyleSchemeChooserButton {
-    #[doc(alias = "gtk_source_style_scheme_chooser_button_new")]
-    pub fn new() -> StyleSchemeChooserButton {
-        assert_initialized_main_thread!();
+impl HoverDisplay {
+    #[doc(alias = "gtk_source_hover_display_append")]
+    pub fn append<P: IsA<gtk::Widget>>(&self, child: &P) {
         unsafe {
-            gtk::Widget::from_glib_none(ffi::gtk_source_style_scheme_chooser_button_new())
-                .unsafe_cast()
+            ffi::gtk_source_hover_display_append(
+                self.to_glib_none().0,
+                child.as_ref().to_glib_none().0,
+            );
+        }
+    }
+
+    #[doc(alias = "gtk_source_hover_display_insert_after")]
+    pub fn insert_after<P: IsA<gtk::Widget>, Q: IsA<gtk::Widget>>(&self, child: &P, sibling: &Q) {
+        unsafe {
+            ffi::gtk_source_hover_display_insert_after(
+                self.to_glib_none().0,
+                child.as_ref().to_glib_none().0,
+                sibling.as_ref().to_glib_none().0,
+            );
+        }
+    }
+
+    #[doc(alias = "gtk_source_hover_display_prepend")]
+    pub fn prepend<P: IsA<gtk::Widget>>(&self, child: &P) {
+        unsafe {
+            ffi::gtk_source_hover_display_prepend(
+                self.to_glib_none().0,
+                child.as_ref().to_glib_none().0,
+            );
+        }
+    }
+
+    #[doc(alias = "gtk_source_hover_display_remove")]
+    pub fn remove<P: IsA<gtk::Widget>>(&self, child: &P) {
+        unsafe {
+            ffi::gtk_source_hover_display_remove(
+                self.to_glib_none().0,
+                child.as_ref().to_glib_none().0,
+            );
         }
     }
 }
 
-impl Default for StyleSchemeChooserButton {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
 #[derive(Clone, Default)]
-pub struct StyleSchemeChooserButtonBuilder {
-    child: Option<gtk::Widget>,
-    has_frame: Option<bool>,
-    icon_name: Option<String>,
-    label: Option<String>,
-    use_underline: Option<bool>,
+pub struct HoverDisplayBuilder {
     can_focus: Option<bool>,
     can_target: Option<bool>,
     css_classes: Option<Vec<String>>,
@@ -73,33 +92,15 @@ pub struct StyleSchemeChooserButtonBuilder {
     visible: Option<bool>,
     width_request: Option<i32>,
     //accessible-role: /*Unknown type*/,
-    action_name: Option<String>,
-    action_target: Option<glib::Variant>,
-    style_scheme: Option<StyleScheme>,
 }
 
-impl StyleSchemeChooserButtonBuilder {
+impl HoverDisplayBuilder {
     pub fn new() -> Self {
         Self::default()
     }
 
-    pub fn build(self) -> StyleSchemeChooserButton {
+    pub fn build(self) -> HoverDisplay {
         let mut properties: Vec<(&str, &dyn ToValue)> = vec![];
-        if let Some(ref child) = self.child {
-            properties.push(("child", child));
-        }
-        if let Some(ref has_frame) = self.has_frame {
-            properties.push(("has-frame", has_frame));
-        }
-        if let Some(ref icon_name) = self.icon_name {
-            properties.push(("icon-name", icon_name));
-        }
-        if let Some(ref label) = self.label {
-            properties.push(("label", label));
-        }
-        if let Some(ref use_underline) = self.use_underline {
-            properties.push(("use-underline", use_underline));
-        }
         if let Some(ref can_focus) = self.can_focus {
             properties.push(("can-focus", can_focus));
         }
@@ -172,42 +173,8 @@ impl StyleSchemeChooserButtonBuilder {
         if let Some(ref width_request) = self.width_request {
             properties.push(("width-request", width_request));
         }
-        if let Some(ref action_name) = self.action_name {
-            properties.push(("action-name", action_name));
-        }
-        if let Some(ref action_target) = self.action_target {
-            properties.push(("action-target", action_target));
-        }
-        if let Some(ref style_scheme) = self.style_scheme {
-            properties.push(("style-scheme", style_scheme));
-        }
-        let ret = glib::Object::new::<StyleSchemeChooserButton>(&properties).expect("object new");
+        let ret = glib::Object::new::<HoverDisplay>(&properties).expect("object new");
         ret
-    }
-
-    pub fn child<P: IsA<gtk::Widget>>(mut self, child: &P) -> Self {
-        self.child = Some(child.clone().upcast());
-        self
-    }
-
-    pub fn has_frame(mut self, has_frame: bool) -> Self {
-        self.has_frame = Some(has_frame);
-        self
-    }
-
-    pub fn icon_name(mut self, icon_name: &str) -> Self {
-        self.icon_name = Some(icon_name.to_string());
-        self
-    }
-
-    pub fn label(mut self, label: &str) -> Self {
-        self.label = Some(label.to_string());
-        self
-    }
-
-    pub fn use_underline(mut self, use_underline: bool) -> Self {
-        self.use_underline = Some(use_underline);
-        self
     }
 
     pub fn can_focus(mut self, can_focus: bool) -> Self {
@@ -329,27 +296,10 @@ impl StyleSchemeChooserButtonBuilder {
         self.width_request = Some(width_request);
         self
     }
-
-    pub fn action_name(mut self, action_name: &str) -> Self {
-        self.action_name = Some(action_name.to_string());
-        self
-    }
-
-    pub fn action_target(mut self, action_target: &glib::Variant) -> Self {
-        self.action_target = Some(action_target.clone());
-        self
-    }
-
-    pub fn style_scheme(mut self, style_scheme: &StyleScheme) -> Self {
-        self.style_scheme = Some(style_scheme.clone());
-        self
-    }
 }
 
-pub const NONE_STYLE_SCHEME_CHOOSER_BUTTON: Option<&StyleSchemeChooserButton> = None;
-
-impl fmt::Display for StyleSchemeChooserButton {
+impl fmt::Display for HoverDisplay {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str("StyleSchemeChooserButton")
+        f.write_str("HoverDisplay")
     }
 }
