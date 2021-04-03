@@ -27,7 +27,7 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: doc
-          args: --package sourceview5 --package sourceview5-sys --no-deps --all-features
+          args: --package sourceview5 --package sourceview5-sys --no-deps --features="dox"
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v2
