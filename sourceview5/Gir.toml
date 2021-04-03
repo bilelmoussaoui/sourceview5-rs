@@ -1,7 +1,7 @@
 [options]
 deprecate_by_min_version = true
 generate_safety_asserts = true
-girs_dir = "../gir-files"
+girs_directories = ["../gir-files"]
 library = "GtkSource"
 min_cfg_version = "4.90"
 single_version_file = true
