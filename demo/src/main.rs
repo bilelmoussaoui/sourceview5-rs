@@ -1,4 +1,3 @@
-use gio::prelude::*;
 use gtk::prelude::*;
 use sourceview5::prelude::*;
 use std::env::args;
@@ -43,9 +42,7 @@ fn main() {
         Default::default(),
     )
     .expect("Initialization failed...");
-    application.connect_activate(|app| {
-        build_ui(app);
-    });
+    application.connect_activate(build_ui);
 
     application.run(&args().collect::<Vec<_>>());
 }
